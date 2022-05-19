@@ -8,9 +8,11 @@ use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Component\Serializer\Annotation\Groups;
+use ApiPlatform\Core\Annotation\ApiResource;
 
 /**
  * @ORM\Entity(repositoryClass=UserRepository::class)
+ *  @ApiResource(normalizationContext={"groups"={"user:read"}},denormalizationContext={"groups"={"user:write"}})
  */
 class User implements UserInterface, PasswordAuthenticatedUserInterface
 {
@@ -45,6 +47,8 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      * @Assert\Regex(pattern="/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/", message="Password must contain at least one lowercase letter, one uppercase letter, one number and one special character")
      */
     private $password;
+
+
 
     public function getId(): ?int
     {
@@ -105,7 +109,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      */
     public function getPassword(): string
     {
-        return $this->password;
+        return (string) $this->password;
     }
 
     public function setPassword(string $password): self
@@ -132,6 +136,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function eraseCredentials()
     {
         // If you store any temporary, sensitive data on the user, clear it here
-        // $this->plainPassword = null;
+        $this->password = null;
     }
 }

@@ -16,7 +16,7 @@ use Symfony\Component\Validator\Validator\ValidatorInterface;
 class RegistrationController extends AbstractController
 {
     /**
-     * @Route("/api/registration", name="app_registration", methods={"POST"})
+     * @Route("/api2/registration", name="app_registration", methods={"POST"})
      */
     public function index(SerializerInterface $serializer, UserRepository $userRepository, Request $request, ValidatorInterface $validatorInterface): JsonResponse
     {
