@@ -48,6 +48,12 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      */
     private $password;
 
+    /**
+     * @ORM\OneToOne(targetEntity=Spotify::class, mappedBy="id_user", cascade={"persist", "remove"})
+     * @Groups({"user:read"})
+     */
+    private $spotify;
+
 
 
     public function getId(): ?int
@@ -137,5 +143,22 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     {
         // If you store any temporary, sensitive data on the user, clear it here
         $this->password = null;
+    }
+
+    public function getSpotify(): ?Spotify
+    {
+        return $this->spotify;
+    }
+
+    public function setSpotify(Spotify $spotify): self
+    {
+        // set the owning side of the relation if necessary
+        if ($spotify->getIdUser() !== $this) {
+            $spotify->setIdUser($this);
+        }
+
+        $this->spotify = $spotify;
+
+        return $this;
     }
 }
