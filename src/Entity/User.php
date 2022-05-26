@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use ApiPlatform\Core\Action\NotFoundAction;
 use App\Repository\UserRepository;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
@@ -10,9 +11,27 @@ use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Component\Serializer\Annotation\Groups;
 use ApiPlatform\Core\Annotation\ApiResource;
 
+// get only for bearer token with openapi
+#[ApiResource(
+    collectionOperations: ['get', 'post'],
+    itemOperations: [
+        'get'=>[
+           'openapi_context' => [
+               'security' => [
+                   ['bearerAuth' => []]
+               ]
+           ]
+        ],
+    ])
+]
+
+// security berAuth
 /**
  * @ORM\Entity(repositoryClass=UserRepository::class)
- *  @ApiResource(normalizationContext={"groups"={"user:read"}},denormalizationContext={"groups"={"user:write"}})
+ * @ApiResource(
+ * normalizationContext={"groups"={"user:read"}},
+ * denormalizationContext={"groups"={"user:write"}},
+ * )
  */
 class User implements UserInterface, PasswordAuthenticatedUserInterface
 {

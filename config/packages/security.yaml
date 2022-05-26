@@ -17,6 +17,7 @@ security:
             
         login:
             pattern: ^/api/login
+            provider: app_user_provider
             stateless: true
             json_login:
                 check_path: api_login_check
@@ -28,6 +29,7 @@ security:
         api:
             pattern:   ^/api
             stateless: true
+            provider:  app_user_provider
             jwt: ~
 
         # main:
