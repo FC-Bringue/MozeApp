@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Entity;
-
+use App\Entity\Spotify;
 use ApiPlatform\Core\Action\NotFoundAction;
 use App\Repository\UserRepository;
 use Doctrine\ORM\Mapping as ORM;
@@ -11,21 +11,19 @@ use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Component\Serializer\Annotation\Groups;
 use ApiPlatform\Core\Annotation\ApiResource;
 
-// get only for bearer token with openapi
-#[ApiResource(
-    collectionOperations: ['get', 'post'],
-    itemOperations: [
-        'get'=>[
-           'openapi_context' => [
-               'security' => [
-                   ['bearerAuth' => []]
-               ]
-           ]
-        ],
-    ])
-]
-
-// security berAuth
+// we want to lock get user items to IS_AUTHENTICATED_FULLY
+// so we need to add this interface to the User class
+// #[ApiResource(collectionOperations: [
+//         'get' => [
+//             'openapi_context' => [
+//                 'security' => [
+//                     ['bearerAuth' => [ ]],
+//                 ],
+//             ]
+//         ],
+//     ]
+   
+// )]
 /**
  * @ORM\Entity(repositoryClass=UserRepository::class)
  * @ApiResource(

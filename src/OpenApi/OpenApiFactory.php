@@ -16,17 +16,13 @@ class OpenApiFactory implements OpenApiFactoryInterface
     public function __invoke(array $context = []): OpenApi
     {
         $openApi = $this->decorate->__invoke($context);
-
         $schemas=$openApi->getComponents()->getSecuritySchemes();
-        //bearer Auth
-        $schemas['bearerAuth'] = [
-            'type' => 'http',
-            'scheme' => 'bearer',
-            'bearerFormat' => 'JWT',
+        $schemas['bearerAuth']=[
+            'type'=>'http',
+            'scheme'=>'bearer',
+            'bearerFormat'=>'JWT',
+            'description' => 'JWT Authorization header using the Bearer scheme.',
         ];
-        
-        // save the modified openapi
-        $openApi->withComponents(new Model\Components($schemas));
         return $openApi;
     }
 }
