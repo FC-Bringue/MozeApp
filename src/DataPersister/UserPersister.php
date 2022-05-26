@@ -8,6 +8,7 @@ use Doctrine\ORM\EntityManagerInterface;
 use App\Repository\UserRepository;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
+use App\Entity\Spotify;
 
 
 
@@ -45,6 +46,10 @@ class UserPersister implements DataPersisterInterface
                     $data->getPassword()
                 )
             );
+
+            $spotify = new Spotify();
+            $data->setSpotify($spotify);
+
             $this->em->persist($data);
             $this->em->flush();
             // erase the password
