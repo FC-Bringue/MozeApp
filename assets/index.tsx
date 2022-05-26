@@ -14,7 +14,6 @@ import ReactDOM from 'react-dom';
 import App from './js/App';
 import { createRoot } from 'react-dom/client';
 
-// App
 const container = document.getElementById('root');
 const root = createRoot(container!); // createRoot(container!) if you use TypeScript
 root.render(<App/>);
