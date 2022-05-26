@@ -35,14 +35,6 @@ class SpotifyPersister implements DataPersisterInterface
 
     public function persist($data)
     {
-        $id_user_id = 2;
-        $spotify = $this->spotifyRepository->findOneBy(['id_user' => $id_user_id]);
-        // $spotify = $user->getSpotify();
-        // $spotify->setToken($data->getToken());
-        // $user->setSpotify($spotify);
-        $spotify->setToken($data->getToken());
-        $this->em->persist($spotify);
-        $this->em->flush();
     }
 
 
