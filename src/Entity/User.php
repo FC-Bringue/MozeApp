@@ -5,6 +5,7 @@ use App\Entity\Spotify;
 use ApiPlatform\Core\Action\NotFoundAction;
 use App\Repository\UserRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Validator\Constraints as Assert;
@@ -22,7 +23,6 @@ use ApiPlatform\Core\Annotation\ApiResource;
 //             ]
 //         ],
 //     ]
-   
 // )]
 /**
  * @ORM\Entity(repositoryClass=UserRepository::class)
@@ -30,6 +30,7 @@ use ApiPlatform\Core\Annotation\ApiResource;
  * normalizationContext={"groups"={"user:read"}},
  * denormalizationContext={"groups"={"user:write"}},
  * )
+ * @UniqueEntity(fields={"email"}, message="There is already an account with this email")
  */
 class User implements UserInterface, PasswordAuthenticatedUserInterface
 {
@@ -70,6 +71,11 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      * @Groups({"user:read"})
      */
     private $spotify;
+
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    private $isVerified = false;
 
 
 
@@ -175,6 +181,18 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         }
 
         $this->spotify = $spotify;
+
+        return $this;
+    }
+
+    public function isVerified(): bool
+    {
+        return $this->isVerified;
+    }
+
+    public function setIsVerified(bool $isVerified): self
+    {
+        $this->isVerified = $isVerified;
 
         return $this;
     }

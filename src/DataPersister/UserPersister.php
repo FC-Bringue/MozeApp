@@ -10,19 +10,28 @@ use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
 use App\Entity\Spotify;
 
-
-
+use App\Security\EmailVerifier;
+use Symfony\Bridge\Twig\Mime\TemplatedEmail;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Mime\Address;
+use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Contracts\Translation\TranslatorInterface;
+use SymfonyCasts\Bundle\VerifyEmail\Exception\VerifyEmailExceptionInterface;
 
 class UserPersister implements DataPersisterInterface
 {
     protected $em;
     protected $userRepository;
-    public function __construct(UserRepository $userRepository, EntityManagerInterface $em, UserPasswordHasherInterface $passwordHasherInterface, ValidatorInterface $validator)
+    private EmailVerifier $emailVerifier;
+    public function __construct(EmailVerifier $emailVerifier, UserRepository $userRepository, EntityManagerInterface $em, UserPasswordHasherInterface $passwordHasherInterface, ValidatorInterface $validator)
     {
         $this->userRepository = $userRepository;
         $this->em = $em;
         $this->passwordHasher = $passwordHasherInterface;
         $this->validator = $validator;
+        $this->emailVerifier = $emailVerifier;
     }
 
     public function supports($data): bool
@@ -52,6 +61,17 @@ class UserPersister implements DataPersisterInterface
 
             $this->em->persist($data);
             $this->em->flush();
+            $this->emailVerifier->sendEmailConfirmation(
+                'app_verify_email',
+                $data,
+                (new TemplatedEmail())
+                    ->from(new Address('medijob@preprod-aileen.com', 'Moze Team'))
+                    ->to($data->getEmail())
+                    ->subject('Please Confirm your Email')
+                    ->htmlTemplate('registration/confirmation_email.html.twig')
+            );
+            // verify if mail is sent
+
             // erase the password
             $data->eraseCredentials();
         } catch (\Exception $e) {
