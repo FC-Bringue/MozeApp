@@ -61,16 +61,7 @@ class UserPersister implements DataPersisterInterface
 
             $this->em->persist($data);
             $this->em->flush();
-            $this->emailVerifier->sendEmailConfirmation(
-                'app_verify_email',
-                $data,
-                (new TemplatedEmail())
-                    ->from(new Address('medijob@preprod-aileen.com', 'Moze Team'))
-                    ->to($data->getEmail())
-                    ->subject('Please Confirm your Email')
-                    ->htmlTemplate('registration/confirmation_email.html.twig')
-            );
-            // verify if mail is sent
+            $this->sendWelcomeEmail($data);
 
             // erase the password
             $data->eraseCredentials();
@@ -85,5 +76,19 @@ class UserPersister implements DataPersisterInterface
     {
         $this->em->remove($data);
         $this->em->flush();
+    }
+    private function sendWelcomeEmail(User $user)
+    {
+        $this->emailVerifier->sendEmailConfirmation(
+            'app_verify_email',
+            $user,
+            (new TemplatedEmail())
+                ->from(new Address('medijob@preprod-aileen.com', 'Moze Team'))
+                ->to($user->getEmail())
+                ->subject('Please Confirm your Email')
+                ->htmlTemplate('registration/confirmation_email.html.twig')
+        );
+        //send via messenger
+        
     }
 }
