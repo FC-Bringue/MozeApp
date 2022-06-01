@@ -1,6 +1,4 @@
-
-
-const App = ()=>{
-  return (<p>FDP</p>)
-}
+const App = () => {
+  return <p>Test</p>;
+};
 export default App;
