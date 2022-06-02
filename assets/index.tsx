@@ -6,14 +6,22 @@
  */
 
 // any CSS you import will output into a single css file (app.css in this case)
-import './styles/app.scss';
+import "./styles/app.scss";
 
 // React
-import React from 'react';
-import ReactDOM from 'react-dom';
-import App from './js/App';
-import { createRoot } from 'react-dom/client';
+import ReactDOM from "react-dom/client";
+import { Provider } from "react-redux";
+import { PersistGate } from "redux-persist/integration/react";
+import { persistStore } from "redux-persist";
+import App from "./js/App";
 
-const container = document.getElementById('root');
-const root = createRoot(container!); // createRoot(container!) if you use TypeScript
-root.render(<App/>);
+import store from "./helpers/redux/Store";
+let persistor = persistStore(store);
+
+ReactDOM.createRoot(document.getElementById("root")!).render(
+  <Provider store={store}>
+    <PersistGate loading={null} persistor={persistor}>
+      <App />
+    </PersistGate>
+  </Provider>
+);
