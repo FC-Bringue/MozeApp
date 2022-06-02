@@ -4,14 +4,19 @@ import { combineReducers } from "redux";
 import { persistReducer } from "redux-persist";
 
 import registerSlice from "./slices/registerSlice";
+import loginSlice from "./slices/loginSlice";
+import userInfosSlice from "./slices/userInfosSlice";
 
 const reducers = combineReducers({
   register: registerSlice,
+  login: loginSlice,
+  userInfos: userInfosSlice,
 });
 
 const persistConfig = {
   key: "root",
   storage,
+  whitelist: ["userInfos"],
 };
 
 const persistedReducer = persistReducer(persistConfig, reducers);

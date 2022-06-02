@@ -1,6 +1,6 @@
 import axios from "axios";
-import { useSelector } from "react-redux";
-
+import { useDispatch } from "react-redux";
+import { setToken } from "../redux/slices/userInfosSlice";
 import { createUserProps, loginUserProps } from "../types/login_signup";
 
 export const createUser = (infos: createUserProps) => {
@@ -19,18 +19,20 @@ export const createUser = (infos: createUserProps) => {
     });
 };
 
-const loginUser = (infos: loginUserProps) => {
-  axios
+export const loginUser = async (infos: loginUserProps) => {
+  var restmp = await axios
     .post("api/login_check", {
       email: infos.email,
       password: infos.password,
     })
     .then((res) => {
       console.log(res);
-      return;
+      return res.data.token;
     })
     .catch((err) => {
       console.log(err);
       return;
     });
+
+  return restmp;
 };
