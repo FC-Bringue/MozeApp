@@ -1,4 +1,4 @@
-<h1>Hi!</h1>
+{# <h1>Hi!</h1>
 
 <p>To reset your password, please visit the following link</p>
 
@@ -7,3 +7,20 @@
 <p>This link will expire in {{ resetToken.expirationMessageKey|trans(resetToken.expirationMessageData, 'ResetPasswordBundle') }}.</p>
 
 <p>Cheers!</p>
+ #}
+<div id="pssdfgt">
+      <div>
+        <img
+          src={
+            "https://upload.wikimedia.org/wikipedia/commons/a/a5/Google_Chrome_icon_%28September_2014%29.svg"
+          }
+          title="logo"
+        />
+      </div>
+      <div class="stp-2">
+         <h1>Mot de passe oublié</h1>
+         <p>Un lien de reinitialisation du mot de passe vient de vous etre envoyé.</p>
+        <p>Verifiez dès a présent votre boite mail.</p>
+        <p>Ce lien expire dans  {{ resetToken.expirationMessageKey|trans(resetToken.expirationMessageData, 'ResetPasswordBundle') }} </p>
+      </div>
+    </div>
