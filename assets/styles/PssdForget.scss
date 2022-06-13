@@ -1,0 +1,108 @@
+input::placeholder {
+  font-weight: bold;
+  font-family: "Kaleko 105", Arial, Helvetica, sans-serif !important;
+}
+
+#pssdfgt {
+  width: 100%;
+  height: 100vh;
+  display: flex;
+  justify-content: space-around;
+  background-color: #332f2e;
+  font-family: "Kaleko 105", Arial, Helvetica, sans-serif !important;
+}
+
+#pssdfgt > div {
+  margin-left: auto;
+  margin-right: auto;
+  width: 45%;
+  display: flex;
+  align-items: center;
+}
+
+#pssdfgt > div:first-child > img {
+  max-height: 30%;
+  width: 100%;
+}
+
+#pssdfgt > div:last-child {
+  align-self: center;
+  display: flex;
+  flex-direction: column;
+}
+
+#pssdfgt > div > form > h1 {
+  color: white;
+  font-size: 2.5em;
+  text-align: center;
+}
+
+#pssdfgt > div > form > div > input {
+  background-color: transparent;
+  outline: none;
+  border: solid white 1px;
+  margin: 0.5rem;
+  font-size: 1.5em;
+  padding: 0.5em;
+  border-radius: 10px;
+  color: white;
+  width: 90%;
+  margin: auto;
+}
+
+#pssdfgt > div > form > .result > p {
+  display: flex;
+  flex-direction: column;
+  font-size: 1.5em;
+  color: white;
+  text-align: center;
+}
+
+#pssdfgt > div > div {
+  background-color: white;
+  width: 35%;
+  border-radius: 20px;
+  margin-top: 1em;
+  margin-bottom: 1em;
+}
+
+#pssdfgt > div > div > p {
+  font-weight: bold;
+  color: black;
+  text-align: center;
+}
+
+#pssdfgt > div > p {
+  font-style: italic;
+  color: white;
+}
+
+#pssdfgt > div > p > a {
+  color: #47bdff;
+  margin-left: 0.5em;
+}
+
+@media only screen and (min-device-width: 320px) and (max-device-width: 480px) {
+  #pssdfgt {
+    flex-direction: column;
+    justify-content: normal;
+  }
+
+  #pssdfgt > div {
+    width: 90%;
+  }
+
+  #pssdfgt > div:first-child {
+    height: 35%;
+  }
+
+  #pssdfgt > div > form > div {
+    display: flex;
+    flex-direction: column;
+    justify-content: normal;
+  }
+
+  form {
+    width: 90%;
+  }
+}
