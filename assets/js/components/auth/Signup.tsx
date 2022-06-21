@@ -1,6 +1,6 @@
 import { useSelector, useDispatch } from "react-redux";
 
-import { createUser } from "../../helpers/API/login_signup";
+import { createUser } from "../../../helpers/API/login_signup";
 
 import {
   setLastName,
@@ -8,9 +8,9 @@ import {
   setEmail,
   setPassword,
   setPasswordConfirm,
-} from "../../helpers/redux/slices/registerSlice";
+} from "../../../helpers/redux/slices/registerSlice";
 
-import "../../styles/Signup.scss";
+import "../../../styles/auth/Signup.scss";
 
 const Signup = () => {
   const dispatch = useDispatch();

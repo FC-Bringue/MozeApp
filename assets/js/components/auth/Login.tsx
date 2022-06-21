@@ -1,10 +1,10 @@
 import { useDispatch, useSelector } from "react-redux";
 
-import { setMail, setPassword } from "../../helpers/redux/slices/loginSlice";
-import { loginUser } from "../../helpers/API/login_signup";
+import { setMail, setPassword } from "../../../helpers/redux/slices/loginSlice";
+import { setToken } from "../../../helpers/redux/slices/userInfosSlice";
+import { loginUser } from "../../../helpers/API/login_signup";
 
-import "../../styles/Login.scss";
-import { setToken } from "../../helpers/redux/slices/userInfosSlice";
+import "../../../styles/auth/Login.scss";
 
 const Login = () => {
   const dispatch = useDispatch();

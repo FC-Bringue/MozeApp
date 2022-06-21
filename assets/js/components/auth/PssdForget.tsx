@@ -1,4 +1,4 @@
-import "../../styles/PssdForget.scss";
+import "../../../styles/auth/PssdForget.scss";
 
 const PssdForget = () => {
   return (

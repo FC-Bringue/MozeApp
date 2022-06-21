@@ -87,15 +87,3 @@
   font-style: normal;
   font-display: swap;
 }
-
-html {
-  margin: 0;
-  padding: 0;
-}
-
-body {
-  margin: 0 !important;
-  padding: 0 !important;
-  background-color: white;
-  font-family: "Kaleko 105", sans-serif;
-}
