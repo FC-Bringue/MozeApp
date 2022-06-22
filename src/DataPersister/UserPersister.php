@@ -56,6 +56,7 @@ class UserPersister implements DataPersisterInterface
                 )
             );
 
+
             $spotify = new Spotify();
             $data->setSpotify($spotify);
 
@@ -64,9 +65,9 @@ class UserPersister implements DataPersisterInterface
             $this->sendWelcomeEmail($data);
 
             // erase the password
-            $data->eraseCredentials();
+
         } catch (\Exception $e) {
-            $data->eraseCredentials();
+
             throw new \Exception($e->getMessage());
         }
     }
@@ -89,6 +90,6 @@ class UserPersister implements DataPersisterInterface
                 ->htmlTemplate('registration/confirmation_email.html.twig')
         );
         //send via messenger
-        
+
     }
 }
