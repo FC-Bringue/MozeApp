@@ -1,4 +1,5 @@
 #navigation {
+  position: -webkit-sticky;
   position: sticky;
   top: 0;
   width: 15%;
@@ -38,4 +39,17 @@
 
 .active {
   font-weight: 600 !important;
+}
+
+.copyright {
+  position: absolute;
+  bottom: 1em;
+  text-align: center;
+}
+
+.copyright > p {
+  font-weight: 200;
+  font-size: 0.9em;
+  margin-left: auto;
+  margin-right: auto;
 }

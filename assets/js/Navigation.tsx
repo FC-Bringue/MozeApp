@@ -1,4 +1,4 @@
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 
 import logoHome from "../img/icons/logoHome.svg";
 import dashboard from "../img/icons/dashboard.svg";
@@ -10,6 +10,7 @@ import { tabRedirects } from "../helpers/functions/tabRedirects";
 import "../styles/Navigation.css";
 
 const Navigation = () => {
+  const navigate = useNavigate();
   const { tab } = useParams();
   console.log(`tabis${tab}`);
 
@@ -31,7 +32,7 @@ const Navigation = () => {
       </div>
       <div
         className={`${tab === "sessions" ? "active" : ""}`}
-        onClick={() => tabRedirects("sessions")}
+        onClick={() => navigate("/dashboard/sessions")}
       >
         <div>
           <img src={play} title="session" />
@@ -47,14 +48,17 @@ const Navigation = () => {
       <div
         className={`${tab === "settings" ? "active" : ""}`}
         onClick={() => {
-          window.location.href = "/dashboard/settings";
-          tabRedirects("settings");
+          navigate("/dashboard/settings");
         }}
       >
         <div>
           <img src={setting} title="settings" />
         </div>
         <p>PARAMETRES</p>
+      </div>
+
+      <div className="copyright">
+        <p>MOZEAPP - {new Date().getFullYear()}</p>
       </div>
     </nav>
   );

@@ -27,11 +27,11 @@ export const loginUser = async (infos: loginUserProps) => {
     })
     .then((res) => {
       console.log(res);
-      return res.data.token;
+      return res;
     })
     .catch((err) => {
       console.log(err);
-      return;
+      return err;
     });
 
   return restmp;
