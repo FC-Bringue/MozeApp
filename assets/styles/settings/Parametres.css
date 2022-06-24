@@ -1,0 +1,53 @@
+#parametres {
+  min-height: 100vh;
+  width: 85%;
+  background-color: #332f2e;
+  color: white;
+  padding-left: 2em;
+  padding-top: 2em;
+}
+
+#parametres > h4 {
+  font-weight: 400;
+  font-style: italic;
+}
+
+#parametres > h1 {
+  margin-left: 5%;
+  font-size: 3.5em;
+  font-weight: 800;
+  font-style: italic;
+}
+
+#parametres > .navigation {
+  display: flex;
+  justify-content: flex-start;
+  width: 60%;
+  margin: auto;
+  font-size: 2em;
+}
+
+#parametres > .navigation > div {
+  border-bottom: #ffffff 2px solid;
+}
+
+#parametres > .navigation > div:first-child {
+  margin-left: auto;
+}
+
+#parametres > .navigation > div:last-child {
+  margin-right: auto;
+}
+
+#parametres > .navigation > div > p {
+  margin-left: 1em;
+  margin-right: 1em;
+  margin-top: 0.5em;
+  margin-bottom: 0.5em;
+}
+
+.param-nav-active {
+  border-bottom: #47bdff 2px solid !important;
+  color: #47bdff !important;
+  font-weight: 800 !important;
+}

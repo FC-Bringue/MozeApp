@@ -31,7 +31,8 @@ input::placeholder {
   flex-direction: column;
 }
 
-#pssdfgt > div > form > h1 {
+#pssdfgt > div > form > h1,
+.titleContent {
   color: white;
   font-size: 2.5em;
   text-align: center;
@@ -80,6 +81,16 @@ input::placeholder {
 #pssdfgt > div > p > a {
   color: #47bdff;
   margin-left: 0.5em;
+}
+
+.stp-2 > p {
+  font-style: normal !important;
+  font-weight: 200;
+}
+
+.stp-3 > form > div {
+  margin-top: 1em;
+  margin-bottom: 1em;
 }
 
 @media only screen and (min-device-width: 320px) and (max-device-width: 480px) {

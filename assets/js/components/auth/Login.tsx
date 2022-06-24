@@ -1,12 +1,14 @@
 import { useDispatch, useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
 
-import { setMail, setPassword } from "../../helpers/redux/slices/loginSlice";
-import { loginUser } from "../../helpers/API/login_signup";
+import { setMail, setPassword } from "../../../helpers/redux/slices/loginSlice";
+import { setToken } from "../../../helpers/redux/slices/userInfosSlice";
+import { loginUser } from "../../../helpers/API/login_signup";
 
-import "../../styles/Login.scss";
-import { setToken } from "../../helpers/redux/slices/userInfosSlice";
+import "../../../styles/auth/Login.scss";
 
 const Login = () => {
+  const navigate = useNavigate();
   const dispatch = useDispatch();
   const mail = useSelector((state: any) => state.login.mail);
   const password = useSelector((state: any) => state.login.password);
@@ -46,7 +48,13 @@ const Login = () => {
               email: mail,
               password: password,
             });
-            dispatch(setToken(response));
+
+            if (response.status === 200) {
+              dispatch(setToken(response.data.token));
+              navigate("/dashboard");
+            } else {
+              console.log("response", response);
+            }
           }}
         >
           <p>Se connecter</p>

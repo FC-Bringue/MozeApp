@@ -1,0 +1,66 @@
+#sessions {
+  min-height: 100vh;
+  width: 85%;
+  background-color: #332f2e;
+  color: white;
+  padding-left: 2em;
+  padding-top: 2em;
+}
+
+#sessions > h4 {
+  font-weight: 400;
+  font-style: italic;
+}
+
+#sessions > h1 {
+  margin-left: 5%;
+  font-size: 3.5em;
+  font-weight: 800;
+  font-style: italic;
+}
+
+.session-list {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.session-item {
+  display: flex;
+  flex-direction: column;
+  width: 20%;
+  background-color: #ccdaff;
+  padding: 1em;
+  margin: 1em;
+  border-radius: 2em;
+  color: black;
+}
+
+.session-item > div:first-child {
+  display: flex;
+  justify-content: space-between;
+}
+
+.session-item > div:first-child > p {
+  font-weight: 800;
+  font-size: 1.5em;
+  margin-top: 0.2em;
+  margin-bottom: 0.2em;
+}
+
+.session-item > div:last-child {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+}
+
+.icons-fnct {
+  display: flex;
+}
+
+.icons-fnct > div {
+  width: 10%;
+  margin-left: 0.5em;
+  margin-right: 0.5em;
+  margin-top: auto;
+  margin-bottom: auto;
+}
