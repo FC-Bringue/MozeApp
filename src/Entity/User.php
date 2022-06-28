@@ -13,18 +13,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Component\Serializer\Annotation\Groups;
 use ApiPlatform\Core\Annotation\ApiResource;
 
-// we want to lock get user items to IS_AUTHENTICATED_FULLY
-// so we need to add this interface to the User class
-// #[ApiResource(collectionOperations: [
-//         'get' => [
-//             'openapi_context' => [
-//                 'security' => [
-//                     ['bearerAuth' => [ ]],
-//                 ],
-//             ]
-//         ],
-//     ]
-// )]
+
 /**
  * @ORM\Entity(repositoryClass=UserRepository::class)
  * @ApiResource(
@@ -68,7 +57,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     private $password;
 
     /**
-     * @ORM\OneToOne(targetEntity=Spotify::class, mappedBy="id_user", cascade={"persist", "remove"})
+     * @ORM\OneToOne(targetEntity=Spotify::class, mappedBy="user", cascade={"persist", "remove"})
      * @Groups({"user:read","user:write"})
      */
     private $spotify;

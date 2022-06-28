@@ -9,7 +9,10 @@ use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Component\Serializer\Annotation\Groups;
 
 /**
- * @ApiResource(normalizationContext={"groups"={"spotify:read"}},denormalizationContext={"groups"={"spotify:write"}})
+ * @ApiResource(
+ * normalizationContext={"groups"={"spotify:read"}},
+ * denormalizationContext={"groups"={"spotify:write"}}
+ * )
  * @ORM\Entity(repositoryClass=SpotifyRepository::class)
  */
 class Spotify
@@ -31,9 +34,15 @@ class Spotify
     /**
      * @ORM\OneToOne(targetEntity=User::class, inversedBy="spotify", cascade={"persist", "remove"})
      * @ORM\JoinColumn(nullable=false)
-     * @Groups({"spotify:read"})
+     * @Groups({"spotify:read", "spotify:write"})
      */
-    private $id_user;
+    private $user;
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     * @Groups({"spotify:read", "spotify:write"})
+     */
+    private $refreshtoken;
 
     public function getId(): ?int
     {
@@ -52,14 +61,26 @@ class Spotify
         return $this;
     }
 
-    public function getIdUser(): ?User
+    public function getUser(): ?User
     {
-        return $this->id_user;
+        return $this->user;
     }
 
-    public function setIdUser(User $id_user): self
+    public function setUser(User $user): self
     {
-        $this->id_user = $id_user;
+        $this->user = $user;
+
+        return $this;
+    }
+
+    public function getRefreshToken(): ?string
+    {
+        return $this->refreshtoken;
+    }
+
+    public function setRefreshToken(?string $refreshtoken): self
+    {
+        $this->refreshtoken = $refreshtoken;
 
         return $this;
     }
