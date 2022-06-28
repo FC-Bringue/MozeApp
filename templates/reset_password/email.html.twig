@@ -1,9 +1,48 @@
-<h1>Hi!</h1>
+<!DOCTYPE html>
+<html xmlns:v="urn:schemas-microsoft-com:vml">
+<head>
+<meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<!--[if !mso]><!-- --><meta http-equiv="X-UA-Compatible" content="IE=edge"><!--<![endif]-->
+<meta name="format-detection" content="telephone=no">
+<title>confirm your email</title>
+<style type="text/css">
+*[class="showmob"] {
+    display:none; /* Generic*/
+    overflow:hidden; /* Generic */
+    font-size:0; /* Be careful with this one, only use if absolutely required */
+} 
 
-<p>To reset your password, please visit the following link</p>
+</style>
+</head>
+<body bgcolor="#332f2e" style="margin:0!important; padding:0!important; width: 100%!important;font-family: 'Kaleko 105', Arial, Helvetica, sans-serif !important;color: white;" class="body">
+<!-- Email container -->
+    <table bgcolor="#332f2e " role="presentation" width="100%" border="0" cellspacing="0" cellpadding="0">
+         <tr>
+            <th align="center" valign="top" style="padding-top:20px; padding-bottom:40px;" class="padt0">
 
-<a href="{{ url('app_reset_password', {token: resetToken.token}) }}">{{ url('app_reset_password', {token: resetToken.token}) }}</a>
+                    <h1>Hi!</h1>
 
-<p>This link will expire in {{ resetToken.expirationMessageKey|trans(resetToken.expirationMessageData, 'ResetPasswordBundle') }}.</p>
+                    <p>To reset your password, please click on the following button</p>
 
-<p>Cheers!</p>
+                    <div><!--[if mso]>
+  <v:roundrect xmlns:v="urn:schemas-microsoft-com:vml" xmlns:w="urn:schemas-microsoft-com:office:word" href="http://" style="height:40px;v-text-anchor:middle;width:200px;" arcsize="10%" stroke="f" fillcolor="#ffffff">
+    <w:anchorlock/>
+    <center>
+  <![endif]-->
+      <a href="{{ url('app_reset_password', {token: resetToken.token}) }}"
+style="background-color:#ffffff;border-radius:40px;color:#332f2e;display:inline-block;font-family:sans-serif;font-size:13px;font-weight:bold;line-height:40px;text-align:center;margin-bottom:1rem; text-decoration:none;width:200px;-webkit-text-size-adjust:none;">{{ url('app_reset_password', {token: resetToken.token}) }}</a>
+  <!--[if mso]>
+    </center>
+  </v:roundrect>
+<![endif]--></div>
+
+                    <p>This link will expire in {{ resetToken.expirationMessageKey|trans(resetToken.expirationMessageData, 'ResetPasswordBundle') }}.</p>
+
+                    <p>Cheers!</p>
+
+
+            </th>
+        </tr>
+    </table>
+</body>

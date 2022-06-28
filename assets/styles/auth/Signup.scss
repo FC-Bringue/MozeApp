@@ -1,0 +1,238 @@
+input::placeholder {
+  font-weight: bold;
+  font-family: "Kaleko 105", Arial, Helvetica, sans-serif !important;
+}
+
+#signup {
+  width: 100%;
+  height: 100vh;
+  display: flex;
+  justify-content: space-around;
+  background-color: #332f2e;
+  font-family: "Kaleko 105", Arial, Helvetica, sans-serif !important;
+}
+
+#signup > div {
+  margin-left: auto;
+  margin-right: auto;
+  width: 45%;
+  display: flex;
+  align-items: center;
+}
+
+#signup > div:first-child > img {
+  max-height: 30%;
+  width: 100%;
+}
+
+#signup > div:last-child {
+  align-self: center;
+  display: flex;
+  flex-direction: column;
+}
+
+#signup > div > form > h1 {
+  color: white;
+  font-size: 2.5em;
+  text-align: center;
+}
+
+#signup > div > form > div {
+  display: flex;
+  justify-content: space-between;
+}
+
+#signup > div > form > div > input,
+#signup > div > form > div > div > input {
+  background-color: transparent;
+  outline: none;
+  border: solid white 1px;
+  margin: 0.5rem;
+  font-size: 1.5em;
+  padding: 0.5em;
+  border-radius: 10px;
+  color: white;
+}
+
+#signup > div > form > div:nth-child(3),
+#signup > div > form > div:nth-child(4),
+#signup > div > form > div:nth-child(5) {
+  display: flex;
+  flex-direction: column;
+}
+
+#signup > div > form > div:nth-child(3) > a {
+  text-align: right;
+  color: #47bdff;
+  font-style: italic;
+  margin-top: 0.5em;
+  margin-bottom: 1em;
+}
+
+#signup > div > div {
+  background-color: white;
+  width: 35%;
+  border-radius: 20px;
+  margin-top: 1em;
+  margin-bottom: 1em;
+}
+
+#signup > div > div > p {
+  font-weight: bold;
+  color: black;
+  text-align: center;
+}
+
+#signup > div > p {
+  font-style: italic;
+  color: white;
+}
+
+#signup > div > p > a {
+  color: #47bdff;
+  margin-left: 0.5em;
+}
+
+@media only screen and (min-device-width: 320px) and (max-device-width: 480px) {
+  #signup {
+    flex-direction: column;
+    justify-content: normal;
+  }
+
+  #signup > div {
+    width: 90%;
+  }
+
+  #signup > div:first-child {
+    height: 35%;
+  }
+
+  #signup > div > form > div {
+    display: flex;
+    flex-direction: column;
+    justify-content: normal;
+  }
+
+  form {
+    width: 90%;
+  }
+}
+input::placeholder {
+  font-weight: bold;
+  font-family: "Kaleko 105", Arial, Helvetica, sans-serif !important;
+}
+
+#signup {
+  width: 100%;
+  height: 100vh;
+  display: flex;
+  justify-content: space-around;
+  background-color: #332f2e;
+  font-family: "Kaleko 105", Arial, Helvetica, sans-serif !important;
+}
+
+#signup > div {
+  margin-left: auto;
+  margin-right: auto;
+  width: 45%;
+  display: flex;
+  align-items: center;
+}
+
+#signup > div:first-child > img {
+  max-height: 30%;
+  width: 100%;
+}
+
+#signup > div:last-child {
+  align-self: center;
+  display: flex;
+  flex-direction: column;
+}
+
+#signup > div > form > h1 {
+  color: white;
+  font-size: 2.5em;
+  text-align: center;
+}
+
+#signup > div > form > div {
+  display: flex;
+  justify-content: space-between;
+}
+
+#signup > div > form > div > input,
+#signup > div > form > div > div > input {
+  background-color: transparent;
+  outline: none;
+  border: solid white 1px;
+  margin: 0.5rem;
+  font-size: 1.5em;
+  padding: 0.5em;
+  border-radius: 10px;
+  color: white;
+}
+
+#signup > div > form > div:nth-child(3),
+#signup > div > form > div:nth-child(4),
+#signup > div > form > div:nth-child(5) {
+  display: flex;
+  flex-direction: column;
+}
+
+#signup > div > form > div:nth-child(3) > a {
+  text-align: right;
+  color: #47bdff;
+  font-style: italic;
+  margin-top: 0.5em;
+  margin-bottom: 1em;
+}
+
+#signup > div > div {
+  background-color: white;
+  width: 35%;
+  border-radius: 20px;
+  margin-top: 1em;
+  margin-bottom: 1em;
+}
+
+#signup > div > div > p {
+  font-weight: bold;
+  color: black;
+  text-align: center;
+}
+
+#signup > div > p {
+  font-style: italic;
+  color: white;
+}
+
+#signup > div > p > a {
+  color: #47bdff;
+  margin-left: 0.5em;
+}
+
+@media only screen and (min-device-width: 320px) and (max-device-width: 480px) {
+  #signup {
+    flex-direction: column;
+    justify-content: normal;
+  }
+
+  #signup > div {
+    width: 90%;
+  }
+
+  #signup > div:first-child {
+    height: 35%;
+  }
+
+  #signup > div > form > div {
+    display: flex;
+    flex-direction: column;
+    justify-content: normal;
+  }
+
+  form {
+    width: 90%;
+  }
+}

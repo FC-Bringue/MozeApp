@@ -1,3 +1,89 @@
-body {
-    background-color: lightgray;
+@font-face {
+  font-family: "Kaleko 105 Book Oblique";
+  src: url("../assets/font/Kaleko105-BookOblique.woff2") format("woff2"),
+    url("../assets/font/Kaleko105-BookOblique.woff") format("woff");
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Kaleko 105 Book";
+  src: url("../assets/font/Kaleko105-Book.woff2") format("woff2"),
+    url("../assets/font/Kaleko105-Book.woff") format("woff");
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Kaleko 105 Heavy Oblique";
+  src: url("../assets/font/Kaleko105-HeavyOblique.woff2") format("woff2"),
+    url("../assets/font/Kaleko105-HeavyOblique.woff") format("woff");
+  font-weight: 900;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Kaleko 105 Bold Oblique";
+  src: url("../assets/font/Kaleko105-BoldOblique.woff2") format("woff2"),
+    url("../assets/font/Kaleko105-BoldOblique.woff") format("woff");
+  font-weight: bold;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Kaleko 105";
+  src: url("../assets/font/Kaleko105-Light.woff2") format("woff2"),
+    url("../assets/font/Kaleko105-Light.woff") format("woff");
+  font-weight: 300;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Kaleko 105 Thin Oblique";
+  src: url("../font/Kaleko105-ThinOblique.woff2") format("woff2"),
+    url("../font/Kaleko105-ThinOblique.woff") format("woff");
+  font-weight: 100;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Kaleko 105 Light Oblique";
+  src: url("../font/Kaleko105-LightOblique.woff2") format("woff2"),
+    url("../font/Kaleko105-LightOblique.woff") format("woff");
+  font-weight: 300;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Kaleko 105";
+  src: url("../font/Kaleko105-Heavy.woff2") format("woff2"),
+    url("../font/Kaleko105-Heavy.woff") format("woff");
+  font-weight: 900;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Kaleko 105";
+  src: url("../font/Kaleko105-Bold.woff2") format("woff2"),
+    url("../font/Kaleko105-Bold.woff") format("woff");
+  font-weight: bold;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Kaleko 105";
+  src: url("../font/Kaleko105-Thin.woff2") format("woff2"),
+    url("../font/Kaleko105-Thin.woff") format("woff");
+  font-weight: 100;
+  font-style: normal;
+  font-display: swap;
 }

@@ -1,0 +1,94 @@
+input {
+  &::placeholder {
+    font-weight: bold;
+    font-family: "Kaleko 105", Arial, Helvetica, sans-serif !important;
+  }
+}
+#login {
+  width: 100%;
+  height: 100vh;
+  display: flex;
+  justify-content: space-around;
+  background-color: #332f2e;
+  font-family: "Kaleko 105", Arial, Helvetica, sans-serif !important;
+  > div {
+    margin-left: auto;
+    margin-right: auto;
+    width: 45%;
+    display: flex;
+    align-items: center;
+    &:first-child {
+      > img {
+        max-height: 30%;
+        width: 100%;
+      }
+    }
+    &:last-child {
+      align-self: center;
+      display: flex;
+      flex-direction: column;
+    }
+    > form {
+      > h1 {
+        color: white;
+        font-size: 2.5em;
+        text-align: center;
+      }
+      > div {
+        > input {
+          background-color: transparent;
+          outline: none;
+          border: solid white 1px;
+          margin: 0.5rem;
+          font-size: 1.5em;
+          padding: 0.5em;
+          border-radius: 10px;
+          color: white;
+        }
+        &:nth-child(3) {
+          display: flex;
+          flex-direction: column;
+          > a {
+            text-align: right;
+            color: #47bdff;
+            font-style: italic;
+            margin-top: 0.5em;
+            margin-bottom: 1em;
+          }
+        }
+      }
+    }
+    > div {
+      background-color: white;
+      width: 35%;
+      border-radius: 20px;
+      margin-top: 1em;
+      margin-bottom: 1em;
+      > p {
+        font-weight: bold;
+        color: black;
+        text-align: center;
+      }
+    }
+    > p {
+      font-style: italic;
+      color: white;
+      > a {
+        color: #47bdff;
+        margin-left: 0.5em;
+      }
+    }
+  }
+}
+@media only screen and (min-device-width: 320px) and (max-device-width: 480px) {
+  #login {
+    flex-direction: column;
+    justify-content: normal;
+    > div {
+      width: 90%;
+      &:first-child {
+        height: 35%;
+      }
+    }
+  }
+}
