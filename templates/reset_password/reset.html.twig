@@ -3,27 +3,10 @@
 {% block title %}Reset your password{% endblock %}
 
 {% block body %}
-    <div id="pssdfgt">
-      <div>
-        <img
-          src={
-            "https://upload.wikimedia.org/wikipedia/commons/a/a5/Google_Chrome_icon_%28September_2014%29.svg"
-          }
-          title="logo"
-        />
-      </div>
-      <div class="stp-3">
-        {{ form_start(resetForm) }}
-            <h1>Mot de passe oublié</h1>
-                {{ form_row(resetForm.plainPassword) }}
-                {# {/* <div className="result">
-                    <p>Un nouveau mot de passe vient de vous être envoyé!</p>
-                    <p>Vérifiez dès à présent votre boite mail.</p>
-                </div> */} #}
-        {{ form_end(resetForm) }}
-        <div onclick="document.querySelector('form').submit();">
-          <p>Envoyer</p>
-        </div>
-      </div>
-    </div>
+    <h1>Reset your password</h1>
+
+    {{ form_start(resetForm) }}
+        {{ form_row(resetForm.plainPassword) }}
+        <button class="btn btn-primary">Reset password</button>
+    {{ form_end(resetForm) }}
 {% endblock %}

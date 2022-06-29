@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Entity;
+
 use App\Entity\Spotify;
 use ApiPlatform\Core\Action\NotFoundAction;
 use App\Repository\UserRepository;
@@ -58,8 +59,8 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     private $password;
 
     /**
-     * @ORM\OneToOne(targetEntity=Spotify::class, mappedBy="id_user", cascade={"persist", "remove"})
-     * @Groups({"user:read"})
+     * @ORM\OneToOne(targetEntity=Spotify::class, mappedBy="user", cascade={"persist", "remove"})
+     * @Groups({"user:read","user:write"})
      */
     private $spotify;
 
@@ -166,7 +167,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function eraseCredentials()
     {
         // If you store any temporary, sensitive data on the user, clear it here
-        $this->password = null;
+        // $this->password = null;
     }
 
     public function getSpotify(): ?Spotify
