@@ -178,8 +178,8 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function setSpotify(Spotify $spotify): self
     {
         // set the owning side of the relation if necessary
-        if ($spotify->getIdUser() !== $this) {
-            $spotify->setIdUser($this);
+        if ($spotify->getUser() !== $this) {
+            $spotify->setUser($this);
         }
 
         $this->spotify = $spotify;
