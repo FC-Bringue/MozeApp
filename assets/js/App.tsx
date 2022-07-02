@@ -4,6 +4,8 @@ import Login from "./components/auth/Login";
 import PssdForget from "./components/auth/PssdForget";
 import Signup from "./components/auth/Signup";
 import AuthedUsers from "./components/AuthedUsers/AuthedUsers";
+import SendAuthCall from "./components/devPages/sendAuthCall";
+import InstagramRedirect from "./components/redirects/InstagramRedirect";
 import SessionUtil from "./components/session/SessionUtil";
 import Parametres from "./components/settings/Parametres";
 import Navigation from "./Navigation";
@@ -12,6 +14,14 @@ const App = () => {
   return (
     <div id="App">
       <Routes>
+        {/* DEV PURPOSE ONLY */}
+        <Route path="/dev/authedCall" element={<SendAuthCall />} />
+        {/* END */}
+
+        {/* API REDIRECTION AUTHED ROUTES */}
+        <Route path="/redirects/instagram" element={<InstagramRedirect />} />
+        {/* END */}
+
         <Route path="dashboard" element={<AuthedUsers />}>
           <Route path=":tab" element={<AuthedUsers />}>
             <Route path=":subTab" element={<AuthedUsers />} />

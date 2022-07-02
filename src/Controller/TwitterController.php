@@ -39,7 +39,6 @@ class TwitterController extends AbstractController
 
         return $this->json([
             'message' => 'Test controller',
-            'path' => 'src/Controller/SpotifyController.php',
             'result' => $return
         ]);
     }
