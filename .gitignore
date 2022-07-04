@@ -24,8 +24,4 @@ yarn-error.log
 *.env
 .env.*
 composer.lock
-<<<<<<< HEAD
 package-lock.json
-=======
-package-lock.json
->>>>>>> 109a2592ef417742dfa428560d4e5c0c5bed4e5c
