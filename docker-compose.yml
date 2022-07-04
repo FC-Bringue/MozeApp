@@ -1,6 +1,7 @@
 version: '3'
 
 services:
+<<<<<<< Updated upstream
 ###> doctrine/doctrine-bundle ###
   database:
     image: postgres:${POSTGRES_VERSION:-13}-alpine
@@ -9,6 +10,43 @@ services:
       # You should definitely change the password in production
       POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-ChangeMe}
       POSTGRES_USER: ${POSTGRES_USER:-symfony}
+=======
+  php:
+    build:
+      context: .
+      target: symfony_php
+      args:
+        SYMFONY_VERSION: ${SYMFONY_VERSION:-5.4.*}
+        SKELETON: ${SKELETON:-symfony/skeleton}
+        STABILITY: ${STABILITY:-stable}
+    restart: unless-stopped
+    volumes:
+      - php_socket:/var/run/php
+    healthcheck:
+      interval: 10s
+      timeout: 3s
+      retries: 3
+      start_period: 30s
+    environment:
+      # Run "composer require symfony/orm-pack" to install and configure Doctrine ORM
+      DATABASE_URL: ${DATABASE_URL}
+      # Run "composer require symfony/mercure-bundle" to install and configure the Mercure integration
+      MERCURE_URL: http://caddy/.well-known/mercure
+      MERCURE_PUBLIC_URL: https://localhost/.well-known/mercure
+      MERCURE_JWT_SECRET: ${CADDY_MERCURE_JWT_SECRET:-!ChangeMe!}
+
+  caddy:
+    build:
+      context: .
+      target: symfony_caddy
+    depends_on:
+      - php
+    environment:
+      SERVER_NAME: ${SERVER_NAME:-localhost, caddy:80}
+      MERCURE_PUBLISHER_JWT_KEY: ${CADDY_MERCURE_JWT_SECRET:-!ChangeMe!}
+      MERCURE_SUBSCRIBER_JWT_KEY: ${CADDY_MERCURE_JWT_SECRET:-!ChangeMe!}
+    restart: unless-stopped
+>>>>>>> Stashed changes
     volumes:
       - db-data:/var/lib/postgresql/data:rw
       # You may use a bind-mounted host directory instead, so that it is harder to accidentally remove the volume and lose all your data!
@@ -33,6 +71,20 @@ services:
       - mercure_config:/config
 ###< symfony/mercure-bundle ###
 
+###> doctrine/doctrine-bundle ###
+  database:
+    image: postgres:${POSTGRES_VERSION:-13}-alpine
+    environment:
+      POSTGRES_DB: ${POSTGRES_DB:-app}
+      # You should definitely change the password in production
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-ChangeMe}
+      POSTGRES_USER: ${POSTGRES_USER:-symfony}
+    volumes:
+      - db-data:/var/lib/postgresql/data:rw
+      # You may use a bind-mounted host directory instead, so that it is harder to accidentally remove the volume and lose all your data!
+      # - ./docker/db/data:/var/lib/postgresql/data:rw
+###< doctrine/doctrine-bundle ###
+
 volumes:
 ###> doctrine/doctrine-bundle ###
   db-data:
@@ -42,3 +94,7 @@ volumes:
   mercure_data:
   mercure_config:
 ###< symfony/mercure-bundle ###
+
+###> doctrine/doctrine-bundle ###
+  db-data:
+###< doctrine/doctrine-bundle ###

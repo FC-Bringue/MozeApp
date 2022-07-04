@@ -25,6 +25,7 @@
             "config/routes/annotations.yaml"
         ]
     },
+<<<<<<< Updated upstream
     "doctrine/cache": {
         "version": "2.1.1"
     },
@@ -42,6 +43,10 @@
     },
     "doctrine/doctrine-bundle": {
         "version": "2.6",
+=======
+    "doctrine/doctrine-bundle": {
+        "version": "2.7",
+>>>>>>> Stashed changes
         "recipe": {
             "repo": "github.com/symfony/recipes",
             "branch": "main",
@@ -67,6 +72,7 @@
             "migrations/.gitignore"
         ]
     },
+<<<<<<< Updated upstream
     "doctrine/event-manager": {
         "version": "1.1.1"
     },
@@ -111,6 +117,10 @@
     },
     "lexik/jwt-authentication-bundle": {
         "version": "2.15",
+=======
+    "lexik/jwt-authentication-bundle": {
+        "version": "2.16",
+>>>>>>> Stashed changes
         "recipe": {
             "repo": "github.com/symfony/recipes",
             "branch": "main",
@@ -121,12 +131,15 @@
             "config/packages/lexik_jwt_authentication.yaml"
         ]
     },
+<<<<<<< Updated upstream
     "monolog/monolog": {
         "version": "2.6.0"
     },
     "namshi/jose": {
         "version": "7.2.3"
     },
+=======
+>>>>>>> Stashed changes
     "nelmio/cors-bundle": {
         "version": "2.2",
         "recipe": {
@@ -139,6 +152,7 @@
             "config/packages/nelmio_cors.yaml"
         ]
     },
+<<<<<<< Updated upstream
     "nikic/php-parser": {
         "version": "v4.13.2"
     },
@@ -169,6 +183,8 @@
     "psr/log": {
         "version": "1.1.4"
     },
+=======
+>>>>>>> Stashed changes
     "sensio/framework-extra-bundle": {
         "version": "6.2",
         "recipe": {
@@ -181,12 +197,15 @@
             "config/packages/sensio_framework_extra.yaml"
         ]
     },
+<<<<<<< Updated upstream
     "stella-maris/clock": {
         "version": "0.1.4"
     },
     "symfony/amqp-messenger": {
         "version": "v5.4.5"
     },
+=======
+>>>>>>> Stashed changes
     "symfony/apache-pack": {
         "version": "1.0",
         "recipe": {
@@ -199,6 +218,7 @@
             "public/.htaccess"
         ]
     },
+<<<<<<< Updated upstream
     "symfony/asset": {
         "version": "v5.4.7"
     },
@@ -211,6 +231,8 @@
     "symfony/config": {
         "version": "v5.4.8"
     },
+=======
+>>>>>>> Stashed changes
     "symfony/console": {
         "version": "5.4",
         "recipe": {
@@ -235,6 +257,7 @@
             "config/packages/debug.yaml"
         ]
     },
+<<<<<<< Updated upstream
     "symfony/dependency-injection": {
         "version": "v5.4.8"
     },
@@ -270,19 +293,30 @@
     },
     "symfony/flex": {
         "version": "1.18",
+=======
+    "symfony/flex": {
+        "version": "1.19",
+>>>>>>> Stashed changes
         "recipe": {
             "repo": "github.com/symfony/recipes",
             "branch": "main",
             "version": "1.0",
+<<<<<<< Updated upstream
             "ref": "c0eeb50665f0f77226616b6038a9b06c03752d8e"
+=======
+            "ref": "146251ae39e06a95be0fe3d13c807bcf3938b172"
+>>>>>>> Stashed changes
         },
         "files": [
             ".env"
         ]
     },
+<<<<<<< Updated upstream
     "symfony/form": {
         "version": "v5.4.8"
     },
+=======
+>>>>>>> Stashed changes
     "symfony/framework-bundle": {
         "version": "5.4",
         "recipe": {
@@ -302,6 +336,7 @@
             "src/Kernel.php"
         ]
     },
+<<<<<<< Updated upstream
     "symfony/http-client": {
         "version": "v5.4.8"
     },
@@ -317,6 +352,8 @@
     "symfony/intl": {
         "version": "v5.4.8"
     },
+=======
+>>>>>>> Stashed changes
     "symfony/mailer": {
         "version": "5.4",
         "recipe": {
@@ -330,7 +367,11 @@
         ]
     },
     "symfony/maker-bundle": {
+<<<<<<< Updated upstream
         "version": "1.42",
+=======
+        "version": "1.43",
+>>>>>>> Stashed changes
         "recipe": {
             "repo": "github.com/symfony/recipes",
             "branch": "main",
@@ -347,7 +388,11 @@
             "ref": "e0a854b5439186e04b28fb8887b42c54f24a0d32"
         },
         "files": [
+<<<<<<< Updated upstream
             "./config/packages/mercure.yaml"
+=======
+            "config/packages/mercure.yaml"
+>>>>>>> Stashed changes
         ]
     },
     "symfony/messenger": {
@@ -359,6 +404,7 @@
             "ref": "dfe610928a5c61619bdfc830cd7fa7f091368023"
         },
         "files": [
+<<<<<<< Updated upstream
             "./config/packages/messenger.yaml"
         ]
     },
@@ -368,6 +414,11 @@
     "symfony/monolog-bridge": {
         "version": "v5.4.3"
     },
+=======
+            "config/packages/messenger.yaml"
+        ]
+    },
+>>>>>>> Stashed changes
     "symfony/monolog-bundle": {
         "version": "3.8",
         "recipe": {
@@ -392,6 +443,7 @@
             "config/packages/notifier.yaml"
         ]
     },
+<<<<<<< Updated upstream
     "symfony/options-resolver": {
         "version": "v5.4.3"
     },
@@ -440,6 +492,8 @@
     "symfony/redis-messenger": {
         "version": "v5.4.6"
     },
+=======
+>>>>>>> Stashed changes
     "symfony/routing": {
         "version": "5.4",
         "recipe": {
@@ -453,9 +507,12 @@
             "config/routes.yaml"
         ]
     },
+<<<<<<< Updated upstream
     "symfony/runtime": {
         "version": "v5.4.8"
     },
+=======
+>>>>>>> Stashed changes
     "symfony/security-bundle": {
         "version": "5.4",
         "recipe": {
@@ -468,6 +525,7 @@
             "config/packages/security.yaml"
         ]
     },
+<<<<<<< Updated upstream
     "symfony/security-core": {
         "version": "v5.4.8"
     },
@@ -492,6 +550,8 @@
     "symfony/string": {
         "version": "v5.4.8"
     },
+=======
+>>>>>>> Stashed changes
     "symfony/translation": {
         "version": "5.4",
         "recipe": {
@@ -505,12 +565,15 @@
             "translations/.gitignore"
         ]
     },
+<<<<<<< Updated upstream
     "symfony/translation-contracts": {
         "version": "v2.5.1"
     },
     "symfony/twig-bridge": {
         "version": "v5.4.8"
     },
+=======
+>>>>>>> Stashed changes
     "symfony/twig-bundle": {
         "version": "5.4",
         "recipe": {
@@ -536,6 +599,7 @@
             "config/packages/validator.yaml"
         ]
     },
+<<<<<<< Updated upstream
     "symfony/var-dumper": {
         "version": "v5.4.8"
     },
@@ -545,6 +609,8 @@
     "symfony/web-link": {
         "version": "v5.4.3"
     },
+=======
+>>>>>>> Stashed changes
     "symfony/web-profiler-bundle": {
         "version": "5.4",
         "recipe": {
@@ -558,6 +624,7 @@
             "config/routes/web_profiler.yaml"
         ]
     },
+<<<<<<< Updated upstream
     "symfony/webapp-meta": {
         "version": "1.0",
         "recipe": {
@@ -570,6 +637,8 @@
             "config/packages/messenger.yaml"
         ]
     },
+=======
+>>>>>>> Stashed changes
     "symfony/webpack-encore-bundle": {
         "version": "1.14",
         "recipe": {
@@ -589,9 +658,12 @@
             "webpack.config.js"
         ]
     },
+<<<<<<< Updated upstream
     "symfony/yaml": {
         "version": "v5.4.3"
     },
+=======
+>>>>>>> Stashed changes
     "symfonycasts/reset-password-bundle": {
         "version": "1.13",
         "recipe": {
@@ -601,7 +673,11 @@
             "ref": "97c1627c0384534997ae1047b93be517ca16de43"
         },
         "files": [
+<<<<<<< Updated upstream
             "./config/packages/reset_password.yaml"
+=======
+            "config/packages/reset_password.yaml"
+>>>>>>> Stashed changes
         ]
     },
     "symfonycasts/verify-email-bundle": {
@@ -609,6 +685,7 @@
     },
     "twig/extra-bundle": {
         "version": "v3.4.0"
+<<<<<<< Updated upstream
     },
     "twig/twig": {
         "version": "v3.4.1"
@@ -618,5 +695,7 @@
     },
     "willdurand/negotiation": {
         "version": "3.1.0"
+=======
+>>>>>>> Stashed changes
     }
 }
