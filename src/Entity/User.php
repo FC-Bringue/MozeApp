@@ -74,6 +74,11 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      */
     private $sessions;
 
+    /**
+     * @ORM\OneToOne(targetEntity=Instagram::class, mappedBy="user", cascade={"persist", "remove"})
+     */
+    private $instagram;
+
     public function __construct()
     {
         $this->sessions = new ArrayCollection();
@@ -178,8 +183,8 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function setSpotify(Spotify $spotify): self
     {
         // set the owning side of the relation if necessary
-        if ($spotify->getIdUser() !== $this) {
-            $spotify->setIdUser($this);
+        if ($spotify->getUser() !== $this) {
+            $spotify->setUser($this);
         }
 
         $this->spotify = $spotify;
@@ -225,6 +230,23 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
                 $session->setUser(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getInstagram(): ?Instagram
+    {
+        return $this->instagram;
+    }
+
+    public function setInstagram(Instagram $instagram): self
+    {
+        // set the owning side of the relation if necessary
+        if ($instagram->getUser() !== $this) {
+            $instagram->setUser($this);
+        }
+
+        $this->instagram = $instagram;
 
         return $this;
     }
