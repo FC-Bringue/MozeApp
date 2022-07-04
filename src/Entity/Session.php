@@ -37,6 +37,11 @@ class Session
      */
     private $parameters = [];
 
+    /**
+     * @ORM\OneToOne(targetEntity=ActiveSession::class, mappedBy="session", cascade={"persist", "remove"})
+     */
+    private $activeSession;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -62,6 +67,23 @@ class Session
     public function setParameters(array $parameters): self
     {
         $this->parameters = $parameters;
+
+        return $this;
+    }
+
+    public function getActiveSession(): ?ActiveSession
+    {
+        return $this->activeSession;
+    }
+
+    public function setActiveSession(ActiveSession $activeSession): self
+    {
+        // set the owning side of the relation if necessary
+        if ($activeSession->getSession() !== $this) {
+            $activeSession->setSession($this);
+        }
+
+        $this->activeSession = $activeSession;
 
         return $this;
     }
