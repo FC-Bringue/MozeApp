@@ -6,6 +6,10 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
+use Symfony\Component\HttpClient\Chunk\ServerSentEvent;
+use Symfony\Component\HttpClient\EventSourceHttpClient;
+use Symfony\Component\HttpClient\HttpClient;
+
 class DefaultController extends AbstractController
 {
     /**

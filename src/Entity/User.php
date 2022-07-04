@@ -1,9 +1,12 @@
 <?php
 
 namespace App\Entity;
+
 use App\Entity\Spotify;
 use ApiPlatform\Core\Action\NotFoundAction;
 use App\Repository\UserRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
@@ -12,18 +15,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Component\Serializer\Annotation\Groups;
 use ApiPlatform\Core\Annotation\ApiResource;
 
-// we want to lock get user items to IS_AUTHENTICATED_FULLY
-// so we need to add this interface to the User class
-// #[ApiResource(collectionOperations: [
-//         'get' => [
-//             'openapi_context' => [
-//                 'security' => [
-//                     ['bearerAuth' => [ ]],
-//                 ],
-//             ]
-//         ],
-//     ]
-// )]
+
 /**
  * @ORM\Entity(repositoryClass=UserRepository::class)
  * @ApiResource(
@@ -67,8 +59,8 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     private $password;
 
     /**
-     * @ORM\OneToOne(targetEntity=Spotify::class, mappedBy="id_user", cascade={"persist", "remove"})
-     * @Groups({"user:read"})
+     * @ORM\OneToOne(targetEntity=Spotify::class, mappedBy="user", cascade={"persist", "remove"})
+     * @Groups({"user:read","user:write"})
      */
     private $spotify;
 
@@ -76,6 +68,16 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      * @ORM\Column(type="boolean")
      */
     private $isVerified = false;
+
+    /**
+     * @ORM\OneToMany(targetEntity=Session::class, mappedBy="user", orphanRemoval=true)
+     */
+    private $sessions;
+
+    public function __construct()
+    {
+        $this->sessions = new ArrayCollection();
+    }
 
 
 
@@ -165,7 +167,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function eraseCredentials()
     {
         // If you store any temporary, sensitive data on the user, clear it here
-        $this->password = null;
+        // $this->password = null;
     }
 
     public function getSpotify(): ?Spotify
@@ -193,6 +195,36 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function setIsVerified(bool $isVerified): self
     {
         $this->isVerified = $isVerified;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Session>
+     */
+    public function getSessions(): Collection
+    {
+        return $this->sessions;
+    }
+
+    public function addSession(Session $session): self
+    {
+        if (!$this->sessions->contains($session)) {
+            $this->sessions[] = $session;
+            $session->setUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeSession(Session $session): self
+    {
+        if ($this->sessions->removeElement($session)) {
+            // set the owning side to null (unless already changed)
+            if ($session->getUser() === $this) {
+                $session->setUser(null);
+            }
+        }
 
         return $this;
     }
