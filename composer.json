@@ -89,9 +89,9 @@
   },
   "scripts": {
       "auto-scripts": {
-          "cache:clear": "symfony-cmd",
-          "assets:install %PUBLIC_DIR%": "symfony-cmd"
-      },
+      "cache:clear": "symfony-cmd",
+      "assets:install %PUBLIC_DIR%": "symfony-cmd"
+    },
       "post-install-cmd": [
           "@auto-scripts"
       ],
@@ -104,8 +104,9 @@
   },
   "extra": {
       "symfony": {
-          "allow-contrib": false,
-          "require": "5.4.*"
-      }
+      "allow-contrib": false,
+      "require": "5.4.*",
+      "docker": true
+    }
   }
 }
