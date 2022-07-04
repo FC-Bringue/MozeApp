@@ -1,10 +1,30 @@
-version: '3'
+version: "3.4"
 
+# Development environment override
 services:
+  php:
+    volumes:
+      # The "cached" option has no effect on Linux but improves performance on Mac
+      - ./:/srv/app:rw,cached
+      - ./docker/php/conf.d/symfony.dev.ini:/usr/local/etc/php/conf.d/symfony.ini
+      # If you develop on Mac you can remove the var/ directory from the bind-mount
+      # for better performance by enabling the next line 
+      # - /srv/app/var
+    environment:
+      APP_ENV: dev
+
+  caddy:
+    volumes:
+      - ./docker/caddy/Caddyfile:/etc/caddy/Caddyfile:ro
+      - ./public:/srv/app/public:ro
+
+###> symfony/mercure-bundle ###
+###< symfony/mercure-bundle ###
+
 ###> doctrine/doctrine-bundle ###
   database:
     ports:
-      - "5432"
+      - "5432:5432"
 ###< doctrine/doctrine-bundle ###
 
 ###> symfony/mailer ###
@@ -12,9 +32,11 @@ services:
     image: schickling/mailcatcher
     ports: [1025, 1080]
 ###< symfony/mailer ###
-
-###> symfony/mercure-bundle ###
-  mercure:
+  encore:
+    command: ["yarn", "dev-server", "--host=0.0.0.0"]
+    container_name: encore
+    image: node:18-alpine
     ports:
-      - "80"
-###< symfony/mercure-bundle ###
+        - "${DEV_SERVER_PORT:-8080}:8080"
+    volumes:
+        - .:/srv/app

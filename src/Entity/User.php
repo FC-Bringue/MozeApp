@@ -18,6 +18,7 @@ use ApiPlatform\Core\Annotation\ApiResource;
 
 /**
  * @ORM\Entity(repositoryClass=UserRepository::class)
+ * @ORM\Table(name="`user`")
  * @ApiResource(
  * normalizationContext={"groups"={"user:read"}},
  * denormalizationContext={"groups"={"user:write"}},
