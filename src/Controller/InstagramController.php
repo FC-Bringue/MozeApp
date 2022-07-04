@@ -9,6 +9,7 @@ use MetzWeb\Instagram\Instagram;
 use Doctrine\ORM\EntityManagerInterface;
 use App\Entity\User;
 use App\Entity\Instagram as entityInstagram;
+use Phpfastcache\Helper\Psr16Adapter;
 
 class InstagramController extends AbstractController
 {
@@ -88,7 +89,7 @@ class InstagramController extends AbstractController
     */
     public function getMediaListByHashtag(EntityManagerInterface $em): Response
     {
-
+/* 
         $this->getUser();
         $instagram = $this->getUser()->getInstagram();
         $token = $instagram->getToken();
@@ -102,6 +103,12 @@ class InstagramController extends AbstractController
             'token' => $token,
             'instagram' => $this->instagramClient->setAccessToken($token),
             "insta" => $this->instagramClient->getAccessToken($token)
+            ]);
+             */
+
+        return $this->json([
+            'message' => 'aaaaaaaaaaaaa',
+            'result' => "medias"
             ]);
     }
     
