@@ -13,9 +13,9 @@ class TwitterController extends AbstractController
     public function __construct()
     {
         $settings = [
-            'account_id' => $_ENV['TWI_APPID'],
-            'consumer_key' => $_ENV['TWI_APPID'],
-            'consumer_secret' => $_ENV['TWI_APPID'],
+            'account_id' => $_ENV['TWI_ACCOUNTID'],
+            'consumer_key' => $_ENV['TWI_APIKEY'],
+            'consumer_secret' => $_ENV['TWI_APIKEYSECRET'],
             'bearer_token' => $_ENV['TWI_BEARERTOKEN'],
             'access_token' => $_ENV['TWI_ACCESSTOKEN'],
             'access_token_secret' => $_ENV['TWI_ACCESSTOKENSECRET']
@@ -32,8 +32,9 @@ class TwitterController extends AbstractController
     {
         $return = $this->client->tweetSearch()
         ->addFilterOnKeywordOrPhrase([
-            'MozeAppRealeaseSoon',
+            'concours',
         ])
+        ->showUserDetails()
         ->performRequest();
         ;
 

@@ -9,6 +9,11 @@ import InstagramRedirect from "./components/redirects/InstagramRedirect";
 import SessionUtil from "./components/session/SessionUtil";
 import Parametres from "./components/settings/Parametres";
 import Navigation from "./Navigation";
+import Index from "./components/landing/index";
+
+
+
+
 
 const App = () => {
   return (
@@ -27,10 +32,13 @@ const App = () => {
             <Route path=":subTab" element={<AuthedUsers />} />
           </Route>
         </Route>
+
         <Route path="login" element={<Login />} />
         <Route path="register" element={<Signup />} />
-        <Route path="/" element={<Login />} />
+        <Route path="/" element={<Index />} />
+        
       </Routes>
+      
     </div>
   );
 };
