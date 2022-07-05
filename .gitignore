@@ -17,7 +17,7 @@ yarn-error.log
 ###< symfony/webpack-encore-bundle ###
 
 ###> lexik/jwt-authentication-bundle ###
-# /config/jwt/*.pem
+/config/jwt/*.pem
 ###< lexik/jwt-authentication-bundle ###
 
 .env
@@ -25,4 +25,4 @@ yarn-error.log
 .env.*
 composer.lock
 package-lock.json
-/migrations
+Version*.php
