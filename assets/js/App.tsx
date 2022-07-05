@@ -8,6 +8,7 @@ import SessionUtil from "./components/session/SessionUtil";
 import Parametres from "./components/settings/Parametres";
 import Navigation from "./Navigation";
 import Index from "./components/landing/index";
+import Appuser from "./components/Application/Appuser";
 
 
 
@@ -24,6 +25,7 @@ const App = () => {
         </Route>
 
         <Route path="login" element={<Login />} />
+        <Route path="App" element={<Appuser />} />
         <Route path="register" element={<Signup />} />
         <Route path="/" element={<Index />} />
         

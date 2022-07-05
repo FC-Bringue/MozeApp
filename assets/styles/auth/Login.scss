@@ -96,7 +96,7 @@ input {
 
 
 
-
+//landing
 
 
 .landing-header{
@@ -246,6 +246,7 @@ $anim-timing: 3s;
   z-index:9;
   position:relative;
   width: 70px;
+  top: 13px;
 }
   
 @keyframes blob-1-anim {
@@ -304,5 +305,44 @@ $anim-timing: 3s;
   }
   100% {
     transform: translate3d(0,50%,0) rotateX(-90deg) scale(0.5) skewX(-3deg);
+  }
+}
+
+
+//AppUser
+
+
+.AppUser{
+background-color: #212121;
+//starting
+  .Starting{
+    height: 100vh;
+  }
+  .logoCenter{
+    text-align: center;
+    top: 45vh;
+    position: relative;
+    img{
+      max-width: 300px;
+    }
+
+  }
+  //SessionName
+  .SessionName{
+    height: 100vh;
+    color: white;
+    .row{
+      height: 33vh;
+    }
+    h2{font-size: 7em;}
+  }
+  .name{
+    width: inherit;
+    height: 5rem;
+    border-radius: 15px;
+    font-size: 2rem;
+  }
+  span{
+    font-size: 2rem;
   }
 }
