@@ -16,21 +16,21 @@ use SpotifyWebAPI\SpotifyWebAPI;
 class SpotifyController extends AbstractController
 {
     /** 
-    * @Route("/api/getSpotifyToken", name="app_spotify", methods={"GET", "POST"})
-    */
+     * @Route("/api/getSpotifyToken", name="app_spotify", methods={"GET", "POST"})
+     */
 
     public function index(UserRepository $userRepository, EntityManagerInterface $entityManager): JsonResponse
     {
-        $client_id = 'ee7443a8ac544def92e43ecb34e0e0a3'; 
+        $client_id = 'ee7443a8ac544def92e43ecb34e0e0a3';
         $client_secret = '9a78f64e60cd4f04948613c4306f6677';
-        $redirect_uri = 'http://localhost:8000/tokenSpotify';
-        
+        $redirect_uri = 'http://localhost/tokenSpotify';
+
         $session = new Session($client_id, $client_secret, $redirect_uri);
         $api = new SpotifyWebAPI();
         if (isset($_GET['code'])) {
             $session->requestAccessToken($_GET['code']);
             $api->setAccessToken($session->getAccessToken());
-        }else {
+        } else {
             $options = [
                 'scope' => [
                     'user-read-email',
@@ -61,7 +61,7 @@ class SpotifyController extends AbstractController
         return $this->json([
             'message' => 'Test controller',
             'path' => 'src/Controller/SpotifyController.php',
-            'result' =>$session
+            'result' => $session
         ]);
     }
 }
