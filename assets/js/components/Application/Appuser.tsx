@@ -1,16 +1,28 @@
-import React from 'react';
-import Starting  from './Apppart/Starting/starting';
+import React, {useState, useEffect} from 'react';
+import Loader  from './Apppart/Starting/starting';
 import SessionName  from './Apppart/sessionName/sessionName';
+import SelectEvent  from './Apppart/selectEvent/selectEvent';
+import Footer  from './Apppart/footer/footer';
+
+
+
 
 
 
 function Landing(){
-    return (
+    const [loader, setLoader]=useState(true);
 
+    useEffect(()=>{
+        setTimeout(()=>{
+            setLoader(false);
+        }, 2000)
+    }, [])
+
+    return (
         <section className='w-100 AppUser'>
-           <Starting/>
+         {loader ? <Loader/>:<Footer/>}  
         </section>
-    );
+    ) ;
 
 }
 

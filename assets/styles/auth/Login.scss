@@ -345,4 +345,25 @@ background-color: #212121;
   span{
     font-size: 2rem;
   }
+  .send{
+    border: 1px solid;
+    border-radius: 50px;
+    padding: 10px;
+  }
+}
+
+
+//footer app
+
+.footerApp{
+  .row{
+    height: 8em;
+    margin: 0;
+  }
+  label{
+    margin: 0 auto;
+  }
+  .footerIcon{
+    width: 70px;
+  }
 }
