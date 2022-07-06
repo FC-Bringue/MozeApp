@@ -55,6 +55,11 @@ class ActiveSession
      */
     private $url;
 
+    /**
+     * @ORM\Column(type="json")
+     */
+    private $musicQueue = [];
+
     public function getId(): ?int
     {
         return $this->id;
@@ -145,6 +150,18 @@ class ActiveSession
     public function setUrl(string $url): self
     {
         $this->url = $url;
+
+        return $this;
+    }
+
+    public function getMusicQueue(): ?array
+    {
+        return $this->musicQueue;
+    }
+
+    public function setMusicQueue(array $musicQueue): self
+    {
+        $this->musicQueue = $musicQueue;
 
         return $this;
     }
