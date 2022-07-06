@@ -30,7 +30,8 @@ const Navigation = () => {
         </div>
         <p>ACCUEIL</p>
       </div>
-      <div
+
+      {/* <div
         className={`${tab === "sessions" ? "active" : ""}`}
         onClick={() => navigate("/dashboard/sessions")}
       >
@@ -38,12 +39,12 @@ const Navigation = () => {
           <img src={play} title="session" />
         </div>
         <p>SESSION</p>
-      </div>
+      </div> */}
       <div className={`${tab === "dashboard" ? "active" : ""}`}>
         <div>
           <img src={dashboard} title="dashboard" />
         </div>
-        <p>PLAYLIST</p>
+        <p>BIBLIOTHEQUE</p>
       </div>
       <div
         className={`${tab === "settings" ? "active" : ""}`}
