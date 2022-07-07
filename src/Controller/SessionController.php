@@ -54,7 +54,6 @@ class SessionController extends AbstractController
      */
     public function setSessionActive(HttpClientInterface $client, Request $request, EntityManagerInterface $entityManager, $idSession): Response
     {
-        $request = new Request();
         ///get Bearer Token in header
         $auth = getallheaders()['Authorization'];
         $response = $client->request('GET', 'http://caddy/api/get/spotify/playlist/' . $idSession, [
@@ -67,6 +66,24 @@ class SessionController extends AbstractController
         $json = $json['playlist'];
         $ActiveSession = new ActiveSession();
         $Session = $entityManager->getRepository(Session::class)->find($idSession);
+        $user = $Session->getUser();
+
+        $auth = getallheaders()['Authorization'];
+        $response = $client->request('GET', 'http://caddy/api/have/session/active/' . $user->getId(), [
+            'headers' => [
+                'Authorization' => $auth
+            ]
+        ]);
+        $content2 = $response->getContent();
+        $content2 = json_decode($content2, true);
+        $content2 = $content2['message'];
+        if ($content2 == "true") {
+            return $this->json([
+                'message' => 'Une session est déjà en cours',
+            ]);
+        }
+
+
         $ActiveSession->setSession($Session);
         $ActiveSession->setNbrOfMusicPlayedBeforeEvent(0);
         $ActiveSession->setIsEvent(0);
@@ -83,7 +100,26 @@ class SessionController extends AbstractController
         $entityManager->persist($ActiveSession);
         $entityManager->flush();
         return $this->json([
-            'message' => 'done',
+            'message' => 'Session activé',
         ]);
+    }
+
+
+    /**
+     * @Route("/api/have/session/active/{idUser}", name="app_have_session_active", methods={"GET", "POST"})
+     */
+    public function haveSessionActive(HttpClientInterface $client, Request $request, EntityManagerInterface $entityManager, $idUser): Response
+    {
+        $user = $entityManager->getRepository(User::class)->findOneBy(['id' => $idUser]);
+        $ActiveSession = $user->getSessions()[0]->getActiveSession();
+        if ($ActiveSession) {
+            return $this->json([
+                'message' => 'true',
+            ]);
+        } else {
+            return $this->json([
+                'message' => 'false',
+            ]);
+        }
     }
 }
