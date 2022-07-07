@@ -4,9 +4,11 @@ namespace App\Entity;
 
 use App\Repository\ActiveSessionRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 /**
  * @ORM\Entity(repositoryClass=ActiveSessionRepository::class)
+ * @UniqueEntity(fields={"url"}, message="There is already an url registered for session")
  */
 class ActiveSession
 {
@@ -47,6 +49,21 @@ class ActiveSession
      * @ORM\OneToOne(targetEntity=Rpc::class, mappedBy="activeSession", cascade={"persist", "remove"})
      */
     private $rpc;
+
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $url;
+
+    /**
+     * @ORM\Column(type="json")
+     */
+    private $musicQueue = [];
+
+    /**
+     * @ORM\Column(type="integer")
+     */
+    private $current_index;
 
     public function getId(): ?int
     {
@@ -126,6 +143,42 @@ class ActiveSession
         }
 
         $this->rpc = $rpc;
+
+        return $this;
+    }
+
+    public function getUrl(): ?string
+    {
+        return $this->url;
+    }
+
+    public function setUrl(string $url): self
+    {
+        $this->url = $url;
+
+        return $this;
+    }
+
+    public function getMusicQueue(): ?array
+    {
+        return $this->musicQueue;
+    }
+
+    public function setMusicQueue(array $musicQueue): self
+    {
+        $this->musicQueue = $musicQueue;
+
+        return $this;
+    }
+
+    public function getCurrentIndex(): ?int
+    {
+        return $this->current_index;
+    }
+
+    public function setCurrentIndex(int $current_index): self
+    {
+        $this->current_index = $current_index;
 
         return $this;
     }

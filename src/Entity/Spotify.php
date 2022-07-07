@@ -26,7 +26,7 @@ class Spotify
     private $id;
 
     /**
-     * @ORM\Column(type="string", length=255, nullable=true)
+     * @ORM\Column(type="text", length=255, nullable=true)
      * @Groups({"spotify:read", "spotify:write"})
      */
     private $token;
@@ -39,7 +39,7 @@ class Spotify
     private $user;
 
     /**
-     * @ORM\Column(type="string", length=255, nullable=true)
+     * @ORM\Column(type="text", length=255, nullable=true)
      * @Groups({"spotify:read", "spotify:write"})
      */
     private $refreshtoken;
