@@ -1,9 +1,7 @@
+setup:
+  config:
+    env_file: .env
+
 build:
   docker:
     web: Dockerfile
-  config:
-    - .env
-    - .env.local
-    - .env.development
-    - .env.test
-    - .env.production
