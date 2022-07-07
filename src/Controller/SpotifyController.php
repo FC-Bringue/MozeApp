@@ -5,6 +5,7 @@ namespace App\Controller;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 use App\Entity\Spotify;
@@ -68,7 +69,7 @@ class SpotifyController extends AbstractController
     /** 
      * @Route("/api/set/spotifyToken", name="app_set_spotify", methods={"GET", "POST"})
      */
-    public function setSpotifyToken(UserRepository $userRepository, EntityManagerInterface $entityManager, Request $request): JsonResponse
+    public function setSpotifyToken(UserRepository $userRepository, EntityManagerInterface $entityManager, Request $request): Response
     {
         $client_id = 'cbca15d571cc47e9818eb3558233bd97';
         $client_secret = '48e424fe8f4b4bb6b6eb4da248f4534e';
@@ -91,11 +92,7 @@ class SpotifyController extends AbstractController
 
         $entityManager->persist($spotify);
         $entityManager->flush();
-
-        return $this->json([
-            'token' => $accessToken,
-            'refreshToken' => $refreshToken
-        ]);
+        return $this->redirect('https://localhost/dashboard/settings');
     }
 
 

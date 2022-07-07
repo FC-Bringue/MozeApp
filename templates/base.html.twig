@@ -16,13 +16,17 @@ crossorigin="anonymous"></script>
         {% endblock %}
     </head>
     <body>
-        {% block body %}{% endblock %}
+        {% block body %}
+        {% endblock %}
     </body>
 </html>
 <script>
+
 const eventSource = new EventSource("{{ mercure('https://localhost/session/6eSP1m4cxzimFQUebvK3Qn')|escape('js') }}");
 eventSource.onmessage = event => {
     const data = JSON.parse(event.data);
     console.log(data);
 }
+
+
 </script>

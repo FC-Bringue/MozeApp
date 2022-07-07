@@ -8,6 +8,7 @@ export const createUser = (infos: createUserProps) => {
     .post("/api/users", {
       email: infos.email,
       password: infos.password,
+      name: infos.name,
     })
     .then((res) => {
       console.log(res);
