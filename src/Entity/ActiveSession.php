@@ -60,6 +60,11 @@ class ActiveSession
      */
     private $musicQueue = [];
 
+    /**
+     * @ORM\Column(type="integer")
+     */
+    private $current_index;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -162,6 +167,18 @@ class ActiveSession
     public function setMusicQueue(array $musicQueue): self
     {
         $this->musicQueue = $musicQueue;
+
+        return $this;
+    }
+
+    public function getCurrentIndex(): ?int
+    {
+        return $this->current_index;
+    }
+
+    public function setCurrentIndex(int $current_index): self
+    {
+        $this->current_index = $current_index;
 
         return $this;
     }
