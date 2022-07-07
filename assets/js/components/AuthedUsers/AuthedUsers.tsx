@@ -20,8 +20,8 @@ const AuthedUsers = () => {
 
   const selectTab = (tabToDisplay: string) => {
     switch (tabToDisplay) {
-      case "sessions":
-        return <Session />;
+      /* case "sessions":
+        return <Session />; */
       case "settings":
         return <Parametres />;
       default:
