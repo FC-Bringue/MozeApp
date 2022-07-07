@@ -1,0 +1,118 @@
+#lights-params {
+  padding: 1em;
+  height: 75%;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+
+  > .stp1P {
+    margin-top: 1em;
+    margin-bottom: 1em;
+  }
+
+  > .infosLigne,
+  .IPListContainer {
+    font-weight: normal;
+    font-size: 1.2em;
+    margin-top: 1em;
+  }
+
+  > .btn {
+    margin-top: 1em;
+    background-color: white;
+    width: 20%;
+    margin-left: auto;
+    margin-right: auto;
+    font-weight: 600;
+    padding: 1em;
+  }
+
+  > div > .inputText {
+    background-color: transparent;
+    outline: none;
+    border: solid white 1px;
+    margin: 0.5rem;
+    font-size: 1.5em;
+    padding: 0.5em;
+    border-radius: 10px;
+    color: white;
+  }
+
+  > .infosLigne {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    margin-top: 1em;
+
+    > p {
+      margin-top: auto;
+      margin-bottom: auto;
+      margin-right: 3%;
+    }
+  }
+
+  .IPListContainer {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    margin-left: auto;
+    margin-right: auto;
+    overflow-y: auto;
+
+    > .cell {
+      margin-left: 2.5%;
+      margin-right: 2.5%;
+
+      > input {
+        background-color: transparent;
+        outline: none;
+        border: solid white 1px;
+        margin: 0.5rem;
+        font-size: 1em;
+        padding: 0.1em;
+        border-radius: 10px;
+        color: white;
+      }
+    }
+  }
+
+  > .stp4 {
+    display: flex;
+    justify-content: center;
+
+    > .config {
+      width: 70%;
+      text-align: left;
+
+      > div:first-child {
+        display: flex;
+        justify-content: space-between;
+        width: 50%;
+      }
+
+      .flowContainer {
+        display: flex;
+        justify-content: flex-start;
+        flex-wrap: wrap;
+
+        > div {
+          margin-left: 5%;
+          margin-bottom: 5%;
+        }
+      }
+    }
+
+    > .separator {
+      width: 1px;
+      background-color: white;
+    }
+
+    > .note {
+      width: 25%;
+      text-align: left;
+      margin: 1em;
+    }
+  }
+}

@@ -1,7 +1,7 @@
 @font-face {
   font-family: "Kaleko 105 Book Oblique";
-  src: url("../assets/font/Kaleko105-BookOblique.woff2") format("woff2"),
-    url("../assets/font/Kaleko105-BookOblique.woff") format("woff");
+  src: url("../font/Kaleko105-BookOblique.woff2") format("woff2"),
+    url("../font/Kaleko105-BookOblique.woff") format("woff");
   font-weight: normal;
   font-style: normal;
   font-display: swap;
@@ -9,8 +9,8 @@
 
 @font-face {
   font-family: "Kaleko 105 Book";
-  src: url("../assets/font/Kaleko105-Book.woff2") format("woff2"),
-    url("../assets/font/Kaleko105-Book.woff") format("woff");
+  src: url("../font/Kaleko105-Book.woff2") format("woff2"),
+    url("../font/Kaleko105-Book.woff") format("woff");
   font-weight: normal;
   font-style: normal;
   font-display: swap;
@@ -18,8 +18,8 @@
 
 @font-face {
   font-family: "Kaleko 105 Heavy Oblique";
-  src: url("../assets/font/Kaleko105-HeavyOblique.woff2") format("woff2"),
-    url("../assets/font/Kaleko105-HeavyOblique.woff") format("woff");
+  src: url("../font/Kaleko105-HeavyOblique.woff2") format("woff2"),
+    url("../font/Kaleko105-HeavyOblique.woff") format("woff");
   font-weight: 900;
   font-style: normal;
   font-display: swap;
@@ -27,8 +27,8 @@
 
 @font-face {
   font-family: "Kaleko 105 Bold Oblique";
-  src: url("../assets/font/Kaleko105-BoldOblique.woff2") format("woff2"),
-    url("../assets/font/Kaleko105-BoldOblique.woff") format("woff");
+  src: url("../font/Kaleko105-BoldOblique.woff2") format("woff2"),
+    url("../font/Kaleko105-BoldOblique.woff") format("woff");
   font-weight: bold;
   font-style: normal;
   font-display: swap;
@@ -36,8 +36,8 @@
 
 @font-face {
   font-family: "Kaleko 105";
-  src: url("../assets/font/Kaleko105-Light.woff2") format("woff2"),
-    url("../assets/font/Kaleko105-Light.woff") format("woff");
+  src: url("../font/Kaleko105-Light.woff2") format("woff2"),
+    url("../font/Kaleko105-Light.woff") format("woff");
   font-weight: 300;
   font-style: normal;
   font-display: swap;

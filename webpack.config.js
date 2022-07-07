@@ -62,6 +62,11 @@ Encore
   // enables Sass/SCSS support
   .enableSassLoader()
 
+  /* .configureFontRule({
+    type: "asset",
+    filename: "./font/[name].[contenthash][ext]",
+  }) */
+
   // uncomment if you use TypeScript
   .enableTypeScriptLoader()
 

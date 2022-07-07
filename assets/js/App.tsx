@@ -10,10 +10,7 @@ import SessionUtil from "./components/session/SessionUtil";
 import Parametres from "./components/settings/Parametres";
 import Navigation from "./Navigation";
 import Index from "./components/landing/index";
-
-
-
-
+import Tv from "./components/TV/Tv";
 
 const App = () => {
   return (
@@ -23,7 +20,7 @@ const App = () => {
         <Route path="/dev/authedCall" element={<SendAuthCall />} />
         {/* END */}
 
-        {/* API REDIRECTION AUTHED ROUTES */}
+        {/* {/* API REDIRECTION AUTHED ROUTES */}
         <Route path="/redirects/instagram" element={<InstagramRedirect />} />
         {/* END */}
 
@@ -31,14 +28,19 @@ const App = () => {
           <Route path=":tab" element={<AuthedUsers />}>
             <Route path=":subTab" element={<AuthedUsers />} />
           </Route>
+          <Route path="sessions" element={<SessionUtil />}>
+            <Route path=":sessionID" element={<SessionUtil />}>
+              <Route path=":settingsType" element={<SessionUtil />} />
+            </Route>
+          </Route>
         </Route>
-
+        <Route path="tv" element={<Tv />}>
+          <Route path=":sessionID" element={<Parametres />} />
+        </Route>
         <Route path="login" element={<Login />} />
         <Route path="register" element={<Signup />} />
         <Route path="/" element={<Index />} />
-        
       </Routes>
-      
     </div>
   );
 };
