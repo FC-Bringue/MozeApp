@@ -1,3 +1,5 @@
+import { useNavigate } from "react-router-dom";
+
 import party from "../../../img/icons/party.svg";
 import music from "../../../img/icons/music-solid.svg";
 import light from "../../../img/icons/lightbulb-solid.svg";
@@ -7,8 +9,13 @@ type SessionCardsProps = {
 };
 
 const SessionCards = ({ number }: SessionCardsProps) => {
+  const navigate = useNavigate();
+
   return (
-    <div className="session-item">
+    <div
+      className="session-item"
+      onClick={() => navigate("/dashboard/sessions/" + number)}
+    >
       <div>
         <p>SESSION {number}</p>
       </div>
