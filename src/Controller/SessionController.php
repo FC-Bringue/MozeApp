@@ -70,6 +70,7 @@ class SessionController extends AbstractController
         $ActiveSession->setSession($Session);
         $ActiveSession->setNbrOfMusicPlayedBeforeEvent(0);
         $ActiveSession->setIsEvent(0);
+        $ActiveSession->setCurrentIndex(0);
 
         // generate a unique url 
         $urlUuid = Uuid::v4()->toBase58();
