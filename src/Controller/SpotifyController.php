@@ -8,6 +8,7 @@ use Symfony\Component\Routing\Annotation\Route;
 
 use App\Entity\Spotify;
 use App\Entity\User;
+use App\Controller\Request ;
 use Doctrine\ORM\EntityManagerInterface;
 use App\Repository\UserRepository;
 use SpotifyWebAPI\Session;
@@ -15,16 +16,16 @@ use SpotifyWebAPI\SpotifyWebAPI;
 
 class SpotifyController extends AbstractController
 {
-    /** 
+    /**
     * @Route("/api/getSpotifyToken", name="app_spotify", methods={"GET", "POST"})
     */
 
-    public function index(UserRepository $userRepository, EntityManagerInterface $entityManager): JsonResponse
+    public function index(UserRepository $userRepository, EntityManagerInterface $entityManager, Request $request): JsonResponse
     {
-        $client_id = 'ee7443a8ac544def92e43ecb34e0e0a3'; 
-        $client_secret = '9a78f64e60cd4f04948613c4306f6677';
-        $redirect_uri = 'http://localhost:8000/tokenSpotify';
-        
+        $client_id = $_ENV["SPOTIFY_CLIENT_ID"];
+        $client_secret = $_ENV["SPOTIFY_CLIENT_SECRET"];
+        $redirect_uri = $request->getUri() .  $_ENV["SPOTIFY_REDIRECT_URI"];
+
         $session = new Session($client_id, $client_secret, $redirect_uri);
         $api = new SpotifyWebAPI();
         if (isset($_GET['code'])) {

@@ -1,7 +1,8 @@
 import { createSlice } from "@reduxjs/toolkit";
 
-const initialState = {
+const initialState: any = {
   token: "",
+  lightsList: null,
 } as const;
 
 export const userInfosSlice = createSlice({
@@ -13,10 +14,13 @@ export const userInfosSlice = createSlice({
       state.token = action.payload;
       console.log(state);
     },
+    setLightsList: (state, action) => {
+      state.lightsList = action.payload;
+    },
   },
 });
 
 // Reducers and actions
-export const { setToken } = userInfosSlice.actions;
+export const { setToken, setLightsList } = userInfosSlice.actions;
 
 export default userInfosSlice.reducer;

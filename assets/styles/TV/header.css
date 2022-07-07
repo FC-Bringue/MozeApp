@@ -1,0 +1,9 @@
+.qrCode{
+    width: 75px;
+}
+
+.title{
+    margin:  0px 15px;
+    color: white;
+    font-family: 'Kaleko 105 Bold'!important;
+}
