@@ -2,6 +2,7 @@ import { Route, Routes, useNavigate, useParams } from "react-router-dom";
 import "../../../styles/settings/Parametres.css";
 import SessionUtil from "../session/SessionUtil";
 import Application from "./Application";
+import General from "./General";
 
 const Parametres = () => {
   const navigate = useNavigate();
@@ -11,6 +12,8 @@ const Parametres = () => {
 
   const selectTab = (tabToDisplay: string) => {
     switch (tabToDisplay) {
+      case "general":
+        return <General />;
       case "audio":
         return <SessionUtil />;
       case "linked-apps":
@@ -25,7 +28,9 @@ const Parametres = () => {
       <h4>PARAMETRES</h4>
       <h1>LE MACUMBA {/* Mettre un value pour le titre */}</h1>
       <div className="navigation">
-        <div className={subTab === undefined ? "param-nav-active" : ""}>
+        <div className={subTab === "general" ? "param-nav-active" : ""}
+            onClick={() => navigate("settings/general")}
+        >
           <p>GENERAL</p>
         </div>
         <div
