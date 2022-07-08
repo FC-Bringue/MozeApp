@@ -11,6 +11,11 @@ import Parametres from "./components/settings/Parametres";
 import Navigation from "./Navigation";
 import Index from "./components/landing/index";
 import Tv from "./components/TV/Tv";
+import Appuser from "./components/Application/Appuser";
+
+
+
+
 
 const App = () => {
   return (
@@ -38,6 +43,7 @@ const App = () => {
           <Route path=":sessionID" element={<Parametres />} />
         </Route>
         <Route path="login" element={<Login />} />
+        <Route path="App" element={<Appuser />} />
         <Route path="register" element={<Signup />} />
         <Route path="/" element={<Index />} />
       </Routes>
