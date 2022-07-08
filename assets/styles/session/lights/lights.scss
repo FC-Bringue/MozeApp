@@ -121,11 +121,15 @@
   > div {
     display: flex;
     justify-content: space-around;
+    height: 70%;
     > img {
-      width: 18%;
+      height: 95%;
       border-radius: 1em;
     }
     > p {
+      font-weight: 900;
+      font-style: italic;
+      font-size: 2em;
     }
   }
 }
