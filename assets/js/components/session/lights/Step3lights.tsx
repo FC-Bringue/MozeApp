@@ -1,13 +1,18 @@
 import { useEffect, useState } from "react";
 import { AiFillInfoCircle } from "react-icons/ai";
+import { useDispatch } from "react-redux";
+
+import { setNewSessionLights } from "../../../../helpers/redux/slices/tempSlice";
 
 const Step3Lights = ({ NmbOfLights, dataLights, setDataLights }: any) => {
+  const dispatch = useDispatch();
   const [data, setData] = useState<any>(
     Array(NmbOfLights).fill({ ip: 0, color: "#000000" })
   );
 
   useEffect(() => {
     setDataLights(data);
+    dispatch(setNewSessionLights(data));
   }, [data]);
 
   return (
@@ -35,6 +40,7 @@ const Step3Lights = ({ NmbOfLights, dataLights, setDataLights }: any) => {
                   index: index,
                 };
                 setData(newData);
+                dispatch(setNewSessionLights(newData));
               }}
             />
           </div>

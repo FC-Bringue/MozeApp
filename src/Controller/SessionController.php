@@ -32,8 +32,11 @@ class SessionController extends AbstractController
     {
         $this->user = $this->getUser();
         $jsonParams = [
-            "SessionName" => "Samedi Soir",
-            "idPlaylist" => "7cEAQguXJ81suQgQO5aplx"
+            "SessionName" => $request->request->get('SessionName'),
+            "idPlaylist" => $request->request->get('idPlaylist'),
+            "hashtag" => $request->request->get('hashtag'),
+            "lights" => $request->request->get('lights'),
+            "events" => $request->request->get('events'),
         ];
         $spotify = $this->user->getSpotify();
         $session = new Session();
@@ -43,8 +46,10 @@ class SessionController extends AbstractController
         $entityManager->persist($session);
         $entityManager->flush();
 
+         $sessionId = $session->getId();
+
         return $this->json([
-            'message' => 'Welcome,' . $this->user->getEmail(),
+            "sessionId" => $sessionId,
         ]);
     }
 
@@ -89,9 +94,9 @@ class SessionController extends AbstractController
         $ActiveSession->setIsEvent(0);
         $ActiveSession->setCurrentIndex(0);
 
-        // generate a unique url 
+        // generate a unique url
         $urlUuid = Uuid::v4()->toBase58();
-        // on verifie si l'url n'existe pas déjà 
+        // on verifie si l'url n'existe pas déjà
         while ($entityManager->getRepository(ActiveSession::class)->findOneBy(['url' => $urlUuid])) {
             $urlUuid = Uuid::v4()->toBase58();
         }
