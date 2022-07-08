@@ -313,7 +313,8 @@ $anim-timing: 3s;
 
 
 .AppUser{
-background-color: #212121;
+  background: rgb(0,0,0);
+  background: linear-gradient(180deg, rgba(0,0,0,0.74) 0%, rgba(0,0,0,0.94) 100%);
 //starting
   .Starting{
     height: 100vh;
@@ -329,8 +330,8 @@ background-color: #212121;
   }
   //SessionName
   .SessionName{
-    height: 100vh;
     color: white;
+    height: 100vh;
     .row{
       height: 33vh;
     }
@@ -352,10 +353,53 @@ background-color: #212121;
   }
 }
 
+.musicListe{
+  max-height: 54vh;
+  overflow: scroll;
+    .MusicPlayerImageTitle{
+      padding-left: 0;
+      padding-right: 0;
+    }
+    ul{
+      list-style: none;
+    }
+}
 
+.RunningSession{
+  height: 100vh;
+  .SessionName{
+    height: 33vh;
+    align-items: center;
+  }
+  h3{
+    font-size: 3rem;
+    color: white;
+  }
+  .playlistBtn{
+    background: none;
+    border: 1px solid white;
+    color: white;
+    border-radius: 10px;
+    font-size: 19px;
+  }
+  .title{
+    word-break: break-all;
+  }
+  .upVoteNbr{
+    color: #B8B8B8;
+    img{
+      width: 40px!important;
+      margin-right: 0;
+    }
+   
+  }
+}
 //footer app
 
 .footerApp{
+  position: absolute;
+  bottom: 0;
+  background-color: #212121;
   .row{
     height: 8em;
     margin: 0;
@@ -365,5 +409,96 @@ background-color: #212121;
   }
   .footerIcon{
     width: 70px;
+  }
+}
+
+//musicplayer
+.MusicPlayer{
+  position: absolute;
+    bottom: 133px;
+    background-color: #212121;
+    width: 100%;
+}
+.MusicPlayerContainer{
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+}
+.MusicPlayerImageTitle{
+  padding: 1rem 3rem;
+  display: flex;
+  flex-direction: row;
+  img{
+    width: 135px!important;
+    height: auto;
+    margin-right: 25px;
+  }
+}
+.MusicPlayerInfo{
+  display: flex;
+  flex-direction: column;
+}
+.MusicPlayerImage{
+  width: 60px;
+  height: 60px;
+  border-radius: 5px;
+}
+
+.MusicPlayerTitle{
+  /* kaleko bold en 20px */
+  font-family: 'Kaleko 105';
+  font-size: 20px;
+  /* color FFFFF */
+  color: #FFFFFF;
+}
+.MusicPlayerArtist{
+  color: #B8B8B8;
+}
+
+.MusicPlayerBar{
+  width: 100%;
+  align-items: center;
+  /* on mets à droite */
+  /* justify-content: flex-end; */
+  
+}
+.MusicPlayerBarFill{
+  background: #D8D8D8;
+  border-radius: 3px;
+  height: 10px;
+ 
+
+}
+
+.MusicPlayerBarFillRect{
+  position: relative;
+  background: #b24040;
+  border-radius: 3px;
+  width: calc(100% * 0.25);
+  height: 10px;
+  /* on centre en hauteur*/
+}
+
+
+//music search 
+.appMusicSearh{
+min-height: 100vh;
+.search{
+  width: 80%;
+    height: 51px;
+    border-radius: 10px;
+}
+.send{border-color:   white;}
+span{color: #B8B8B8;}
+}
+
+//appprofile
+.AppProfile{
+  height: 100vh;
+  color: white;
+  p{
+    font-size: 3rem;
+
   }
 }

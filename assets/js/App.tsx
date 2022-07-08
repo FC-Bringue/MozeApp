@@ -1,4 +1,5 @@
 import { Routes, Route, Link } from "react-router-dom";
+import "../styles/app.css";
 
 import Login from "./components/auth/Login";
 import PssdForget from "./components/auth/PssdForget";
@@ -12,6 +13,8 @@ import Navigation from "./Navigation";
 import Index from "./components/landing/index";
 import Tv from "./components/TV/Tv";
 import Appuser from "./components/Application/Appuser";
+import AppContainer from "./components/Application/AppContainer";
+
 
 
 
@@ -42,6 +45,11 @@ const App = () => {
         <Route path="tv" element={<Tv />}>
           <Route path=":sessionID" element={<Parametres />} />
         </Route>
+
+        <Route path="app" element={<AppContainer/>} >
+          <Route path=":applicationSection" element={<AppContainer/>} />
+        </Route>
+
         <Route path="login" element={<Login />} />
         <Route path="App" element={<Appuser />} />
         <Route path="register" element={<Signup />} />
