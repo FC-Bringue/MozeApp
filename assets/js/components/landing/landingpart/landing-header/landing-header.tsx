@@ -4,6 +4,7 @@ import { useAnimation } from 'framer-motion';
 import { useInView } from 'react-intersection-observer';
 import { useEffect } from 'react';
 import MozeLogo from "../../../../../img/logos/MOZE.png";
+import { Container, Row, Col } from 'react-bootstrap';
 
 const Header: React.FC<{}> = () => {
 
@@ -61,19 +62,18 @@ const Header: React.FC<{}> = () => {
             </div>
           </div>
         </nav>
-   
-  <div className='container '>
-    <div ref={ref} className='row'>
-      <div className='col-12 col-md-6'>
-        <motion.div animate={animation3} className='Header-content'>
-            <h1>
-              Des millions de titres, musics et bien plus encore.
-            </h1>
-            
-        </motion.div>
-      </div>
-    </div>
-  </div>
+        <Container >
+                <Row ref={ref}>
+                    <Col lg={6} sm={12} xs={12}>
+                      <motion.div animate={animation3} className='Header-content'>
+                          <h1>
+                            Des millions de titres, musics et bien plus encore.
+                          </h1>
+                          
+                      </motion.div>
+                    </Col>
+                  </Row>
+          </Container>
 
   <div className="ico animated">
   

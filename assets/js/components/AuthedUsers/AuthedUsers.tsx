@@ -1,9 +1,9 @@
 import { useEffect } from "react";
 import { useSelector } from "react-redux";
-import { useNavigate, useParams } from "react-router-dom";
+import { useNavigate, useParams, Outlet } from "react-router-dom";
 
 import Navigation from "../../Navigation";
-import Session from "../session/SessionUtil";
+import SessionContainer from "../session/SessionContainer";
 import Parametres from "../settings/Parametres";
 
 const AuthedUsers = () => {
@@ -25,14 +25,15 @@ const AuthedUsers = () => {
       case "settings":
         return <Parametres />;
       default:
-        return <Session />;
+        return <SessionContainer />;
     }
   };
 
   return (
     <>
       <Navigation />
-      {selectTab(tab)}
+      {/* {selectTab(tab)} */}
+      <Outlet />
     </>
   );
 };

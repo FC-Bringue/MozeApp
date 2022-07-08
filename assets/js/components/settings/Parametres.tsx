@@ -1,6 +1,12 @@
-import { Route, Routes, useNavigate, useParams } from "react-router-dom";
+import {
+  Outlet,
+  Route,
+  Routes,
+  useNavigate,
+  useParams,
+} from "react-router-dom";
 import "../../../styles/settings/Parametres.css";
-import SessionUtil from "../session/SessionUtil";
+import SessionContainer from "../session/SessionContainer";
 import Application from "./Application";
 
 const Parametres = () => {
@@ -12,7 +18,7 @@ const Parametres = () => {
   const selectTab = (tabToDisplay: string) => {
     switch (tabToDisplay) {
       case "audio":
-        return <SessionUtil />;
+        return <SessionContainer />;
       case "linked-apps":
         return <Application />;
       default:
@@ -30,18 +36,18 @@ const Parametres = () => {
         </div>
         <div
           className={subTab === "linked-apps" ? "param-nav-active" : ""}
-          onClick={() => navigate("settings/linked-apps")}
+          onClick={() => navigate("linked-apps")}
         >
           <p>APPLICATIONS</p>
         </div>
         <div
           className={subTab === "audio" ? "param-nav-active" : ""}
-          onClick={() => navigate("settings/audio")}
+          onClick={() => navigate("audio")}
         >
           <p>SORTIE AUDIO</p>
         </div>
       </div>
-      {selectTab(subTab)}
+      <Outlet />
     </section>
   );
 };

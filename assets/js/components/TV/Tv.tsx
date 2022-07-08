@@ -6,8 +6,11 @@ import Footer from "./Footer";
 import Main from "./Main";
 import { useLocation } from "react-router-dom";
 
+
 function Tv() {
   const location = useLocation();
+const [isPlaying, setIsPlaying] = React.useState(false);
+
   return (
     <>
       <header className="App-header">
@@ -16,6 +19,7 @@ function Tv() {
 
       <main>
         <Main />
+        
       </main>
 
       <footer className="fixed-bottom">

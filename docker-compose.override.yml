@@ -1,4 +1,4 @@
-version: '3'
+version: '3.4'
 
 services:
   php:
@@ -15,9 +15,14 @@ services:
     volumes:
       - ./docker/caddy/Caddyfile:/etc/caddy/Caddyfile:ro
       - ./public:/srv/app/public:ro
+
+
   database:
     ports:
       - "5432:5432"
   mailer:
     image: schickling/mailcatcher
     ports: [1025, 1080]
+
+###< symfony/mercure-bundle ###
+###< symfony/mercure-bundle ###
