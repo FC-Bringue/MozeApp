@@ -44,11 +44,13 @@ security:
 
     access_control:
         - { path: ^/api/login_check, roles: PUBLIC_ACCESS }
+        - { path: ^api/get/isAlreadyCreated, roles: [PUBLIC_ACCESS] }
         - { path: ^/api/users, roles: PUBLIC_ACCESS , methods: [POST] }
         - { path: ^/api/getSpotifyToken, roles: PUBLIC_ACCESS }
         - { path: ^/docs, roles: PUBLIC_ACCESS }
         # - { path: ^/api, roles: [IS_AUTHENTICATED_FULLY] }
         - { path: ^/api, roles: [PUBLIC_ACCESS] }
+        
         
 
         
