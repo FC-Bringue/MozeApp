@@ -4,8 +4,10 @@ import "../../../styles/TV/Tv.css";
 import Header from "./Header";
 import Footer from "./Footer";
 import Main from "./Main";
+import { useLocation } from "react-router-dom";
 
 function Tv() {
+  const location = useLocation();
   return (
     <>
       <header className="App-header">

@@ -5,10 +5,14 @@
     /* align-items: center; */
     justify-content: center;
     text-align: left;
+    /* margin-right: 10px;
+    margin-left: 10px; */
 }
 
 #twitter_embedded{
     z-index: 0;
+    margin: auto;
+    top: 100px;
 }
 
 .twitter_logo{

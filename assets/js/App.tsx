@@ -11,10 +11,12 @@ import Parametres from "./components/settings/Parametres";
 import Navigation from "./Navigation";
 import Index from "./components/landing/index";
 import Tv from "./components/TV/Tv";
+import { useLocation } from "react-router-dom";
 
 const App = () => {
+  const location = useLocation();
   return (
-    <div id="App">
+    <div id="App" className={location.pathname === "/tv" ? "forceColumn":null}>
       <Routes>
         {/* DEV PURPOSE ONLY */}
         <Route path="/dev/authedCall" element={<SendAuthCall />} />
