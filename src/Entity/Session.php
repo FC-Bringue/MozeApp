@@ -27,13 +27,14 @@ class Session
     /**
      * @ORM\ManyToOne(targetEntity=User::class, inversedBy="sessions")
      * @ORM\JoinColumn(nullable=false)
-     * @Groups({"session:read", "session:write"})
+     * @Groups({"session:read"})
      */
     private $user;
 
     /**
      * @ORM\Column(type="json")
      * @Groups({"session:read", "session:write"})
+    
      */
     private $parameters = [];
 
