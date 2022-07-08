@@ -18,6 +18,7 @@ import SessionConfig from "./components/session/SessionConfig";
 import Lights from "./components/session/lights/Step0Lights";
 import ListIt from "./components/session/SessionList";
 import Appuser from "./components/Application/Appuser";
+import Playlist from "./components/session/playlist/Step0Playlist";
 
 const App = () => {
   return (
@@ -36,12 +37,12 @@ const App = () => {
           <Route path="sessions" element={<ListIt />} />
           <Route path="sessions/new" element={<NewSession />} />
           <Route path="sessions/new/:onNew" element={<SessionConfig />}>
-            <Route path="config-playlist" element={<SessionContainer />} />
+            <Route path="config-playlist" element={<Playlist />} />
             <Route path="config-lights" element={<Lights />} />
             <Route path="config-events" element={<SessionContainer />} />
           </Route>
           <Route path="sessions/:sessionID" element={<SessionConfig />}>
-            <Route path="config-playlist" element={<SessionContainer />} />
+            <Route path="config-playlist" element={<Playlist />} />
             <Route path="config-lights" element={<Lights />} />
             <Route path="config-events" element={<SessionContainer />} />
           </Route>

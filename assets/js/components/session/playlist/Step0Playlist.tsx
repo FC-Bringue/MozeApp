@@ -1,4 +1,5 @@
 import { ImCross, ImArrowRight2, ImArrowLeft2 } from "react-icons/im";
+import { BsCheckLg } from "react-icons/bs";
 import { useEffect, useState } from "react";
 import { useParams, useNavigate, Outlet } from "react-router-dom";
 
@@ -7,7 +8,9 @@ import Step2Lights from "./Step2Playlist";
 import Step3Lights from "./Step3Playlist";
 import Step4Lights from "./Step4Playlist";
 
-const Lights = () => {
+import "../../../../styles/session/playlist/playlist.scss";
+
+const Playlist = () => {
   const [lightsCount, setLightsCount] = useState<any>(1);
   const [NmbOfLights, setNmbOfLights] = useState<null | number | string>(1);
   const [canClick, setCanClick] = useState(false);
@@ -93,16 +96,11 @@ const Lights = () => {
                   NmbOfLights != 0 &&
                   NmbOfLights != ""
                 ) {
-                  console.log(lightsCount);
-                  if (lightsCount > 2) {
-                    setLightsCount("done");
-                    return;
-                  }
-                  setLightsCount(lightsCount + 1);
+                  navigate("/dashboard/sessions/new/config/");
                 }
               }}
             >
-              <p>SUIVANT</p> <ImArrowRight2 size={"2em"} />
+              <p>VALIDER</p> <BsCheckLg size={"2em"} />
             </div>
           </div>
         )}
@@ -111,4 +109,4 @@ const Lights = () => {
   );
 };
 
-export default Lights;
+export default Playlist;
