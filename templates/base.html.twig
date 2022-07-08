@@ -6,6 +6,7 @@
         <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 128 128%22><text y=%221.2em%22 font-size=%2296%22>⚫️</text></svg>">
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
 crossorigin="anonymous"></script>
+        <script src="https://sdk.scdn.co/spotify-player.js"></script>
         {# Run `composer require symfony/webpack-encore-bundle` to start using Symfony UX #}
         {% block stylesheets %}
             {{ encore_entry_link_tags('index') }}
@@ -27,6 +28,64 @@ eventSource.onmessage = event => {
     const data = JSON.parse(event.data);
     console.log(data);
 }
+// dom load
+document.addEventListener('DOMContentLoaded', () => {
+    window.onSpotifyWebPlaybackSDKReady = () => {
+    const token = 'BQCr1JCrttQJ-HTcvymmVUPSzou9IFGfghbR5var7qZeByRePXTr13xcoOr5kENNQZNlCcbWNgmwuQV1T9wxizljy4KqX7cyEXnVzbg4I2yitGWg6FC7SeKZ9yADiknnD-3EbknzUH0lwO4e0MGLwicE6TOmTnenrVkfwlcbaoAetBGPWo6ATjxSzpxzX2saRG4';
+    const player = new Spotify.Player({
+        name: 'Web Playback SDK Quick Start Player',
+        getOAuthToken: cb => { cb(token); },
+        volume: 0.3,
+    });
+    player.addListener('ready', ({ device_id }) => {
+        console.log('Ready with Device ID', device_id);
+    });
+    // Not Ready
+    player.addListener('not_ready', ({ device_id }) => {
+        console.log('Device ID has gone offline', device_id);
+    });
+    player.addListener('initialization_error', ({ message }) => { 
+        console.error(message);
+    });
 
+    player.addListener('authentication_error', ({ message }) => {
+        console.error(message);
+    });
+
+    player.addListener('account_error', ({ message }) => {
+        console.error(message);
+    });
+
+    document.getElementById('togglePlay').onclick = function() {
+        player.togglePlay();
+    };
+
+    // previous track and next track
+    document.getElementById('previous').onclick = function() {
+        player.previousTrack();
+    };
+    document.getElementById('next').onclick = function() {
+        player.nextTrack();
+    };
+
+    // and and event listener when spotifu player changes track
+    player.addListener('player_state_changed', state => {
+        console.log(state);
+    });
+
+    player.addListener('autoplay_failed', () => {
+        console.log('Autoplay is not allowed by the browser autoplay rules');
+    });
+
+    player.setName('Moze App TV');
+    
+    //play spotify:track:7xGfFoTpQ2E7fRF5lN10tr
+
+   
+
+    player.connect();
+    };
+
+});
 
 </script>
