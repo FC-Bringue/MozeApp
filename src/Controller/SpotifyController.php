@@ -400,4 +400,40 @@ class SpotifyController extends AbstractController
             'message' => ' Music correctly changed',
         ]);
     }
+
+    /** 
+     * @Route("/api/get/spotify/userplaylist", name="app_get_spotify_playlists", methods={"GET", "POST"})
+     */
+    public function getSpotifyPlaylists(HttpClientInterface $client, Request $request, SessionRepository $sessionRepository, EntityManagerInterface $entityManager): Response
+    {
+        $client_id = 'cbca15d571cc47e9818eb3558233bd97';
+        $client_secret = '48e424fe8f4b4bb6b6eb4da248f4534e';
+        $session = new SpotifySession($client_id, $client_secret);
+        $api = new SpotifyWebAPI();
+        $user = $this->getUser();
+        $spotify = $user->getSpotify();
+        $accessToken = $spotify->getToken();
+        $session->setAccessToken($spotify->getToken());
+        $session->setRefreshToken($spotify->getRefreshToken());
+        $api->setAccessToken($session->getAccessToken());
+        while (true) {
+            try {
+                $userID = $api->me()->id;
+                $playlists = $api->getUserPlaylists($userID, [
+                    'limit' => 50
+                ]);
+                break;
+            } catch (SpotifyWebAPIException $e) {
+                $session->refreshAccessToken($session->getRefreshToken());
+                $api->setAccessToken($session->getAccessToken());
+                $spotify->setToken($session->getAccessToken());
+                $entityManager->persist($spotify);
+                $entityManager->flush();
+            }
+        }
+        return $this->json([
+            'message' => 'All playlists',
+            'playlists' => $playlists->items,
+        ]);
+    }
 }
