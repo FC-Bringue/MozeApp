@@ -6,7 +6,7 @@
         <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 128 128%22><text y=%221.2em%22 font-size=%2296%22>⚫️</text></svg>">
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
 crossorigin="anonymous"></script>
-        <script src="https://sdk.scdn.co/spotify-player.js"></script>
+        {# <script src="https://sdk.scdn.co/spotify-player.js"></script> #}
         {# Run `composer require symfony/webpack-encore-bundle` to start using Symfony UX #}
         {% block stylesheets %}
             {{ encore_entry_link_tags('index') }}
@@ -29,9 +29,9 @@ eventSource.onmessage = event => {
     console.log(data);
 }
 // dom load
-document.addEventListener('DOMContentLoaded', () => {
+{# document.addEventListener('DOMContentLoaded', () => {
     window.onSpotifyWebPlaybackSDKReady = () => {
-    const token = 'BQCr1JCrttQJ-HTcvymmVUPSzou9IFGfghbR5var7qZeByRePXTr13xcoOr5kENNQZNlCcbWNgmwuQV1T9wxizljy4KqX7cyEXnVzbg4I2yitGWg6FC7SeKZ9yADiknnD-3EbknzUH0lwO4e0MGLwicE6TOmTnenrVkfwlcbaoAetBGPWo6ATjxSzpxzX2saRG4';
+    const token = 'BQCfk2-QzPVTe4OwTXbbipQrSbceZ7XhC9cqvL62frvy1bdUMshfY__Jolht_DOhI10Gb0irNybEtk2Mlw-dDwiIhLVK_UtCfvoTTDDcOPMmKV_3AQ6ACogj0-5AAyZv0_IaXR39UUVkeXIDx_qRCPbju-JgUHiMxBcTRfkw6gvrSMWNs1t_qH7LQYNxGbWSLeQ';
     const player = new Spotify.Player({
         name: 'Web Playback SDK Quick Start Player',
         getOAuthToken: cb => { cb(token); },
@@ -77,15 +77,11 @@ document.addEventListener('DOMContentLoaded', () => {
         console.log('Autoplay is not allowed by the browser autoplay rules');
     });
 
-    player.setName('Moze App TV');
-    
-    //play spotify:track:7xGfFoTpQ2E7fRF5lN10tr
 
-   
 
     player.connect();
     };
 
-});
+}); #}
 
 </script>
