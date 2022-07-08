@@ -3,8 +3,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { createUser } from "../../../helpers/API/login_signup";
 
 import {
-  setLastName,
-  setFirstName,
+  setName,
   setEmail,
   setPassword,
   setPasswordConfirm,
@@ -17,6 +16,8 @@ const Signup = () => {
 
   const mail = useSelector((state: any) => state.register.email);
   const password = useSelector((state: any) => state.register.password);
+  const name = useSelector((state: any) => state.register.name);
+
 
   /* const [user, setUser] = useState({
     lastName: "",
@@ -52,18 +53,8 @@ const Signup = () => {
                 type="text"
                 placeholder="Nom"
                 onChange={
-                  (e) => dispatch(setLastName(e.target.value))
+                  (e) => dispatch(setName(e.target.value))
                   /* handleCreateInputUpdate(e.target.value, "lastName") */
-                }
-              />
-            </div>
-            <div>
-              <input
-                type="text"
-                placeholder="Prénom"
-                onChange={
-                  (e) => dispatch(setFirstName(e.target.value))
-                  /* handleCreateInputUpdate(e.target.value, "firstName") */
                 }
               />
             </div>
@@ -106,6 +97,7 @@ const Signup = () => {
             createUser({
               email: mail,
               password: password,
+              name: name
             })
           }
         >

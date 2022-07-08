@@ -5,7 +5,10 @@ import Header from "./Header";
 import Footer from "./Footer";
 import Main from "./Main";
 
+
 function Tv() {
+const [isPlaying, setIsPlaying] = React.useState(false);
+
   return (
     <>
       <header className="App-header">
@@ -14,6 +17,7 @@ function Tv() {
 
       <main>
         <Main />
+        
       </main>
 
       <footer className="fixed-bottom">

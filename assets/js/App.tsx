@@ -17,6 +17,7 @@ import SessionSettings from "./components/session/SessionSettings";
 import SessionConfig from "./components/session/SessionConfig";
 import Lights from "./components/session/lights/Step0Lights";
 import ListIt from "./components/session/SessionList";
+import Appuser from "./components/Application/Appuser";
 
 const App = () => {
   return (
@@ -61,6 +62,7 @@ const App = () => {
 
         {/* BASIC ROUTING */}
         <Route path="login" element={<Login />} />
+        <Route path="App" element={<Appuser />} />
         <Route path="register" element={<Signup />} />
         <Route path="/" element={<Index />} />
         {/* END */}

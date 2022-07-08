@@ -4,7 +4,7 @@
 
 
 # https://docs.docker.com/engine/reference/builder/#understand-how-arg-and-from-interact
-ARG PHP_VERSION=8.1
+ARG PHP_VERSION=7.4
 ARG CADDY_VERSION=2
 
 # "php" stage
@@ -35,6 +35,7 @@ RUN set -eux; \
 	zip \
 	; \
 	pecl install \
+	install libnss3-tools \
 	apcu-${APCU_VERSION} \
 	; \
 	pecl clear-cache; \
@@ -65,7 +66,7 @@ COPY docker/php/php-fpm.d/zz-docker.conf /usr/local/etc/php-fpm.d/zz-docker.conf
 
 COPY docker/php/docker-entrypoint.sh /usr/local/bin/docker-entrypoint
 
-RUN chmod 777 /usr/local/bin/docker-entrypoint
+RUN chmod +x /usr/local/bin/docker-entrypoint
 
 VOLUME /var/run/php
 
@@ -112,6 +113,7 @@ RUN set -eux; \
 	composer symfony:dump-env prod; \
 	composer run-script --no-dev post-install-cmd; \
 	chmod +x bin/console; sync
+
 VOLUME /srv/app/var
 
 ENTRYPOINT ["docker-entrypoint"]
@@ -123,7 +125,7 @@ RUN xcaddy build \
 	--with github.com/dunglas/mercure \
 	--with github.com/dunglas/mercure/caddy \
 	--with github.com/dunglas/vulcain \
-	--with github.com/dunglas/vulcain/caddy
+	--with github.com/dunglas/vulcain/caddy 
 
 FROM caddy:${CADDY_VERSION} AS symfony_caddy
 
