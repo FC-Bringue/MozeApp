@@ -9,6 +9,8 @@ import {
   setPasswordConfirm,
 } from "../../../helpers/redux/slices/registerSlice";
 
+import mozeLogo from "../../../img/logos/MOZE.svg";
+
 import "../../../styles/auth/Signup.scss";
 
 const Signup = () => {
@@ -17,7 +19,6 @@ const Signup = () => {
   const mail = useSelector((state: any) => state.register.email);
   const password = useSelector((state: any) => state.register.password);
   const name = useSelector((state: any) => state.register.name);
-
 
   /* const [user, setUser] = useState({
     lastName: "",
@@ -37,12 +38,7 @@ const Signup = () => {
   return (
     <div id="signup">
       <div>
-        <img
-          src={
-            "https://upload.wikimedia.org/wikipedia/commons/a/a5/Google_Chrome_icon_%28September_2014%29.svg"
-          }
-          title="logo"
-        />
+        <img src={mozeLogo} title="logo" />
       </div>
       <div>
         <form>
@@ -97,7 +93,7 @@ const Signup = () => {
             createUser({
               email: mail,
               password: password,
-              name: name
+              name: name,
             })
           }
         >

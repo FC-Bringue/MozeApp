@@ -1,0 +1,36 @@
+#playlist-params {
+  > .explications {
+  }
+  > .playlistContainer {
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
+    margin-bottom: 2em;
+    height: 60vh;
+    overflow-y: scroll;
+
+    > .playlistSelected {
+      opacity: 0.5;
+    }
+
+    > .playlist {
+      width: 20%;
+      margin-left: 1em;
+
+      &:hover {
+        opacity: 0.5;
+        cursor: pointer;
+      }
+
+      > p {
+        margin-bottom: 0.5em;
+        margin-top: 0.5em;
+      }
+      > img {
+        margin-top: 0.5em;
+        border-radius: 1em;
+        width: 100%;
+      }
+    }
+  }
+}

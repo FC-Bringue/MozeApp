@@ -89,6 +89,12 @@
   margin-bottom: 1em;
 }
 
+#params-options > div.inactif {
+  height: 26vh;
+  border-bottom: 1px solid white;
+  margin-bottom: 1em;
+}
+
 #params-options > div:last-child {
   border-bottom: none;
 }

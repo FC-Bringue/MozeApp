@@ -1,5 +1,5 @@
 import { useParams, useNavigate, Outlet } from "react-router-dom";
-
+import { useDispatch, useSelector } from "react-redux";
 import { ImCross, ImArrowRight2, ImArrowLeft2 } from "react-icons/im";
 import { BsCheckLg } from "react-icons/bs";
 
@@ -8,6 +8,9 @@ import "../../../styles/session/lights/lights.scss";
 const SessionConfig = () => {
   const navigate = useNavigate();
   const { sessionID, onNew } = useParams();
+  const getTmpPlaylist = useSelector(
+    (state: any) => state.tempSlice.tmpPlaylist
+  );
   return (
     <section id="sessions">
       <h4>SESSIONS</h4>
@@ -17,10 +20,18 @@ const SessionConfig = () => {
           onClick={() => {
             navigate("config-playlist");
           }}
+          className={getTmpPlaylist ? "tmpPlaylist" : ""}
         >
           <h2>Playlist</h2>
           <p>Choisissez la playlist de départ pour votre session !</p>
-          <div>CURRENT PLAYLIST</div>
+          <div>
+            {getTmpPlaylist && (
+              <>
+                <img src={getTmpPlaylist.images[0].url} alt="" />
+                <p>{getTmpPlaylist.name}</p>
+              </>
+            )}
+          </div>
         </div>
         <div
           onClick={() => {
