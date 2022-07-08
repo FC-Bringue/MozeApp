@@ -208,4 +208,21 @@ class SessionController extends AbstractController
             'message' => 'L\'utilisateur a été mis à jour',
         ]);
     }
+
+    /**
+     * @Route("/api/isUrlActive", name="app_isUrlActive", methods={"GET", "POST"})
+     */
+    public function isUrlActive(HttpClientInterface $client, Request $request, EntityManagerInterface $entityManager): Response
+    {
+        $url = $_POST['url'];
+        $ActiveSession = $entityManager->getRepository(ActiveSession::class)->findOneBy(['url' => $url]);
+        if ($ActiveSession) {
+            return $this->json([
+                'message' => true,
+            ]);
+        }
+        return $this->json([
+            'message' => false,
+        ]);
+    }
 }
