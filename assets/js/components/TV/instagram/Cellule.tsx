@@ -1,25 +1,19 @@
-import {
-  DataEntity,
-  UsersEntity,
-} from "../../../../helpers/propsType/TwitterResponse";
 
 type AppProps = {
-  tweetData: DataEntity;
-  userData: UsersEntity;
+  ligne: any;
 };
 
-const Cellule = ({ tweetData, userData }: AppProps) => {
-  console.log("Cellule", tweetData);
-  console.log("Cellule", userData);
+const Image = ({media}: any) => {
+  return (
+    <><p>AAAAAAAAAAAAAAA</p>
+    <img src={media}/></>
+  );
+}
 
-  const getMinutesSinceNow = (created_at: string) => {
-    //Get the number of minutes since the tweet was created
-    const date = new Date(created_at);
-    const now = new Date();
-    const diff = now.getTime() - date.getTime();
-    const minutes = Math.floor(diff / 60000);
-    return minutes;
-  };
+const Cellule = ({ ligne }: AppProps) => {
+  console.log("ligne", ligne);
+  const listeMedia = ligne.layout_content.medias;
+  console.log("listeMedia", listeMedia);
 
   return (
     <div
@@ -32,33 +26,26 @@ const Cellule = ({ tweetData, userData }: AppProps) => {
         backgroundColor: "#232932",
       }}
     >
-      {userData && tweetData && (
-        <>
-          <div className="header-cellule d-flex justify-content-between">
-            <div className="cellule-name d-flex justify-content-around">
-              <div>
-                <img
-                  src={userData.profile_image_url}
-                  alt={"Photo de profil de " + userData.username}
-                  className="rounded-circle"
-                />
-              </div>
-              <div>
-                <p style={{ margin: "auto", marginLeft: "0.5em" }}>
-                  {userData.name}
-                </p>
-                <p style={{ margin: "auto", marginLeft: "0.5em" }}>
-                  @{userData.username}
-                </p>
-              </div>
-            </div>
-            <p>{getMinutesSinceNow(userData.created_at)}min</p>
-          </div>
-          <p style={{ paddingTop: "0.5em", paddingBottom: "0.5em" }}>
-            {tweetData.text}
-          </p>
-        </>
-      )}
+
+      {listeMedia && listeMedia.map((media: any, index: any) => {
+        let getImageUrl;
+        media = media.media;
+        console.log(index, media);
+        if(media.carousel_media){
+          getImageUrl = media.carousel_media[0].image_versions2.candidates[0].url;
+          console.log("carousel", getImageUrl);
+        }
+        if(media.image_versions2){
+          getImageUrl = media.image_versions2.candidates[0].url;
+          console.log("image", getImageUrl);
+        }
+
+        return (
+          
+            <iframe src={getImageUrl} width="100%" height="100%" frameBorder="0" allowFullScreen></iframe>
+          )
+      })}
+
     </div>
   );
 };

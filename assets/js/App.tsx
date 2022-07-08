@@ -11,6 +11,7 @@ import Parametres from "./components/settings/Parametres";
 import Navigation from "./Navigation";
 import Index from "./components/landing/index";
 import Tv from "./components/TV/Tv";
+import { useLocation } from "react-router-dom";
 import NewSession from "./components/session/NewSession";
 import Application from "./components/settings/Application";
 import SessionSettings from "./components/session/SessionSettings";
@@ -22,8 +23,9 @@ import Playlist from "./components/session/playlist/Step0Playlist";
 import DashboardContainer from "./components/dashboard/DashboardContainer";
 
 const App = () => {
+  const location = useLocation();
   return (
-    <div id="App">
+    <div id="App" className={location.pathname === "/tv" ? "forceColumn":null}>
       <Routes>
         {/* DEV PURPOSE ONLY */}
         <Route path="/dev/authedCall" element={<SendAuthCall />} />

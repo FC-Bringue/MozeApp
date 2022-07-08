@@ -10,6 +10,7 @@ use App\Entity\User;
 use App\Entity\Spotify;
 use App\Entity\Session;
 use App\Entity\ActiveSession;
+use App\Entity\Guest;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Contracts\HttpClient\HttpClientInterface;
 use Symfony\Component\Uid\Uuid;
@@ -24,6 +25,16 @@ class SessionController extends AbstractController
     //     $this->user = $this->getUser();
     // }
 
+
+    /**
+     * @Route("/api/cme", name="app_me", methods={"GET", "POST"})
+     */
+    public function me(Request $request): Response
+    {
+        return $this->json([
+            'user' => $this->getUser(),
+        ]);
+    }
 
     /**
      * @Route("/api/create/session", name="app_session", methods={"GET", "POST"})
@@ -129,13 +140,94 @@ class SessionController extends AbstractController
     }
 
     /**
-     * @Route("/api/set/guest/{idActiveSession}", name="app_set_guest", methods={"GET", "POST"})
+     * @Route("/api/set/guest/{url}", name="app_set_guest", methods={"GET", "POST"})
      */
-    public function createGuest(HttpClientInterface $client, Request $request, EntityManagerInterface $entityManager, $idActiveSession): Response
+    public function createGuest(HttpClientInterface $client, Request $request, EntityManagerInterface $entityManager, $url): Response
     {
+        $ActiveSession = $entityManager->getRepository(ActiveSession::class)->findOneBy(['url' => $url]);
+
+        if (!$ActiveSession) {
+            return $this->json([
+                'message' => 'Cette session n\'existe pas',
+            ]);
+        } else {
+            $guests = $entityManager->getRepository(Guest::class)->findBy(['active_session' => $ActiveSession]);
+            foreach ($guests as $guest) {
+                if ($guest->getNavigatorToken() == $_POST['token']) {
+                    return $this->json([
+                        'message' => 'L\'utilisateur est déjà connecté',
+                        'guest' => $guest
+                    ]);
+                    break;
+                }
+            }
+        }
+        $guest = new Guest();
+        $guest->setNavigatorToken($_POST['token']);
+        $guest->setActiveSession($ActiveSession);
+        $guest->setName($_POST['name']);
+
+        $entityManager->persist($guest);
+        $entityManager->flush();
 
         return $this->json([
-            'message' => 'Welcome guest'
+            'message' => 'L\'utilisateur a été créé'
+        ]);
+    }
+
+    /** 
+     * @Route("/api/get/isAlreadyCreated", name="app_get_isAlreadyCreated", methods={"GET", "POST"})
+     */
+    public function getIsAlreadyCreated(HttpClientInterface $client, Request $request, EntityManagerInterface $entityManager): Response
+    {
+
+        $token = $_POST['token'];
+
+        $guest = $entityManager->getRepository(Guest::class)->findOneBy(['navigatorToken' => $token]);
+        if ($guest) {
+            return $this->json([
+                'message' => true,
+            ]);
+        }
+        return $this->json([
+            'message' => false,
+        ]);
+    }
+
+
+    /**
+     * @Route("/api/patch/guest/{token}", name="app_patch_guest", methods={"GET", "POST"})
+     */
+    public function patchGuest(HttpClientInterface $client, Request $request, EntityManagerInterface $entityManager, $token): Response
+    {
+        $guest = $entityManager->getRepository(Guest::class)->findOneBy(['navigatorToken' => $token]);
+        if (!$guest) {
+            return $this->json([
+                'message' => 'Cet utilisateur n\'existe pas',
+            ]);
+        }
+        $guest->setName($_POST['name']);
+        $entityManager->persist($guest);
+        $entityManager->flush();
+        return $this->json([
+            'message' => 'L\'utilisateur a été mis à jour',
+        ]);
+    }
+
+    /**
+     * @Route("/api/isUrlActive", name="app_isUrlActive", methods={"GET", "POST"})
+     */
+    public function isUrlActive(HttpClientInterface $client, Request $request, EntityManagerInterface $entityManager): Response
+    {
+        $url = $_POST['url'];
+        $ActiveSession = $entityManager->getRepository(ActiveSession::class)->findOneBy(['url' => $url]);
+        if ($ActiveSession) {
+            return $this->json([
+                'message' => true,
+            ]);
+        }
+        return $this->json([
+            'message' => false,
         ]);
     }
 }

@@ -436,4 +436,23 @@ class SpotifyController extends AbstractController
             'playlists' => $playlists->items,
         ]);
     }
+
+
+
+    /** 
+     * @Route("/api/get/isConnected", name="app_get_spotify_playlists", methods={"GET", "POST"})
+     */
+    public function isConnected(HttpClientInterface $client, Request $request, SessionRepository $sessionRepository, EntityManagerInterface $entityManager): Response
+    {
+        $user = $this->getUser();
+        $spotify = $user->getSpotify();
+        if ($spotify->getToken()) {
+            return $this->json([
+                'message' => 'Connected',
+            ]);
+        }
+        return $this->json([
+            'message' => 'Not Connected',
+        ]);
+    }
 }

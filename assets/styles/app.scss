@@ -20,3 +20,8 @@ p {
   margin-top: auto;
   margin-bottom: auto;
 }
+.forceColumn {
+  display: flex;
+  flex-direction: column;
+  justify-content: unset;
+}
