@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\ActiveSessionRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
@@ -64,6 +66,16 @@ class ActiveSession
      * @ORM\Column(type="integer")
      */
     private $current_index;
+
+    /**
+     * @ORM\OneToMany(targetEntity=Guest::class, mappedBy="active_session", orphanRemoval=true)
+     */
+    private $guests;
+
+    public function __construct()
+    {
+        $this->guests = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -179,6 +191,36 @@ class ActiveSession
     public function setCurrentIndex(int $current_index): self
     {
         $this->current_index = $current_index;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Guest>
+     */
+    public function getGuests(): Collection
+    {
+        return $this->guests;
+    }
+
+    public function addGuest(Guest $guest): self
+    {
+        if (!$this->guests->contains($guest)) {
+            $this->guests[] = $guest;
+            $guest->setActiveSession($this);
+        }
+
+        return $this;
+    }
+
+    public function removeGuest(Guest $guest): self
+    {
+        if ($this->guests->removeElement($guest)) {
+            // set the owning side to null (unless already changed)
+            if ($guest->getActiveSession() === $this) {
+                $guest->setActiveSession(null);
+            }
+        }
 
         return $this;
     }

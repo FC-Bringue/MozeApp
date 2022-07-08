@@ -122,4 +122,15 @@ class SessionController extends AbstractController
             ]);
         }
     }
+
+    /**
+     * @Route("/api/set/guest/{idActiveSession}", name="app_set_guest", methods={"GET", "POST"})
+     */
+    public function createGuest(HttpClientInterface $client, Request $request, EntityManagerInterface $entityManager, $idActiveSession): Response
+    {
+
+        return $this->json([
+            'message' => 'Welcome guest'
+        ]);
+    }
 }
