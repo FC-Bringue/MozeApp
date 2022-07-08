@@ -27,6 +27,12 @@ class Guest
      */
     private $navigatorToken;
 
+    /**
+     * @ORM\ManyToOne(targetEntity=ActiveSession::class, inversedBy="guests")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $active_session;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -52,6 +58,18 @@ class Guest
     public function setNavigatorToken(string $navigatorToken): self
     {
         $this->navigatorToken = $navigatorToken;
+
+        return $this;
+    }
+
+    public function getActiveSession(): ?ActiveSession
+    {
+        return $this->active_session;
+    }
+
+    public function setActiveSession(?ActiveSession $active_session): self
+    {
+        $this->active_session = $active_session;
 
         return $this;
     }

@@ -103,7 +103,7 @@ class SpotifyController extends AbstractController
     /** 
      * @Route("/api/get/spotify/playlist/{idSession}", name="app_get_spotify_playlist", methods={"GET", "POST"})
      */
-    public function getSpotifyPlaylist(SessionRepository $sessionRepository, UserRepository $userRepository, EntityManagerInterface $entityManager, Request $request, $idSession): JsonResponse
+    public function getSpotifyPlaylistForSession(SessionRepository $sessionRepository, UserRepository $userRepository, EntityManagerInterface $entityManager, Request $request, $idSession): JsonResponse
     {
         $client_id = 'cbca15d571cc47e9818eb3558233bd97';
         $client_secret = '48e424fe8f4b4bb6b6eb4da248f4534e';
@@ -137,7 +137,7 @@ class SpotifyController extends AbstractController
                     'offset' => $offset,
                     'limit' => $limit
                 ]);
-                $tracks = array_push($tracks, $playlist->items);
+                $tracks = array_merge($tracks, $playlist->items);
                 $offset += $limit;
             }
         } catch (SpotifyWebAPIException $e) {
