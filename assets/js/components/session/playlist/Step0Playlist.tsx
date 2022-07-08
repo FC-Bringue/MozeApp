@@ -4,9 +4,6 @@ import { useEffect, useState } from "react";
 import { useParams, useNavigate, Outlet } from "react-router-dom";
 
 import Step1Lights from "./Step1Playlist";
-import Step2Lights from "./Step2Playlist";
-import Step3Lights from "./Step3Playlist";
-import Step4Lights from "./Step4Playlist";
 
 import "../../../../styles/session/playlist/playlist.scss";
 
@@ -23,26 +20,6 @@ const Playlist = () => {
     switch (step) {
       case 1:
         return <Step1Lights />;
-        break;
-      case 2:
-        return (
-          <Step2Lights
-            setNmbOfLights={setNmbOfLights}
-            setCanClick={setCanClick}
-          />
-        );
-        break;
-      case 3:
-        return (
-          <Step3Lights
-            NmbOfLights={NmbOfLights}
-            dataLights={dataLights}
-            setDataLights={setDataLights}
-          />
-        );
-        break;
-      default:
-        return <Step4Lights dataLights={dataLights} />;
         break;
     }
   };
