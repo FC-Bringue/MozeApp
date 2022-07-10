@@ -26,7 +26,7 @@ use Symfony\Component\HttpFoundation\Cookie;
 
 class SpotifyController extends AbstractController
 {
-    /** 
+    /**
      * @Route("/api/get/spotify/TokenUrl", name="app_spotify", methods={"GET", "POST"})
      */
 
@@ -70,7 +70,7 @@ class SpotifyController extends AbstractController
             'url' => $session->getAuthorizeUrl($options)
         ]);
     }
-    /** 
+    /**
      * @Route("/api/set/spotifyToken", name="app_set_spotify", methods={"GET", "POST"})
      */
     public function setSpotifyToken(UserRepository $userRepository, EntityManagerInterface $entityManager, Request $request): Response
@@ -100,7 +100,7 @@ class SpotifyController extends AbstractController
     }
 
 
-    /** 
+    /**
      * @Route("/api/get/spotify/playlist/{idSession}", name="app_get_spotify_playlist", methods={"GET", "POST"})
      */
     public function getSpotifyPlaylistForSession(SessionRepository $sessionRepository, UserRepository $userRepository, EntityManagerInterface $entityManager, Request $request, $idSession): JsonResponse
@@ -166,7 +166,10 @@ class SpotifyController extends AbstractController
             return [
                 'id' => $track->track->id,
                 'nbrLike' => 0,
-                'key' => $key + 1
+                'key' => $key + 1,
+                'name' => $track->track->name,
+                'artist' => $track->track->artists[0]->name,
+                'cover' => $track->track->album->images[0]->url,
             ];
         }, $tracks, array_keys($tracks));
 
@@ -176,7 +179,7 @@ class SpotifyController extends AbstractController
     }
 
 
-    /** 
+    /**
      * @Route("/api/get/spotify/playlist/current/{idSession}", name="app_get_spotify_current_playlist", methods={"GET", "POST"})
      */
     public function getSpotifyCurrentPlaylist(Request $request, SessionRepository $sessionRepository, EntityManagerInterface $entityManager, $idSession): Response
@@ -327,7 +330,7 @@ class SpotifyController extends AbstractController
         ]);
     }
 
-    /** 
+    /**
      * @Route("/api/set/spotify/playlist/next/{idSession}", name="app_set_spotify_next_playlist", methods={"GET", "POST"})
      */
     public function setSpotifyNextPlaylist(HttpClientInterface $client, Request $request, SessionRepository $sessionRepository, EntityManagerInterface $entityManager, $idSession): Response
@@ -362,7 +365,7 @@ class SpotifyController extends AbstractController
     }
 
 
-    /** 
+    /**
      * @Route("/api/set/spotify/playlist/previous/{idSession}", name="app_set_spotify_previous_playlist", methods={"GET", "POST"})
      */
     public function setSpotifyPreviousPlaylist(HttpClientInterface $client, Request $request, SessionRepository $sessionRepository, EntityManagerInterface $entityManager, $idSession): Response
@@ -401,7 +404,7 @@ class SpotifyController extends AbstractController
         ]);
     }
 
-    /** 
+    /**
      * @Route("/api/get/spotify/userplaylist", name="app_get_spotify_playlists", methods={"GET", "POST"})
      */
     public function getSpotifyPlaylists(HttpClientInterface $client, Request $request, SessionRepository $sessionRepository, EntityManagerInterface $entityManager): Response
@@ -420,7 +423,7 @@ class SpotifyController extends AbstractController
             try {
                 $userID = $api->me()->id;
                 $playlists = $api->getUserPlaylists($userID, [
-                    'limit' => 50
+                    'limit' => 25
                 ]);
                 break;
             } catch (SpotifyWebAPIException $e) {
@@ -437,10 +440,8 @@ class SpotifyController extends AbstractController
         ]);
     }
 
-
-
-    /** 
-     * @Route("/api/get/isConnected", name="app_get_spotify_playlists", methods={"GET", "POST"})
+    /**
+     * @Route("/api/get/isConnected", name="app_get_spotify_isConnected", methods={"GET", "POST"})
      */
     public function isConnected(HttpClientInterface $client, Request $request, SessionRepository $sessionRepository, EntityManagerInterface $entityManager): Response
     {

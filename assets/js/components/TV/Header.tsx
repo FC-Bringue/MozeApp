@@ -1,6 +1,6 @@
 import React from "react";
 import "../../../styles/TV/header.css";
-import Logo from "../../../img/logos/MOZE.png";
+import Logo from "../../../img/logos/MOZE.svg";
 
 function Header() {
   return (

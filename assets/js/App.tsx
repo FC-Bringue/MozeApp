@@ -1,4 +1,5 @@
 import { Routes, Route } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 
 import Login from "./components/auth/Login";
 import PssdForget from "./components/auth/PssdForget";
@@ -8,15 +9,13 @@ import SendAuthCall from "./components/devPages/sendAuthCall";
 import InstagramRedirect from "./components/redirects/InstagramRedirect";
 import SessionContainer from "./components/session/SessionContainer";
 import Parametres from "./components/settings/Parametres";
-import Navigation from "./Navigation";
 import Index from "./components/landing/index";
 import Tv from "./components/TV/Tv";
-import { useLocation } from "react-router-dom";
 import NewSession from "./components/session/NewSession";
 import Application from "./components/settings/Application";
-import SessionSettings from "./components/session/SessionSettings";
 import SessionConfig from "./components/session/SessionConfig";
 import Lights from "./components/session/lights/Step0Lights";
+import LightsConfigContainer from "./components/session/lights/LightsConfigContainer";
 import ListIt from "./components/session/SessionList";
 import Appuser from "./components/Application/Appuser";
 import Playlist from "./components/session/playlist/Step0Playlist";
@@ -25,7 +24,10 @@ import DashboardContainer from "./components/dashboard/DashboardContainer";
 const App = () => {
   const location = useLocation();
   return (
-    <div id="App" className={location.pathname === "/tv" ? "forceColumn":null}>
+    <div
+      id="App"
+      className={location.pathname === "/tv" ? "forceColumn" : null}
+    >
       <Routes>
         {/* DEV PURPOSE ONLY */}
         <Route path="/dev/authedCall" element={<SendAuthCall />} />
@@ -45,7 +47,7 @@ const App = () => {
           <Route path="sessions/new" element={<NewSession />} />
           <Route path="sessions/new/:onNew" element={<SessionConfig />}>
             <Route path="config-playlist" element={<Playlist />} />
-            <Route path="config-lights" element={<Lights />} />
+            <Route path="config-lights" element={<LightsConfigContainer />} />
             <Route path="config-events" element={<SessionContainer />} />
           </Route>
           <Route path="sessions/:sessionID" element={<SessionConfig />}>

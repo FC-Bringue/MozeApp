@@ -1,57 +1,99 @@
 import axios from "axios";
 import { useEffect } from "react";
-import { useSelector } from "react-redux";
-import { useNavigate, useParams, Outlet } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { useNavigate, useParams, Outlet, useLocation } from "react-router-dom";
+import { setActiveSessionInfos } from "../../../helpers/redux/slices/activeSlice";
+import {
+  setMail,
+  setName,
+  setUserId,
+  setIsLoggedToSpotify,
+} from "../../../helpers/redux/slices/userInfosSlice";
+import { setDisplayResume } from "../../../helpers/redux/slices/websiteWorkerSlice";
 
 import Navigation from "../../Navigation";
 import SessionContainer from "../session/SessionContainer";
 import Parametres from "../settings/Parametres";
 
 const AuthedUsers = () => {
-  let { tab } = useParams();
+  const { pathname } = useLocation();
+  const dispatch = useDispatch();
   const navigate = useNavigate();
-  const isAuthed = useSelector((state: any) => state.userInfos.token);
+  const idUser = useSelector((state: any) => state.userInfos.userId);
   const bearerToken = useSelector((state: any) => state.userInfos.token);
+  const loggedToSpotify = useSelector(
+    (state: any) => state.userInfos.isLoggedToSpotify
+  );
 
   useEffect(() => {
+    dispatch(setDisplayResume(false));
+    if (pathname === "/dashboard" || pathname === "/dashboard/") {
+      navigate("/dashboard/resume");
+    }
+
     const config = {
       headers: {
         Authorization: `Bearer ${bearerToken}`,
       },
     };
-    console.log("isAuthed", isAuthed);
-    if (!isAuthed) {
+    console.log("isAuthed", bearerToken);
+    if (!bearerToken) {
       navigate("/");
     }
     let JWTExpires = axios
       .get("/api/checkPermission", config)
       .then((res) => {
-        console.log(res);
+        console.log("checkPermission", res);
         if (res.data.result != true) {
           window.location.replace("/login");
         }
       })
       .catch((err) => {
-        console.log(err);
+        console.log("checkPermission", err);
         window.location.replace("/login");
       });
-  }, []);
 
-  const selectTab = (tabToDisplay: string) => {
-    switch (tabToDisplay) {
-      /* case "sessions":
-        return <Session />; */
-      case "settings":
-        return <Parametres />;
-      default:
-        return <SessionContainer />;
-    }
-  };
+    axios
+      .get("/api/getUserInfos", config)
+      .then(async (res) => {
+        dispatch(setName(res.data.user.name));
+        dispatch(setMail(res.data.user.email));
+        dispatch(setUserId(res.data.user.id));
+        console.log("userinfos", res.data);
+        return res.data;
+      })
+      .catch((err) => {
+        console.log(err);
+      })
+      .then((res) => {
+        console.log("userinfosbeforeactivesession", res);
+        axios
+          .get("/api/have/session/active/" + res.user.id, config)
+          .then((res) => {
+            console.log("Une session est active", res.data);
+            dispatch(setActiveSessionInfos(res.data.sessionActive));
+            dispatch(setDisplayResume(true));
+          })
+          .catch((err) => {
+            console.log("active session", err);
+          });
+      });
+
+    axios
+      .get("/api/get/spotify/userplaylist", config)
+      .then((res) => {
+        console.log("isLOggedToSpotify", res.data);
+        dispatch(setIsLoggedToSpotify(true));
+      })
+      .catch((err) => {
+        console.log("isLOggedToSpotify", err);
+        dispatch(setIsLoggedToSpotify(false));
+      });
+  }, []);
 
   return (
     <>
       <Navigation />
-      {/* {selectTab(tab)} */}
       <Outlet />
     </>
   );

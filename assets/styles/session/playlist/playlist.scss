@@ -1,4 +1,10 @@
 #playlist-params {
+  > .loaderContainer {
+    margin: auto;
+    display: flex;
+    justify-content: center;
+    margin-top: 20%;
+  }
   > .explications {
   }
   > .playlistContainer {
