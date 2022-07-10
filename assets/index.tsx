@@ -11,6 +11,7 @@ import "./styles/app.css";
 
 import "./styles/auth/PssdForget.scss";
 import "react-loader-spinner/dist/loader/css/react-spinner-loader.css";
+import "simplebar/dist/simplebar.min.css";
 
 // React
 import ReactDOM from "react-dom/client";

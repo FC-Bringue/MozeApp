@@ -60,32 +60,35 @@ const AuthedUsers = () => {
         dispatch(setMail(res.data.user.email));
         dispatch(setUserId(res.data.user.id));
         console.log("userinfos", res.data);
+        return res.data;
       })
       .catch((err) => {
         console.log(err);
-      });
-    axios
-      .get("/api/have/session/active/" + idUser, config)
-      .then((res) => {
-        console.log("Une session est active", res.data);
-        dispatch(setActiveSessionInfos(res.data.sessionActive));
-        dispatch(setDisplayResume(true));
       })
-      .catch((err) => {
-        console.log("active session", err);
+      .then((res) => {
+        console.log("userinfosbeforeactivesession", res);
+        axios
+          .get("/api/have/session/active/" + res.user.id, config)
+          .then((res) => {
+            console.log("Une session est active", res.data);
+            dispatch(setActiveSessionInfos(res.data.sessionActive));
+            dispatch(setDisplayResume(true));
+          })
+          .catch((err) => {
+            console.log("active session", err);
+          });
       });
 
-    if (!loggedToSpotify) {
-      axios
-        .get("/api/get/spotify/userplaylist", config)
-        .then((res) => {
-          console.log("user", res.data);
-          dispatch(setIsLoggedToSpotify(true));
-        })
-        .catch((err) => {
-          console.log(err);
-        });
-    }
+    axios
+      .get("/api/get/spotify/userplaylist", config)
+      .then((res) => {
+        console.log("isLOggedToSpotify", res.data);
+        dispatch(setIsLoggedToSpotify(true));
+      })
+      .catch((err) => {
+        console.log("isLOggedToSpotify", err);
+        dispatch(setIsLoggedToSpotify(false));
+      });
   }, []);
 
   return (

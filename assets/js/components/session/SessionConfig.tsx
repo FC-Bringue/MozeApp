@@ -49,13 +49,27 @@ const SessionConfig = () => {
   const [isChecked, setIsChecked] = useState(false);
 
   useEffect(() => {
-    console.log(onNew, getTmpName, getTmpHashtag, tmpSession, getTmpPlaylist);
+    console.log(
+      "onNew",
+      onNew,
+      "getTmpName",
+      getTmpName,
+      "getTmpHashtag",
+      getTmpHashtag,
+      "tmpSession",
+      tmpSession,
+      "getTmpPlaylist",
+      getTmpPlaylist,
+      "getTmpLights",
+      getTmpLights
+    );
     if (onNew === "config" && !getTmpName) {
       console.log("onNew && getTmpName");
       navigate("/dashboard/sessions/new");
     }
 
-    if (!tmpSession) {
+    if (!tmpSession && onNew !== "config") {
+      console.log("sessionID", sessionID);
       axios
         .get("/api/sessions/" + sessionID, {
           headers: {
@@ -66,7 +80,6 @@ const SessionConfig = () => {
           console.log("/api/sessions/", res.data.parameters);
           dispatch(setTmpSession({ parameters: res.data.parameters }));
           console.log("tmpSession2", tmpSession);
-          dispatch(setDisplayConfig(true));
           return res.data.parameters;
         })
         .catch((err) => {
@@ -81,7 +94,22 @@ const SessionConfig = () => {
               id: res.idPlaylist,
             })
           );
+          dispatch(setDisplayConfig(true));
+        })
+        .catch((err) => {
+          console.log(err);
+          dispatch(
+            setTmpPlaylist({
+              name: null,
+              images: [{ url: null }],
+              id: null,
+            })
+          );
         });
+    } else if (tmpSession) {
+      dispatch(setDisplayConfig(true));
+    } else if (onNew === "config") {
+      dispatch(setDisplayConfig(true));
     }
 
     console.log(activeSession, "sessionActiveInConfig");
@@ -101,6 +129,10 @@ const SessionConfig = () => {
 
     console.log("tmpSession", tmpSession);
   }, []);
+
+  useEffect(() => {
+    console.log("getTmpLights", getTmpLights);
+  }, [getTmpLights]);
 
   const toggleActive = (e: any) => {
     console.log("toggleActive", e);
@@ -146,7 +178,7 @@ const SessionConfig = () => {
     <>
       <section id="sessions">
         <h4>SESSIONS</h4>
-        {displayConfig && tmpSession ? (
+        {displayConfig ? (
           <>
             <div className="title">
               <h1>
@@ -236,7 +268,21 @@ const SessionConfig = () => {
                   Egayez vos soirées en personnalisant toutes les teintes de
                   lumières que vous voulez !
                 </p>
-                <div>ACTIF - CURRENT COLOR</div>
+                <div>
+                  <div>
+                    <p>
+                      Nombres de lumieres configurées :{" "}
+                      {getTmpLights && getTmpLights.lengths}
+                    </p>
+                  </div>
+                  <div>
+                    <p>IPs des lumieres :</p>
+                    {getTmpLights &&
+                      getTmpLights.lights.map((light: any) => {
+                        return <p>{light.ip}</p>;
+                      })}
+                  </div>
+                </div>
               </div>
               <div
                 onClick={() => {
@@ -307,6 +353,7 @@ const SessionConfig = () => {
                               id: getTmpPlaylist.id,
                             })
                           );
+                          dispatch(setNewSessionLights(null));
                           navigate("/dashboard/sessions/" + res.data.sessionId);
                         })
                         .catch((e) => {

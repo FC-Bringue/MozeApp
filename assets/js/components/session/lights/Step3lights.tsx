@@ -7,12 +7,11 @@ import { setNewSessionLights } from "../../../../helpers/redux/slices/tempSlice"
 const Step3Lights = ({ NmbOfLights, dataLights, setDataLights }: any) => {
   const dispatch = useDispatch();
   const [data, setData] = useState<any>(
-    Array(NmbOfLights).fill({ ip: 0, color: "#000000" })
+    Array(NmbOfLights).fill({ ip: 0, color: "#000000", flow: [] })
   );
 
   useEffect(() => {
     setDataLights(data);
-    dispatch(setNewSessionLights(data));
   }, [data]);
 
   return (
@@ -31,16 +30,15 @@ const Step3Lights = ({ NmbOfLights, dataLights, setDataLights }: any) => {
             <input
               type={"text"}
               placeholder={"192.168.X.XX"}
-              onChange={(e) => {
+              onBlur={(e) => {
                 console.log(data);
                 let newData = data;
                 newData[index] = {
                   ip: e.target.value,
                   color: "#00000",
-                  index: index,
+                  flow: [],
                 };
                 setData(newData);
-                dispatch(setNewSessionLights(newData));
               }}
             />
           </div>

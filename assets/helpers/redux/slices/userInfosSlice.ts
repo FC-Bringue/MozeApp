@@ -8,6 +8,7 @@ const initialState: any = {
   mail: "",
   userId: "",
   isLoggedToSpotify: false,
+  mozeYeelightControlToken: "",
 } as const;
 
 export const userInfosSlice = createSlice({
@@ -37,6 +38,9 @@ export const userInfosSlice = createSlice({
     setIsLoggedToSpotify: (state, action) => {
       state.isLoggedToSpotify = action.payload;
     },
+    setMozeYeelightControlToken: (state, action) => {
+      state.mozeYeelightControlToken = action.payload;
+    },
   },
 });
 
@@ -49,6 +53,7 @@ export const {
   setMail,
   setUserId,
   setIsLoggedToSpotify,
+  setMozeYeelightControlToken,
 } = userInfosSlice.actions;
 
 export default userInfosSlice.reducer;

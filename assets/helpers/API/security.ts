@@ -1,5 +1,7 @@
 import axios from "axios";
 import { useDispatch, useSelector } from "react-redux";
+import persistStore from "redux-persist/es/persistStore";
+import store from "../redux/Store";
 
 const bearerToken = useSelector((state: any) => state.userInfos.token);
 const config = {
@@ -14,11 +16,13 @@ export const checkToken = () => {
     .then((res) => {
       console.log("checkPermission", res);
       if (res.data.result != true) {
+        persistStore(store).purge();
         window.location.replace("/login");
       }
     })
     .catch((err) => {
       console.log("checkPermission", err);
+      persistStore(store).purge();
       window.location.replace("/login");
     });
 };

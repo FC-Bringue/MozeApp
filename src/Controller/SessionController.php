@@ -153,7 +153,13 @@ class SessionController extends AbstractController
     public function haveSessionActive(HttpClientInterface $client, Request $request, EntityManagerInterface $entityManager, $idUser): Response
     {
         $user = $entityManager->getRepository(User::class)->findOneBy(['id' => $idUser]);
-        $ActiveSession = $user->getSessions()[0]->getActiveSession();
+        $ActiveSession = $user->getSessions()[0];
+        if($ActiveSession == null){
+            return $this->json([
+                'message' => 'false',
+            ]);
+        }
+        $ActiveSession = $ActiveSession->getActiveSession();
         if ($ActiveSession) {
             return $this->json([
                 'message' => 'true',
