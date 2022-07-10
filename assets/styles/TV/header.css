@@ -1,21 +1,21 @@
-.qrCode{
-    width: 75px;
-    position: right;
+.qrCode {
+  width: 75px;
+  position: right;
 }
 
-.title{
-    margin:  0px 15px;
-    color: white;
-    font-family: 'Kaleko 105 Bold'!important;
+.title {
+  margin: 0px 15px;
+  color: white;
+  font-family: "Kaleko 105" !important;
 }
 
-.logo{
-    height: 75px;
-    margin: 0px 15px;
+.logo {
+  height: 75px;
+  margin: 0px 15px;
 }
 
 .navbar {
-    /* position: fixed; */
-    top:0px;
-    width: 100%;
+  /* position: fixed; */
+  top: 0px;
+  width: 100%;
 }

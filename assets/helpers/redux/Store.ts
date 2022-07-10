@@ -7,12 +7,16 @@ import registerSlice from "./slices/registerSlice";
 import loginSlice from "./slices/loginSlice";
 import userInfosSlice from "./slices/userInfosSlice";
 import tempSlice from "./slices/tempSlice";
+import activeSlice from "./slices/activeSlice";
+import websiteWorkerSlice from "./slices/websiteWorkerSlice";
 
 const reducers = combineReducers({
   register: registerSlice,
   login: loginSlice,
   userInfos: userInfosSlice,
   tempSlice: tempSlice,
+  active: activeSlice,
+  websiteWorker: websiteWorkerSlice,
 });
 
 const persistConfig = {

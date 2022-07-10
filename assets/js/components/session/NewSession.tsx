@@ -6,6 +6,7 @@ import { useDispatch } from "react-redux";
 import {
   setNewSessionName,
   setNewSessionHashtag,
+  setTmpPlaylist,
 } from "../../../helpers/redux/slices/tempSlice";
 
 const StepOne = ({ setSessionName, setSessionHashtag, setStep }: any) => {
@@ -37,7 +38,13 @@ const StepOne = ({ setSessionName, setSessionHashtag, setStep }: any) => {
             <p>RETOUR</p>
           </div>
 
-          <div className="passTo " onClick={() => navigate("config")}>
+          <div
+            className="passTo "
+            onClick={() => {
+              dispatch(setTmpPlaylist(null));
+              navigate("config");
+            }}
+          >
             <p>SUIVANT</p>
             <ImArrowRight2 size={"2em"} />
           </div>
@@ -51,23 +58,6 @@ const NewSession = () => {
   const [step, setStep] = useState(1);
   const [sessionName, setSessionName] = useState(null);
   const [sessionHashtag, setSessionHashtag] = useState(null);
-
-  const stepHolder = (step: number) => {
-    switch (step) {
-      case 1:
-        return;
-        break;
-      case 2:
-        return;
-        break;
-      case 3:
-        return;
-        break;
-      default:
-        return;
-        break;
-    }
-  };
 
   return (
     <section id="sessions">

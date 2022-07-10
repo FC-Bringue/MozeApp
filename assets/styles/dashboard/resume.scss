@@ -5,4 +5,43 @@
   color: white;
   padding-left: 2em;
   padding-top: 2em;
+
+  > .loaderContainer {
+    margin: auto;
+    display: flex;
+    justify-content: center;
+    margin-top: 30%;
+  }
+
+  > .noSession {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    text-align: center;
+    /* Center the div */
+    margin: auto;
+    padding-top: 30vh;
+    > h1 {
+      font-weight: 600;
+    }
+    > .question {
+      font-size: 2em;
+      font-style: italic;
+    }
+
+    .btn {
+      background-color: white;
+      width: 20%;
+      padding: 0.5em 1em;
+      border-radius: 2em;
+      margin-left: auto;
+      margin-right: auto;
+      display: flex;
+      justify-content: space-around;
+
+      > p {
+        margin: auto;
+      }
+    }
+  }
 }

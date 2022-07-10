@@ -42,12 +42,17 @@ class SessionController extends AbstractController
     public function index(Request $request, EntityManagerInterface $entityManager): Response
     {
         $this->user = $this->getUser();
+        //Get data from the post request
+        $data = json_decode($request->getContent(), true);
+
         $jsonParams = [
-            "SessionName" => $request->request->get('SessionName'),
-            "idPlaylist" => $request->request->get('idPlaylist'),
-            "hashtag" => $request->request->get('hashtag'),
-            "lights" => $request->request->get('lights'),
-            "events" => $request->request->get('events'),
+            "SessionName" => $data["SessionName"],
+            "idPlaylist" => $data['idPlaylist'],
+            "urlPlaylist" => $data['urlPlaylist'],
+            "PlaylistName" => $data['PlaylistName'],
+            "hashtag" => $data['hashtag'],
+            "lights" => $data['lights'],
+            "events" => $data['events']
         ];
         $spotify = $this->user->getSpotify();
         $session = new Session();
@@ -56,6 +61,12 @@ class SessionController extends AbstractController
 
         $entityManager->persist($session);
         $entityManager->flush();
+
+
+        $session->setParameters(array_merge($session->getParameters(), ["sessionID" => $session->getId()]));
+        $entityManager->persist($session);
+        $entityManager->flush();
+
 
          $sessionId = $session->getId();
 
@@ -117,6 +128,21 @@ class SessionController extends AbstractController
         $entityManager->flush();
         return $this->json([
             'message' => 'Session activé',
+            'session' => $ActiveSession,
+        ]);
+    }
+
+    //Create a route to unset the active session
+    /**
+     * @Route("/api/unset/session/active/{idSession}", name="app_unset_session_active", methods={"GET", "POST"})
+     */
+    public function unsetSessionActive(HttpClientInterface $client, Request $request, EntityManagerInterface $entityManager, $idSession): Response
+    {
+        $ActiveSession = $entityManager->getRepository(ActiveSession::class)->findOneBy(['session' => $idSession]);
+        $entityManager->remove($ActiveSession);
+        $entityManager->flush();
+        return $this->json([
+            'message' => 'Session désactivé',
         ]);
     }
 
@@ -131,6 +157,7 @@ class SessionController extends AbstractController
         if ($ActiveSession) {
             return $this->json([
                 'message' => 'true',
+                'sessionActive' => $ActiveSession,
             ]);
         } else {
             return $this->json([
@@ -175,7 +202,7 @@ class SessionController extends AbstractController
         ]);
     }
 
-    /** 
+    /**
      * @Route("/api/get/isAlreadyCreated", name="app_get_isAlreadyCreated", methods={"GET", "POST"})
      */
     public function getIsAlreadyCreated(HttpClientInterface $client, Request $request, EntityManagerInterface $entityManager): Response
@@ -230,4 +257,58 @@ class SessionController extends AbstractController
             'message' => false,
         ]);
     }
+
+    /**
+     * @Route("/api/get/sessionList", name="get_session_from_user", methods={"GET", "POST"})
+     */
+    public function getSessionFromUser(Request $request, EntityManagerInterface $entityManager): Response
+    {
+        $this->user = $this->getUser();
+        //Get all session
+        $sessions = $entityManager->getRepository(Session::class)->findBy(['user' => $this->user]);
+        return $this->json([
+            'sessions' => $sessions,
+        ]);
+
+    }
+
+    //Create a route to delete a session who belong to the user and the session is not active
+    /**
+     * @Route("/api/delete/session/{idSession}", name="app_delete_session", methods={"GET", "POST"})
+     */
+    public function deleteSession(HttpClientInterface $client, Request $request, EntityManagerInterface $entityManager, $idSession): Response
+    {
+        //check if the session belong to the user
+        $session = $entityManager->getRepository(Session::class)->findOneBy(['id' => $idSession]);
+
+        //Get the userID of the session
+        $userID = $session->getUser()->getId();
+        //Get the userID of the user that request the call
+        $user = $this->getUser();
+
+        //Check if the user is the owner of the session
+        if ($userID == $user->getId()) {
+            //Check if the session is active
+            if ($session->getActiveSession() == null) {
+                //Delete the session
+                $entityManager->remove($session);
+                $entityManager->flush();
+                return $this->json([
+                    'isDeleted' => true,
+                    'message' => 'La session a été supprimée',
+                ]);
+            } else {
+                return $this->json([
+                    'isDeleted' => false,
+                    'message' => 'La session est active',
+                ]);
+            }
+        } else {
+            return $this->json([
+                'isDeleted' => false,
+                'message' => 'Vous n\'êtes pas le propriétaire de cette session',
+            ]);
+        }
+    }
+
 }

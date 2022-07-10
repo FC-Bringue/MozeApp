@@ -17,4 +17,15 @@ class CheckAuthController extends AbstractController
             'result' => true
             ]);
     }
+
+    /**
+    * @Route("/api/getUserInfos", name="user_infos", methods={"GET", "POST"})
+    */
+    public function getUserInfos(): Response
+    {
+        $user = $this->getUser();
+        return $this->json([
+            'user' => $user
+            ]);
+    }
 }
