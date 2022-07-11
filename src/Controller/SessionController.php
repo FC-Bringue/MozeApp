@@ -27,7 +27,7 @@ class SessionController extends AbstractController
 
 
     /**
-     * @Route("/api/cme", name="app_me", methods={"GET", "POST"})
+     * @Route("/api/me", name="app_me", methods={"GET", "POST"})
      */
     public function me(Request $request): Response
     {
@@ -68,7 +68,7 @@ class SessionController extends AbstractController
         $entityManager->flush();
 
 
-         $sessionId = $session->getId();
+        $sessionId = $session->getId();
 
         return $this->json([
             "sessionId" => $sessionId,
@@ -114,7 +114,7 @@ class SessionController extends AbstractController
         $ActiveSession->setSession($Session);
         $ActiveSession->setNbrOfMusicPlayedBeforeEvent(0);
         $ActiveSession->setIsEvent(0);
-        $ActiveSession->setCurrentIndex(0);
+        $ActiveSession->setCurrentIndex(1);
 
         // generate a unique url
         $urlUuid = Uuid::v4()->toBase58();
@@ -154,7 +154,7 @@ class SessionController extends AbstractController
     {
         $user = $entityManager->getRepository(User::class)->findOneBy(['id' => $idUser]);
         $ActiveSession = $user->getSessions()[0];
-        if($ActiveSession == null){
+        if ($ActiveSession == null) {
             return $this->json([
                 'message' => 'false',
             ]);
@@ -275,7 +275,6 @@ class SessionController extends AbstractController
         return $this->json([
             'sessions' => $sessions,
         ]);
-
     }
 
     //Create a route to delete a session who belong to the user and the session is not active
@@ -317,4 +316,29 @@ class SessionController extends AbstractController
         }
     }
 
+    /**
+     * @Route("/api/get/session/queue/{url}", name="app_get_queue", methods={"GET", "POST"})
+     */
+    public function getQueue(HttpClientInterface $client, Request $request, EntityManagerInterface $entityManager, $url): Response
+    {
+        return $this->json([
+            'queue' => $entityManager->getRepository(ActiveSession::class)->findOneBy(['url' => $url])->getMusicQueue(),
+        ]);
+    }
+
+    /**
+     * @Route("/api/get/current/song/{url}", name="app_get_current_song", methods={"GET", "POST"})
+     */
+    public function getCurrentSong(HttpClientInterface $client, Request $request, EntityManagerInterface $entityManager, $url): Response
+    {
+        $ActiveSession = $entityManager->getRepository(ActiveSession::class)->findOneBy(['url' => $url]);
+        $currentIndex = $ActiveSession->getCurrentIndex();
+        $music_queue = $ActiveSession->getMusicQueue();
+        $currentSong = $music_queue[$currentIndex - 1];
+
+        return $this->json([
+            'index' => $currentIndex,
+            'song' => $currentSong,
+        ]);
+    }
 }
