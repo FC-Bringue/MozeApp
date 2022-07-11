@@ -1,0 +1,85 @@
+footer {
+  height: 15%;
+  /* center son contenu */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: rgb(57, 51, 52);
+  /* background: -moz-linear-gradient(180deg, rgba(57,51,52,1) 0%, rgba(118,123,153,1) 100%);
+    background: -webkit-linear-gradient(180deg, rgba(57,51,52,1) 0%, rgba(118,123,153,1) 100%);
+    background: linear-gradient(180deg, rgba(57,51,52,1) 0%, rgba(118,123,153,1) 100%); */
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#393334",endColorstr="#767b99",GradientType=1);
+}
+.MusicPlayerContainer {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+}
+.MusicPlayerImageTitle {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+  width: 15%;
+}
+.MusicPlayerInfo {
+  display: flex;
+  flex-direction: column;
+}
+.MusicPlayerImage {
+  width: 60px;
+  height: 60px;
+  border-radius: 5px;
+}
+
+.MusicPlayerTitle {
+  /* kaleko bold en 20px */
+  font-family: "Kaleko 105 Bold";
+  font-size: 20px;
+  /* color FFFFF */
+  color: #ffffff;
+}
+.MusicPlayerArtist {
+  color: #b8b8b8;
+}
+
+.MusicPlayerBar {
+  display: flex;
+  flex-direction: row;
+  width: 60%;
+  align-items: center;
+  /* on mets à droite */
+  /* justify-content: flex-end; */
+}
+.MusicPlayerBarFill {
+  background: #d8d8d8;
+  border-radius: 3px;
+  width: 862px;
+  height: 10px;
+  display: flex;
+}
+
+.MusicPlayerBarTime {
+  font-family: "Kaleko 105 Bold";
+  color: #b8b8b8;
+  margin-left: 15px;
+  margin-right: 15px;
+}
+.MusicPlayerBarFillCircle {
+  position: relative;
+  background: #ffffff;
+  /* faire un rond */
+  border-radius: 50%;
+  width: 20px;
+  height: 20px;
+  /* On le centre en hauteur */
+  top: -4px;
+}
+.MusicPlayerBarFillRect {
+  position: relative;
+  background: #ffffff;
+  border-radius: 3px;
+  width: calc(862px * 0.15);
+  height: 10px;
+  /* on centre en hauteur*/
+}
