@@ -1,5 +1,6 @@
-import { Routes, Route, Link } from "react-router-dom";
 import "../styles/app.css";
+import { Routes, Route } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 
 import Login from "./components/auth/Login";
 import PssdForget from "./components/auth/PssdForget";
@@ -9,14 +10,13 @@ import SendAuthCall from "./components/devPages/sendAuthCall";
 import InstagramRedirect from "./components/redirects/InstagramRedirect";
 import SessionContainer from "./components/session/SessionContainer";
 import Parametres from "./components/settings/Parametres";
-import Navigation from "./Navigation";
 import Index from "./components/landing/index";
 import Tv from "./components/TV/Tv";
 import NewSession from "./components/session/NewSession";
 import Application from "./components/settings/Application";
-import SessionSettings from "./components/session/SessionSettings";
 import SessionConfig from "./components/session/SessionConfig";
 import Lights from "./components/session/lights/Step0Lights";
+import LightsConfigContainer from "./components/session/lights/LightsConfigContainer";
 import ListIt from "./components/session/SessionList";
 import Appuser from "./components/Application/Appuser";
 import AppMusicSearch from "./components/Application/Apppart/AppMusicSearch/AppMusicSearch";
@@ -27,10 +27,16 @@ import SessionName from "./components/Application/Apppart/sessionName/sessionApp
 
 import AppContainer from "./components/Application/AppContainer";
 
+import Playlist from "./components/session/playlist/Step0Playlist";
+import DashboardContainer from "./components/dashboard/DashboardContainer";
 
 const App = () => {
+  const location = useLocation();
   return (
-    <div id="App">
+    <div
+      id="App"
+      className={location.pathname === "/tv" ? "forceColumn" : null}
+    >
       <Routes>
         {/* DEV PURPOSE ONLY */}
         <Route path="/dev/authedCall" element={<SendAuthCall />} />
@@ -42,19 +48,24 @@ const App = () => {
 
         {/* DASHBOARD ROUTING */}
         <Route path="dashboard" element={<AuthedUsers />}>
+          {/* WELCOME PAGE */}
+          <Route path="resume" element={<DashboardContainer />} />
+
+          {/* SESSIONS PAGE */}
           <Route path="sessions" element={<ListIt />} />
           <Route path="sessions/new" element={<NewSession />} />
           <Route path="sessions/new/:onNew" element={<SessionConfig />}>
-            <Route path="config-playlist" element={<SessionContainer />} />
-            <Route path="config-lights" element={<Lights />} />
+            <Route path="config-playlist" element={<Playlist />} />
+            <Route path="config-lights" element={<LightsConfigContainer />} />
             <Route path="config-events" element={<SessionContainer />} />
           </Route>
           <Route path="sessions/:sessionID" element={<SessionConfig />}>
-            <Route path="config-playlist" element={<SessionContainer />} />
-            <Route path="config-lights" element={<Lights />} />
+            <Route path="config-playlist" element={<Playlist />} />
+            <Route path="config-lights" element={<LightsConfigContainer />} />
             <Route path="config-events" element={<SessionContainer />} />
           </Route>
 
+          {/* SETTINGS PAGE */}
           <Route path="settings" element={<Parametres />}>
             {/*  <Route path="" element={<AuthedUsers />} /> */}
             <Route path="audio" element={<SessionContainer />} />
@@ -68,13 +79,13 @@ const App = () => {
           <Route path=":sessionID" element={<Parametres />} />
         </Route>
 
-        <Route path="app/:sessionid" element={<AppContainer/>} >
-        {/* <Route path=":applicationSection" element={<AppContainer/>} /> */}
-          <Route path="search" element={<AppMusicSearch/>} />
-          <Route path="music" element={<AppPlaylist/>} />
-          <Route path="acceuil" element={<Acceuil/>} />
-          <Route path="profile" element={<UserProfile/>} />
-          <Route path="addGuest" element={<SessionName/>} />
+        <Route path="app/:sessionid" element={<AppContainer />}>
+          {/* <Route path=":applicationSection" element={<AppContainer/>} /> */}
+          <Route path="search" element={<AppMusicSearch />} />
+          <Route path="music" element={<AppPlaylist />} />
+          <Route path="acceuil" element={<Acceuil />} />
+          <Route path="profile" element={<UserProfile />} />
+          <Route path="addGuest" element={<SessionName />} />
         </Route>
 
         <Route path="login" element={<Login />} />

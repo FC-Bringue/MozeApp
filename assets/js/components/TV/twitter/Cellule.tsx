@@ -12,13 +12,12 @@ import { Container, Row, Col } from "react-bootstrap";
 type AppProps = {
   tweetData: any;
   userData: any;
-  setCelluleHeight: any;
 };
 
-const Cellule = ({ tweetData, userData, setCelluleHeight }: AppProps) => {
+const Cellule = ({ tweetData, userData}: AppProps) => {
   const celluleRef = useRef<HTMLDivElement>(null);
-  /* console.log("Cellule", tweetData);
-  console.log("Cellule", userData); */
+  console.log("tweetdata", tweetData);
+  console.log("Cellule", userData);
 
   const getMinutesSinceNow = (created_at: string) => {
     //Get the number of minutes since the tweet was created
@@ -28,11 +27,6 @@ const Cellule = ({ tweetData, userData, setCelluleHeight }: AppProps) => {
     const minutes = Math.floor(diff / 60000);
     return minutes;
   };
-
-  useEffect(() => {
-    console.log("celluleHeightTwi");
-    setCelluleHeight(celluleRef.current!.clientHeight);
-  }, []);
 
   return (
     <>
@@ -44,9 +38,9 @@ const Cellule = ({ tweetData, userData, setCelluleHeight }: AppProps) => {
           padding: "0.5em",
           minHeight: "20%",
           backgroundColor: "#232932",
-          translateY: "-2100px",
+          translateY: "-1000px",
         }}
-        animate={{ y: 12 }}
+        animate={{ y: 1000 }}
         transition={{
           /* repeat: Infinity, ease: "easeInOut", */ duration: 10,
           ease: "easeInOut",
@@ -88,7 +82,6 @@ const Cellule = ({ tweetData, userData, setCelluleHeight }: AppProps) => {
                   </p>
                 </div>
               </div>
-              <p>{getMinutesSinceNow(userData.created_at)}min</p>
             </div>
             <p style={{ paddingTop: "0.5em", paddingBottom: "0.5em" }}>
               {tweetData.text}

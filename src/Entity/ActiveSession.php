@@ -22,7 +22,7 @@ class ActiveSession
     private $id;
 
     /**
-     * @ORM\OneToOne(targetEntity=Session::class, inversedBy="activeSession", cascade={"persist", "remove"})
+     * @ORM\OneToOne(targetEntity=Session::class, inversedBy="activeSession")
      * @ORM\JoinColumn(nullable=false)
      */
     private $session;

@@ -1,6 +1,9 @@
 import { ImCross, ImArrowRight2, ImArrowLeft2 } from "react-icons/im";
 import { useEffect, useState } from "react";
 import { useParams, useNavigate, Outlet } from "react-router-dom";
+import { useDispatch } from "react-redux";
+
+import { setNewSessionLights } from "../../../../helpers/redux/slices/tempSlice";
 
 import Step1Lights from "./Step1Lights";
 import Step2Lights from "./Step2Lights";
@@ -12,6 +15,8 @@ const Lights = () => {
   const [NmbOfLights, setNmbOfLights] = useState<null | number | string>(1);
   const [canClick, setCanClick] = useState(false);
   const [dataLights, setDataLights] = useState<any>([]);
+
+  const dispatch = useDispatch();
 
   const { sessionID, onNew } = useParams();
   const navigate = useNavigate();
@@ -99,6 +104,7 @@ const Lights = () => {
                     return;
                   }
                   setLightsCount(lightsCount + 1);
+                  dispatch(setNewSessionLights(dataLights));
                 }
               }}
             >

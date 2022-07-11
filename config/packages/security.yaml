@@ -14,7 +14,7 @@ security:
         dev:
             pattern: ^/(_(profiler|wdt)|css|images|js)/
             security: false
-            
+
         login:
             pattern: ^/api/login_check
             stateless: true
@@ -43,6 +43,7 @@ security:
                 failure_handler: lexik_jwt_authentication.handler.authentication_failure
 
     access_control:
+        - { path: ^/api/checkPermission, roles: [IS_AUTHENTICATED_FULLY] }
         - { path: ^/api/login_check, roles: PUBLIC_ACCESS }
         - { path: ^api/get/isAlreadyCreated, roles: [PUBLIC_ACCESS] }
         - { path: ^/api/users, roles: PUBLIC_ACCESS , methods: [POST] }
@@ -54,8 +55,9 @@ security:
         
         
 
-        
-        
+
+
+
 
 when@test:
     security:

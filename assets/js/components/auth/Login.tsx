@@ -5,6 +5,8 @@ import { setMail, setPassword } from "../../../helpers/redux/slices/loginSlice";
 import { setToken } from "../../../helpers/redux/slices/userInfosSlice";
 import { loginUser } from "../../../helpers/API/login_signup";
 
+import mozeLogo from "../../../img/logos/MOZE.svg";
+
 import "../../../styles/auth/Login.scss";
 
 const Login = () => {
@@ -16,12 +18,7 @@ const Login = () => {
   return (
     <div id="login">
       <div>
-        <img
-          src={
-            "https://upload.wikimedia.org/wikipedia/commons/a/a5/Google_Chrome_icon_%28September_2014%29.svg"
-          }
-          title="logo"
-        />
+        <img src={mozeLogo} title="logo" />
       </div>
       <div>
         <form>
@@ -51,7 +48,7 @@ const Login = () => {
 
             if (response.status === 200) {
               dispatch(setToken(response.data.token));
-              navigate("/dashboard");
+              navigate("/dashboard/resume");
             } else {
               console.log("response", response);
             }
