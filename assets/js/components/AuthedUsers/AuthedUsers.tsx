@@ -12,6 +12,7 @@ import {
 import { setDisplayResume } from "../../../helpers/redux/slices/websiteWorkerSlice";
 
 import Navigation from "../../Navigation";
+import PlayerSpotify from "../player/PlayerSpotify";
 import SessionContainer from "../session/SessionContainer";
 import Parametres from "../settings/Parametres";
 
@@ -81,8 +82,9 @@ const AuthedUsers = () => {
           });
       });
 
+    console.log("beforeislogged");
     axios
-      .get("/api/get/spotify/userplaylist", config)
+      .get("/api/get/isConnected", config)
       .then((res) => {
         console.log("isLOggedToSpotify", res.data);
         dispatch(setIsLoggedToSpotify(true));
@@ -97,6 +99,7 @@ const AuthedUsers = () => {
     <>
       <Navigation />
       <Outlet />
+      <PlayerSpotify />
     </>
   );
 };

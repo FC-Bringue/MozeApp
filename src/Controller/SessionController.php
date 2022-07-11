@@ -244,6 +244,8 @@ class SessionController extends AbstractController
         $entityManager->flush();
         return $this->json([
             'message' => 'L\'utilisateur a été mis à jour',
+            'token' => $token,
+            'name' => $_POST['name']
         ]);
     }
 

@@ -45,6 +45,7 @@ const DashboardContainer = () => {
   const handleChangeLight = (action: any, color: any) => {
     console.log("color", color);
     if (!mozeYeelightToken) {
+      console.log("no token");
       return;
     }
     const config = {

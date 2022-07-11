@@ -1,0 +1,42 @@
+#spotifyPlayer {
+  position: fixed;
+  bottom: 5%;
+  left: 20%;
+  display: flex;
+  justify-content: space-between;
+  background-color: rgba($color: #000000, $alpha: 0.4);
+  width: 75%;
+  padding: 0.5em;
+  color: white;
+  border-radius: 1.5em;
+
+  > .infos {
+    > .name {
+      > h1 {
+        font-size: 1.5em;
+        font-weight: 700;
+      }
+      > h3 {
+        font-size: 1em;
+        font-style: italic;
+      }
+    }
+  }
+
+  .controls {
+    display: flex;
+    justify-content: space-between;
+
+    > .btnContainer {
+      margin: auto;
+      > .play,
+      > .pause {
+      }
+
+      > .next {
+      }
+      > .previous {
+      }
+    }
+  }
+}
