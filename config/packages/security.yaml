@@ -52,6 +52,9 @@ security:
         # - { path: ^/api, roles: [IS_AUTHENTICATED_FULLY] }
         - { path: ^/api, roles: [PUBLIC_ACCESS] }
 
+        
+        
+
 
 
 

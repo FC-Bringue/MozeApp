@@ -5,11 +5,12 @@ import { useInView } from "react-intersection-observer";
 import { useEffect } from "react";
 import MozeLogo from "../../../../../img/logos/Moze.svg";
 import { Container, Row, Col } from "react-bootstrap";
+import { useNavigate, useParams } from "react-router-dom";
 
 const Header: React.FC<{}> = () => {
   const { ref, inView } = useInView();
   const animation3 = useAnimation();
-
+  const navigate = useNavigate();
   useEffect(() => {
     if (inView) {
       animation3.start({
@@ -47,29 +48,26 @@ const Header: React.FC<{}> = () => {
           </button>
           <div className="collapse navbar-collapse" id="navbarSupportedContent">
             <ul className="navbar-nav ms-auto mb-2 mb-lg-0">
-              <li className="nav-item">
-                <a className="nav-link " aria-current="page" href="#">
-                  Acceuil
-                </a>
-              </li>
-              <li className="nav-item">
-                <a className="nav-link " aria-current="page" href="#">
-                  Catalogue
-                </a>
-              </li>
-              <li className="nav-item pe-2">
-                <a className="nav-link " aria-current="page" href="#">
-                  Premium
-                </a>
-              </li>
-              <div className="d-flex border-start border-white">
+              <div className="d-flex">
                 <li className="nav-item">
-                  <a className="nav-link " aria-current="page" href="#">
+                  <a
+                    className="nav-link "
+                    aria-current="page"
+                    onClick={async () => {
+                      navigate(`/register`);
+                    }}
+                  >
                     s'inscrire
                   </a>
                 </li>
                 <li className="nav-item">
-                  <a className="nav-link " aria-current="page" href="#">
+                  <a
+                    className="nav-link "
+                    aria-current="page"
+                    onClick={async () => {
+                      navigate(`/login`);
+                    }}
+                  >
                     Connexion
                   </a>
                 </li>

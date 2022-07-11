@@ -9,6 +9,7 @@ import registerSlice from "./slices/registerSlice";
 import loginSlice from "./slices/loginSlice";
 import userInfosSlice from "./slices/userInfosSlice";
 import tempSlice from "./slices/tempSlice";
+import guestSlice from "./slices/guestSlice";
 import activeSlice from "./slices/activeSlice";
 import websiteWorkerSlice from "./slices/websiteWorkerSlice";
 
@@ -17,6 +18,7 @@ const reducers = combineReducers({
   login: loginSlice,
   userInfos: userInfosSlice,
   tempSlice: tempSlice,
+  guest: guestSlice,
   active: activeSlice,
   websiteWorker: websiteWorkerSlice,
 });
@@ -24,11 +26,11 @@ const reducers = combineReducers({
 const persistConfig = {
   key: "root",
   storage,
-  whitelist: ["userInfos"],
+  whitelist: ["userInfos", "guest"],
   transforms: [
     encryptTransform({
       secretKey: "moze-app-demo-encryption-key",
-      onError: function (error) {
+      onError: function (error: any) {
         console.log("error at persist encryption", error);
       },
     }),
