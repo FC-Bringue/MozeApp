@@ -82,7 +82,7 @@ const Header: React.FC<{}> = () => {
         <Row ref={ref}>
           <Col lg={6} sm={12} xs={12}>
             <motion.div animate={animation3} className="Header-content">
-              <h1>Des millions de titres, musics et bien plus encore.</h1>
+              <h1>Rendez le controle a vos clients !</h1>
             </motion.div>
           </Col>
         </Row>

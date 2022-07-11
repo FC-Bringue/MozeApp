@@ -1,8 +1,7 @@
 #applications {
   display: flex;
   flex-direction: column;
-  width: 25%;
-  margin: auto;
+  align-items: center;
   padding: 1em;
 }
 

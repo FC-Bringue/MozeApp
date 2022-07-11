@@ -1,4 +1,4 @@
-import {useNavigate} from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import axios from "axios";
 
 import amazonMusic from "../../../img/logos/amazonMusic.png";
@@ -54,7 +54,7 @@ const Application = () => {
   return (
     <>
       {displayParams ? (
-        <section id="applications" style={{ margin: "12em auto auto auto" }}>
+        <section id="applications">
           <div
             className="spotify"
             onClick={() => {
