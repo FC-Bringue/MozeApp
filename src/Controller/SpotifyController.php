@@ -188,7 +188,8 @@ class SpotifyController extends AbstractController
         $sessionActiveRepository = $entityManager->getRepository(ActiveSessionEntity::class);
         $activeSession = $sessionActiveRepository->findOneBy(['url' => $urlSession]);
         $currentSession = $activeSession->getSession();
-        if ($currentSession->getParameters()['hashtag'] != null) {
+        // is defined $currentSession->getParameters()['hashtag']
+        if (isset($currentSession->getParameters()['hashtag'])) {
             $hastag = $currentSession->getParameters()['hashtag'];
         } else {
             $hastag = "";
