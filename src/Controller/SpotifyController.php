@@ -187,6 +187,8 @@ class SpotifyController extends AbstractController
         $sessionActiveRepository = $entityManager->getRepository(ActiveSessionEntity::class);
         $activeSession = $sessionActiveRepository->findOneBy(['url' => $urlSession]);
         $currentSession = $activeSession->getSession();
+        $hastag = $currentSession->getParameters()['hashtag'];
+        $sessionName = $currentSession->$this->getParameters()['SessionName'];
 
         // $activeSession = $currentSession->getActiveSession();
         $parameters = $currentSession->getParameters();
@@ -196,7 +198,7 @@ class SpotifyController extends AbstractController
 
         $currentMusic = $musicQueue[$currentIndex];
         $nextMusic = [];
-        for ($i =  1; $i < 6; $i++) {
+        for ($i =  1; $i < 11; $i++) {
             if (isset($musicQueue[$currentIndex + $i])) {
                 $nextMusic[] = $musicQueue[$currentIndex + $i];
             } else {
@@ -330,7 +332,8 @@ class SpotifyController extends AbstractController
             'next musics info' => $nextMusicsInfo,
             'previous musics info' => $previousMusicsInfo,
             'playlist name' => $playlistName,
-
+            'session name' => $sessionName,
+            'hashtag' => $hastag,
         ]);
     }
     /**
@@ -730,21 +733,18 @@ class SpotifyController extends AbstractController
         $activeSession = $entityManager->getRepository(ActiveSessionEntity::class)->findOneBy(['url' => $url]);
         $musicQueue = $activeSession->getMusicQueue();
         $currentIndex = $activeSession->getCurrentIndex();
-
         foreach ($musicQueue as $key => $music) {
             if ($music['id'] == $songId) {
                 $musicQueue[$key]['nbrLike'] = $music['nbrLike'] + 1;
-                $musicLiked = $music;
+                $musicLiked = $musicQueue[$key];
                 // on le supprime de la liste
                 unset($musicQueue[$key]);
             }
         }
         // à partir de la position courante, on regarde quel est la musique la plus likée
         foreach ($musicQueue as $key => $music) {
-            if ($key > $currentIndex) {
-                if ($music['nbrLike'] >= $musicLiked['nbrLike']) {
-                    // on ajoute la musique juste en dessous de la 
-                    dd('there is a song already liked higer than the current one');
+            if ($key > $currentIndex - 1) {
+                if ($music['nbrLike'] <= $musicLiked['nbrLike']) {
                     $partOne = array_slice($musicQueue, 0, $key);
                     $partTwo = array_slice($musicQueue, $key);
                     $partOne[$key] = $musicLiked;
@@ -753,13 +753,30 @@ class SpotifyController extends AbstractController
                         $partTwo[$key2]['key'] = $key2 + $key + 2;
                     }
                     $musicQueue = array_merge($partOne, $partTwo);
-                } else {
-                    // on la mets directement en dessous de la musique en currentIndex
-                    $partOne = array_slice($musicQueue, 0, $currentIndex);
-                    dd($partOne);
                 }
+                // else {
+                //     // on la mets directement en dessous de la musique en currentIndex
+                //     $partOne = array_slice($musicQueue, 0, $currentIndex);
+                //     $partTwo = array_slice($musicQueue, $currentIndex);
+
+                //     $partOne[$key] = $musicLiked;
+                //     $partOne[$key]['key'] = $key + 1;
+                //     foreach ($partTwo as $key2 => $music2) {
+                //         dd($key2, $key, 2);
+                //         $partTwo[$key2]['key'] = $key2 + $key + 2;
+                //     }
+                // }
             }
         }
+
+        // on parcourt pour renvoyer false si 0 like on été trouvé
+        // if (!$found) {
+        //     $partOne = array_slice($musicQueue, 0, $currentIndex);
+        //     $partTwo = array_slice($musicQueue, $currentIndex);
+        //     // on ajoute à la fin de partOne $musicLiked
+        //     $partOne[$currentIndex + 1] = $musicLiked;
+        //     dd($partOne, 'partOne');
+        // }
 
         $activeSession->setMusicQueue($musicQueue);
         $entityManager->persist($activeSession);

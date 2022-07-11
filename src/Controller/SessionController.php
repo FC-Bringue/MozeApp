@@ -244,6 +244,8 @@ class SessionController extends AbstractController
         $entityManager->flush();
         return $this->json([
             'message' => 'L\'utilisateur a été mis à jour',
+            'token' => $token,
+            'name' => $_POST['name']
         ]);
     }
 
@@ -362,6 +364,17 @@ class SessionController extends AbstractController
         $entityManager->flush();
         return $this->json([
             'message' => 'Les paramètres ont été mis à jour',
+        ]);
+    }
+
+    /**
+     * @Route("/api/get/url/session/{idSession}", name="app_get_url_session", methods={"GET", "POST"})
+     */
+    public function getUrlSession(HttpClientInterface $client, Request $request, EntityManagerInterface $entityManager, $idSession): Response
+    {
+        $session = $entityManager->getRepository(Session::class)->findOneBy(['id' => $idSession])->getActiveSession();
+        return $this->json([
+            'url' => $session->getUrl(),
         ]);
     }
 }

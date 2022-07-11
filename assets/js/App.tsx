@@ -78,7 +78,6 @@ const App = () => {
         <Route path="tv" element={<Tv />}>
           <Route path=":sessionID" element={<Parametres />} />
         </Route>
-        {/* END */}
 
         {/* APPLICATION ROUTING */}
         <Route path="app/:sessionid" element={<AppContainer />}>
