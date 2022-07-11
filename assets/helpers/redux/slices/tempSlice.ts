@@ -5,6 +5,7 @@ type TempState = {
   newSessionHashtag: string | null;
   newSessionIdPLaylist: string | null;
   newSessionLights: string | null | object;
+  tmpLights: string | null | object;
   tmpPlaylist: string | null | object;
   tmpSession: string | null | object;
 };
@@ -14,6 +15,7 @@ const initialState: TempState = {
   newSessionHashtag: null,
   newSessionIdPLaylist: null,
   newSessionLights: null,
+  tmpLights: [],
   tmpPlaylist: null,
   tmpSession: null,
 } as const;
@@ -40,6 +42,9 @@ export const tempSlice = createSlice({
     setTmpSession: (state, action) => {
       state.tmpSession = action.payload;
     },
+    setTmpLights: (state, action) => {
+      state.tmpLights = action.payload;
+    },
   },
 });
 
@@ -51,6 +56,7 @@ export const {
   setNewSessionIdPlaylist,
   setTmpPlaylist,
   setTmpSession,
+  setTmpLights,
 } = tempSlice.actions;
 
 export default tempSlice.reducer;

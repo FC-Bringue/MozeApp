@@ -52,7 +52,7 @@ const App = () => {
           </Route>
           <Route path="sessions/:sessionID" element={<SessionConfig />}>
             <Route path="config-playlist" element={<Playlist />} />
-            <Route path="config-lights" element={<Lights />} />
+            <Route path="config-lights" element={<LightsConfigContainer />} />
             <Route path="config-events" element={<SessionContainer />} />
           </Route>
 

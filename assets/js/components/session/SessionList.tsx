@@ -46,7 +46,7 @@ const ListIt = () => {
                 sessionList.map((item: any, index: any) => (
                   <>
                     <SessionCards
-                      key={item.parameters.SessionName}
+                      key={item.parameters.SessionName + index}
                       item={item}
                     />
                     {index + 1 === sessionList.length && (
