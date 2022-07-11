@@ -1,11 +1,12 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import { Bars } from "react-loader-spinner";
 import { ImPlus } from "react-icons/im";
 import { AiOutlinePoweroff } from "react-icons/ai";
 import axios from "axios";
 import SimpleBar from "simplebar-react";
+import { setUrlActiveSession } from "../../../helpers/redux/slices/activeSlice";
 
 import TracksData from "./tracks/TracksData";
 
@@ -15,9 +16,13 @@ import "../../../styles/dashboard/resume.scss";
 import "simplebar/dist/simplebar.min.css";
 
 const DashboardContainer = () => {
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const location = useLocation();
+
   const [display, setDisplay] = useState(false);
   const [lightsDuplicate, setLightsDuplicate] = useState([]);
-  const dispatch = useDispatch();
+
   const activeSession = useSelector(
     (state: any) => state.active.activeSessionInfos
   );
@@ -28,7 +33,9 @@ const DashboardContainer = () => {
   const mozeYeelightToken = useSelector(
     (state: any) => state.userInfos.mozeYeelightControlToken
   );
-  const navigate = useNavigate();
+  const sessionActiveURL = useSelector(
+    (state: any) => state.active.urlActiveSession
+  );
 
   useEffect(() => {
     console.log("activeSessionAAAAAAA", activeSession);
@@ -112,7 +119,12 @@ const DashboardContainer = () => {
               </h1>
               <section className="session-list-resume">
                 <div className="playlistDetails">
-                  <h3>Votre playlist en cours :</h3>
+                  <h3>
+                    Votre playlist en cours : "
+                    {activeSession.session.parameters.PlaylistName &&
+                      activeSession.session.parameters.PlaylistName}
+                    "
+                  </h3>
                   <SimpleBar
                     forceVisible="y"
                     autoHide={false}
@@ -212,7 +224,21 @@ const DashboardContainer = () => {
                       />
                     </div>
                   </div>
-                  {/*  <div className="events"></div> */}
+                  <div className="links">
+                    <h3>Voici vos liens de session :</h3>
+                    {sessionActiveURL && (
+                      <div className="linksContainer">
+                        <div className="link">
+                          <h4>Le lien d'affichage pour votre TV :</h4>
+                          <p>{`${window.location.origin}/tv/${sessionActiveURL}`}</p>
+                        </div>
+                        <div className="link">
+                          <h4>L'accès pour vos consommateurs :</h4>
+                          <p>{`${window.location.origin}/app/${sessionActiveURL}`}</p>
+                        </div>
+                      </div>
+                    )}
+                  </div>
                 </div>
               </section>
             </>
