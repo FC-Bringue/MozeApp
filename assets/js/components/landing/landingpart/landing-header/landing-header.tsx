@@ -5,11 +5,14 @@ import { useInView } from "react-intersection-observer";
 import { useEffect } from "react";
 import MozeLogo from "../../../../../img/logos/Moze.svg";
 import { Container, Row, Col } from "react-bootstrap";
+import { useNavigate } from "react-router-dom";
+import { useSelector } from "react-redux";
 
 const Header: React.FC<{}> = () => {
+  const navigate = useNavigate();
   const { ref, inView } = useInView();
   const animation3 = useAnimation();
-
+  const bearerToken = useSelector((state: any) => state.userInfos.token);
   useEffect(() => {
     if (inView) {
       animation3.start({
@@ -47,33 +50,47 @@ const Header: React.FC<{}> = () => {
           </button>
           <div className="collapse navbar-collapse" id="navbarSupportedContent">
             <ul className="navbar-nav ms-auto mb-2 mb-lg-0">
-              <li className="nav-item">
-                <a className="nav-link " aria-current="page" href="#">
-                  Acceuil
-                </a>
-              </li>
-              <li className="nav-item">
-                <a className="nav-link " aria-current="page" href="#">
-                  Catalogue
-                </a>
-              </li>
-              <li className="nav-item pe-2">
-                <a className="nav-link " aria-current="page" href="#">
-                  Premium
-                </a>
-              </li>
-              <div className="d-flex border-start border-white">
-                <li className="nav-item">
-                  <a className="nav-link " aria-current="page" href="#">
-                    s'inscrire
-                  </a>
-                </li>
-                <li className="nav-item">
-                  <a className="nav-link " aria-current="page" href="#">
-                    Connexion
-                  </a>
-                </li>
-              </div>
+              {bearerToken ? (
+                <div className="d-flex">
+                  <li
+                    className="nav-item"
+                    style={{ cursor: "pointer" }}
+                    onClick={async () => {
+                      navigate(`/dashboard/resume`);
+                    }}
+                  >
+                    <a className="nav-link " aria-current="page">
+                      Acceder au dashboard
+                    </a>
+                  </li>
+                </div>
+              ) : (
+                <div className="d-flex">
+                  <li
+                    className="nav-item"
+                    style={{ cursor: "pointer" }}
+                    onClick={async () => {
+                      navigate(`/register`);
+                    }}
+                  >
+                    <a className="nav-link " aria-current="page">
+                      s'inscrire
+                    </a>
+                  </li>
+                  <li className="nav-item">
+                    <a
+                      className="nav-link "
+                      aria-current="page"
+                      style={{ cursor: "pointer" }}
+                      onClick={async () => {
+                        navigate(`/login`);
+                      }}
+                    >
+                      Connexion
+                    </a>
+                  </li>
+                </div>
+              )}
             </ul>
           </div>
         </div>
@@ -82,7 +99,7 @@ const Header: React.FC<{}> = () => {
         <Row ref={ref}>
           <Col lg={6} sm={12} xs={12}>
             <motion.div animate={animation3} className="Header-content">
-              <h1>Rendez le controle a vos clients !</h1>
+              <h1>Rendez le controle a vos utilisateurs !</h1>
             </motion.div>
           </Col>
         </Row>

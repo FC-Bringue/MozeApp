@@ -1,7 +1,8 @@
 import React from "react";
 import { Container, Row, Col } from "react-bootstrap";
 import btnleft from "../../../../../img/icons/Sort.png";
-import btnmid from "../../../../../img/icons/music.png";
+/* import btnmid from "../../../../../img/icons/music.png";
+import btnright from "../../../../../img/icons/profil.png"; */
 import { FaUserAlt, FaMusic } from "react-icons/fa";
 import { animate, motion } from "framer-motion";
 import { useNavigate, useParams } from "react-router-dom";
@@ -38,12 +39,8 @@ const Starting: React.FC<{}> = () => {
                 navigate(`/app/${sessionid}/music`);
               }}
             >
-              <FaMusic
-                size={"6em"}
-                color={"white"}
-                title="MozeLogo"
-                className="footerIcon"
-              />
+              {/* <img src={btnmid} title="MozeLogo" className="footerIcon" /> */}
+              <FaMusic className="footerIcon" />
             </div>
           </motion.label>
           <input type="submit" id="upload-button" style={{ display: "none" }} />
@@ -58,7 +55,8 @@ const Starting: React.FC<{}> = () => {
                 navigate(`/app/${sessionid}/profile`);
               }}
             >
-              <FaUserAlt title="MozeLogo" className="footerIcon" />
+              {/* <img src={btnright} title="MozeLogo" className="footerIcon" /> */}
+              <FaUserAlt className="footerIcon" />
             </div>
           </motion.label>
         </Col>
