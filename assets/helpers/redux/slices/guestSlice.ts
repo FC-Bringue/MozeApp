@@ -1,8 +1,8 @@
 import { createSlice } from "@reduxjs/toolkit";
 
-const initialState : any= {
- tokenGuest : null, 
- nameGuest : null
+const initialState: any = {
+  tokenGuest: null,
+  nameGuest: null,
 } as const;
 
 export const guestSlice = createSlice({
@@ -10,11 +10,11 @@ export const guestSlice = createSlice({
   initialState,
   reducers: {
     setTokenGuest: (state, action) => {
-        state.tokenGuest = action.payload;
-      },
-      setNameGuest: (state, action) => {
-        state.nameGuest = action.payload;
-      }
+      state.tokenGuest = action.payload;
+    },
+    setNameGuest: (state, action) => {
+      state.nameGuest = action.payload;
+    },
   },
 });
 

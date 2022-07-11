@@ -13,7 +13,6 @@ import Parametres from "./components/settings/Parametres";
 import Index from "./components/landing/index";
 import Tv from "./components/TV/Tv";
 import NewSession from "./components/session/NewSession";
-import General from "./components/settings/General"
 import Application from "./components/settings/Application";
 import SessionConfig from "./components/session/SessionConfig";
 import Lights from "./components/session/lights/Step0Lights";
@@ -69,7 +68,7 @@ const App = () => {
           {/* SETTINGS PAGE */}
           <Route path="settings" element={<Parametres />}>
             {/*  <Route path="" element={<AuthedUsers />} /> */}
-            <Route path="general" element={<General />} />
+            <Route path="audio" element={<SessionContainer />} />
             <Route path="linked-apps" element={<Application />} />
           </Route>
         </Route>
@@ -80,6 +79,7 @@ const App = () => {
           <Route path=":sessionID" element={<Parametres />} />
         </Route>
 
+        {/* APPLICATION ROUTING */}
         <Route path="app/:sessionid" element={<AppContainer />}>
           {/* <Route path=":applicationSection" element={<AppContainer/>} /> */}
           <Route path="search" element={<AppMusicSearch />} />
@@ -88,7 +88,9 @@ const App = () => {
           <Route path="profile" element={<UserProfile />} />
           <Route path="addGuest" element={<SessionName />} />
         </Route>
+        {/* END */}
 
+        {/* BASIC ROUTING */}
         <Route path="login" element={<Login />} />
         <Route path="register" element={<Signup />} />
         <Route path="/" element={<Index />} />

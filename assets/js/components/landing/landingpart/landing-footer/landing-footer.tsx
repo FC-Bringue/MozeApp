@@ -6,9 +6,9 @@ const Content: React.FC<{}> = () => {
     <section className="landing-Footer py-5">
       <div className="container">
         <div className="row">
-          <div className="col-12 col-md-3 footer-link text-center">
+          {/*<div className="col-12 col-md-3 footer-link text-center">
             <h4 className="footer-title ">MOZE</h4>
-            <ul>
+             <ul>
               <li>
                 {" "}
                 <a>offre</a>{" "}
@@ -27,7 +27,7 @@ const Content: React.FC<{}> = () => {
               </li>
             </ul>
           </div>
-          <div className="col-12 col-md-3 footer-link text-center">
+           <div className="col-12 col-md-3 footer-link text-center">
             <h4 className="footer-title ">Explorer</h4>
             <ul>
               <li>
@@ -89,7 +89,7 @@ const Content: React.FC<{}> = () => {
                 <a>Aide</a>
               </li>
             </ul>
-          </div>
+          </div>*/}
         </div>
         <div className="row py-5">
           <div className="col-12 text-center">

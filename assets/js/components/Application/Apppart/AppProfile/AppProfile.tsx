@@ -3,7 +3,8 @@ import { useNavigate, useParams } from "react-router-dom";
 import { useCookies } from "react-cookie";
 import { useDispatch, useSelector } from "react-redux";
 import { Container, Row, Col } from "react-bootstrap";
-import profil from "../../../../../img/icons/TallProfil.png";
+/* import profil from "../../../../../img/icons/TallProfil.png"; */
+import { FaUserAlt } from "react-icons/fa";
 import Arrow from "../../../../../img/icons/Arrow_right.png";
 import { animate, motion } from "framer-motion";
 import { useAnimation } from "framer-motion";
@@ -89,7 +90,8 @@ const Profile = () => {
             <Container className="Session">
               <Row className="d-flex align-items-center">
                 <Col className="p-4 text-center">
-                  <img src={profil} title="MozeLogo" className="w-50" />
+                  {/* <img src={profil} title="MozeLogo" className="w-50" /> */}
+                  <FaUserAlt className="w-50" />
                   <p>{nameStored && nameStored}</p>
                 </Col>
               </Row>

@@ -1,8 +1,10 @@
-import React, { useEffect } from "react";
+import { useEffect } from "react";
+
 import { useNavigate, useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { Container, Row, Col } from "react-bootstrap";
-import UpVote from "../../../../../img/icons/upvote.png";
+/* import UpVote from "../../../../../img/icons/upvote.png"; */
+import { BiUpvote } from "react-icons/bi";
 import Footer from "../footer/footer";
 import MozeLogo from "../../../../../img/logos/MOZE.svg";
 import MusicPlayer from "../MusicPlayer/MusicPlayer";
@@ -64,8 +66,7 @@ const Starting = () => {
                       navigate(`/app/${sessionid}/music`);
                     }}
                   >
-                    {" "}
-                    Voir la playlist{" "}
+                    Voir la playlist
                   </button>
                 </Col>
               </Row>
@@ -87,7 +88,8 @@ const Starting = () => {
                         </div>
 
                         <div className="upVoteNbr ms-auto d-flex align-items-baseline">
-                          <img src={UpVote} title="Upvote" />
+                          {/* <img src={UpVote} title="Upvote" /> */}
+                          <BiUpvote />
                           <span className="p-2">20</span>
                         </div>
                       </div>
@@ -106,7 +108,7 @@ const Starting = () => {
                           </span>
                         </div>
                         <div className="upVoteNbr ms-auto d-flex align-items-baseline">
-                          <img src={UpVote} title="Upvote" />
+                          <BiUpvote />
                           <span className="p-2">20</span>
                         </div>
                       </div>
@@ -125,7 +127,7 @@ const Starting = () => {
                           </span>
                         </div>
                         <div className="upVoteNbr ms-auto d-flex align-items-baseline">
-                          <img src={UpVote} title="Upvote" />
+                          <BiUpvote />
                           <span className="p-2">20</span>
                         </div>
                       </div>
