@@ -4,6 +4,7 @@ const initialState = {
   displayResume: false,
   displayConfig: false,
   displayParams: false,
+  setDisplayApp: false,
 } as const;
 
 export const websiteWorkerSlice = createSlice({
@@ -19,11 +20,18 @@ export const websiteWorkerSlice = createSlice({
     setDisplayParams: (state, action) => {
       state.displayParams = action.payload;
     },
+    setDisplayApp: (state, action) => {
+      state.setDisplayApp = action.payload;
+    },
   },
 });
 
 // Reducers and actions
-export const { setDisplayResume, setDisplayConfig, setDisplayParams } =
-  websiteWorkerSlice.actions;
+export const {
+  setDisplayResume,
+  setDisplayConfig,
+  setDisplayParams,
+  setDisplayApp,
+} = websiteWorkerSlice.actions;
 
 export default websiteWorkerSlice.reducer;
