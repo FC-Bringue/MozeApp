@@ -518,7 +518,6 @@ class SpotifyController extends AbstractController
         ]);
     }
 
-
     /**
      * @Route("/api/set/spotify/playlist/previous/{idSession}", name="app_set_spotify_previous_playlist", methods={"GET", "POST"})
      */
@@ -635,6 +634,88 @@ class SpotifyController extends AbstractController
         return $this->json([
             'message' => 'Token sent',
             'token' => $token,
+        ]);
+    }
+
+    /**
+     * @Route("/api/search/spotify", name="app_search_spotify", methods={"GET", "POST"})
+     */
+    public function searchSpotify(HttpClientInterface $client, Request $request, SessionRepository $sessionRepository, EntityManagerInterface $entityManager): Response
+    {
+        $url = $_POST['url'];
+        $song = $_POST['song'];
+        $client_id = 'cbca15d571cc47e9818eb3558233bd97';
+        $client_secret = '48e424fe8f4b4bb6b6eb4da248f4534e';
+        $session = new SpotifySession($client_id, $client_secret);
+
+        $spotify = $entityManager->getRepository(ActiveSessionEntity::class)->findOneBy(['url' => $url])->getSession()->getUser()->getSpotify();
+        $session->setAccessToken($spotify->getToken());
+        $session->setRefreshToken($spotify->getRefreshToken());
+        $api = new SpotifyWebAPI();
+
+        $accessToken = $spotify->getToken();
+
+
+        $api->setAccessToken($accessToken);
+
+        while (true) {
+            try {
+                $results = $api->search($song, 'track', [
+                    'limit' => 10
+                ]);
+                break;
+            } catch (SpotifyWebAPIException $e) {
+                $session->refreshAccessToken($session->getRefreshToken());
+                $api->setAccessToken($session->getAccessToken());
+                $spotify->setToken($session->getAccessToken());
+                $entityManager->persist($spotify);
+                $entityManager->flush();
+            }
+        }
+        return $this->json([
+            'results' => $results->tracks->items,
+        ]);
+    }
+
+    /**
+     * @Route("/api/add/song/spotify", name="app_add_song_spotify", methods={"GET", "POST"})
+     */
+    public function addSongSpotify(HttpClientInterface $client, Request $request, SessionRepository $sessionRepository, EntityManagerInterface $entityManager): Response
+    {
+
+        $url = $_POST['url'];
+        // $song = $_POST['song'];
+        $activeSession = $entityManager->getRepository(ActiveSessionEntity::class)->findOneBy(['url' => $url]);
+        $musicQueue = $activeSession->getMusicQueue();
+        $currentIndex = $activeSession->getCurrentIndex();
+        // à partir de la position courante, on ajoute +1 à key
+        foreach ($musicQueue as $key => $music) {
+            $i = $key + 1;
+            if ($key > $currentIndex + 3) {
+                $musicQueue[$key]['key'] = $i;
+            }
+        }
+        // on coupe musicQueue en deux à la postiion currentIndex
+        $musicQueuepart1 = array_slice($musicQueue, 0, $currentIndex + 3);
+        // on ajoute la musique à la position currentIndex
+
+        $musicQueuepart1[$currentIndex + 3] = [
+            "id" => $_POST['songId'],
+            "nbrLike" => 0,
+            "key" => $currentIndex + 4,
+            "name" => $_POST['songName'],
+            "artist" => $_POST['songArtist'],
+            "cover" => $_POST['songImage'],
+        ];
+        $musicQueuepart2 = array_slice($musicQueue, $currentIndex + 4);
+        $musicQueue = array_merge($musicQueuepart1, $musicQueuepart2);
+
+        $activeSession->setMusicQueue($musicQueue);
+
+        $entityManager->persist($activeSession);
+        $entityManager->flush();
+        return $this->json([
+            'musicQueue' => $musicQueue,
         ]);
     }
 }
