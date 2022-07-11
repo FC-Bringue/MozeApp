@@ -68,7 +68,7 @@ class SessionController extends AbstractController
         $entityManager->flush();
 
 
-         $sessionId = $session->getId();
+        $sessionId = $session->getId();
 
         return $this->json([
             "sessionId" => $sessionId,
@@ -154,7 +154,7 @@ class SessionController extends AbstractController
     {
         $user = $entityManager->getRepository(User::class)->findOneBy(['id' => $idUser]);
         $ActiveSession = $user->getSessions()[0];
-        if($ActiveSession == null){
+        if ($ActiveSession == null) {
             return $this->json([
                 'message' => 'false',
             ]);
@@ -275,7 +275,6 @@ class SessionController extends AbstractController
         return $this->json([
             'sessions' => $sessions,
         ]);
-
     }
 
     //Create a route to delete a session who belong to the user and the session is not active
@@ -316,5 +315,4 @@ class SessionController extends AbstractController
             ]);
         }
     }
-
 }
