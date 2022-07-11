@@ -341,4 +341,27 @@ class SessionController extends AbstractController
             'song' => $currentSong,
         ]);
     }
+
+
+    /**
+     * @Route("/api/udpate/user", name="app_update_user_params", methods={"GET", "POST"})
+     */
+    public function updateUserParams(HttpClientInterface $client, Request $request, EntityManagerInterface $entityManager): Response
+    {
+        $user = $this->getUser();
+        if (isset($_POST['name'])) {
+            $user->setName($_POST['name']);
+        }
+        if (isset($_POST['email'])) {
+            $user->setEmail($_POST['email']);
+        }
+        if (isset($_POST['password'])) {
+            $user->setPassword($_POST['password']);
+        }
+        $entityManager->persist($user);
+        $entityManager->flush();
+        return $this->json([
+            'message' => 'Les paramètres ont été mis à jour',
+        ]);
+    }
 }

@@ -714,6 +714,56 @@ class SpotifyController extends AbstractController
 
         $entityManager->persist($activeSession);
         $entityManager->flush();
+
+        return $this->json([
+            'musicQueue' => $musicQueue,
+        ]);
+    }
+
+    /**
+     * @Route("/api/like/song/spotify", name="app_like_song_spotify", methods={"GET", "POST"})
+     */
+    public function likeSongSpotify(HttpClientInterface $client, Request $request, SessionRepository $sessionRepository, EntityManagerInterface $entityManager): Response
+    {
+        $url = $_POST['url'];
+        $songId = $_POST['songId'];
+        $activeSession = $entityManager->getRepository(ActiveSessionEntity::class)->findOneBy(['url' => $url]);
+        $musicQueue = $activeSession->getMusicQueue();
+        $currentIndex = $activeSession->getCurrentIndex();
+
+        foreach ($musicQueue as $key => $music) {
+            if ($music['id'] == $songId) {
+                $musicQueue[$key]['nbrLike'] = $music['nbrLike'] + 1;
+                $musicLiked = $music;
+                // on le supprime de la liste
+                unset($musicQueue[$key]);
+            }
+        }
+        // à partir de la position courante, on regarde quel est la musique la plus likée
+        foreach ($musicQueue as $key => $music) {
+            if ($key > $currentIndex) {
+                if ($music['nbrLike'] >= $musicLiked['nbrLike']) {
+                    // on ajoute la musique juste en dessous de la 
+                    dd('there is a song already liked higer than the current one');
+                    $partOne = array_slice($musicQueue, 0, $key);
+                    $partTwo = array_slice($musicQueue, $key);
+                    $partOne[$key] = $musicLiked;
+                    $partOne[$key]['key'] = $key + 1;
+                    foreach ($partTwo as $key2 => $music2) {
+                        $partTwo[$key2]['key'] = $key2 + $key + 2;
+                    }
+                    $musicQueue = array_merge($partOne, $partTwo);
+                } else {
+                    // on la mets directement en dessous de la musique en currentIndex
+                    $partOne = array_slice($musicQueue, 0, $currentIndex);
+                    dd($partOne);
+                }
+            }
+        }
+
+        $activeSession->setMusicQueue($musicQueue);
+        $entityManager->persist($activeSession);
+        $entityManager->flush();
         return $this->json([
             'musicQueue' => $musicQueue,
         ]);
