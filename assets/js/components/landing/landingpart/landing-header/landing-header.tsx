@@ -52,6 +52,7 @@ const Header: React.FC<{}> = () => {
                 <li className="nav-item">
                   <a
                     className="nav-link "
+                    style={{ cursor: "pointer" }}
                     aria-current="page"
                     onClick={async () => {
                       navigate(`/register`);
@@ -64,6 +65,7 @@ const Header: React.FC<{}> = () => {
                   <a
                     className="nav-link "
                     aria-current="page"
+                    style={{ cursor: "pointer" }}
                     onClick={async () => {
                       navigate(`/login`);
                     }}
