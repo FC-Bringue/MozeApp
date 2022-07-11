@@ -12,6 +12,7 @@ import {
 import { setDisplayResume } from "../../../helpers/redux/slices/websiteWorkerSlice";
 
 import Navigation from "../../Navigation";
+import PlayerSpotify from "../player/PlayerSpotify";
 import SessionContainer from "../session/SessionContainer";
 import Parametres from "../settings/Parametres";
 
@@ -97,6 +98,7 @@ const AuthedUsers = () => {
     <>
       <Navigation />
       <Outlet />
+      <PlayerSpotify />
     </>
   );
 };
