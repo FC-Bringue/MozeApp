@@ -830,33 +830,34 @@ class SpotifyController extends AbstractController
                 unset($musicQueue[$key]);
             }
         }
-        // à partir de la position courante, on regarde quel est la musique la plus likée
         foreach ($musicQueue as $key => $music) {
-            if ($key > $currentIndex - 1) {
-                if ($music['nbrLike'] <= $musicLiked['nbrLike']) {
-                    $partOne = array_slice($musicQueue, 0, $key);
-                    $partTwo = array_slice($musicQueue, $key);
-                    $partOne[$key] = $musicLiked;
-                    $partOne[$key]['key'] = $key + 1;
-                    foreach ($partTwo as $key2 => $music2) {
-                        $partTwo[$key2]['key'] = $key2 + $key + 2;
-                    }
-                    $musicQueue = array_merge($partOne, $partTwo);
-                }
-                // else {
-                //     // on la mets directement en dessous de la musique en currentIndex
-                //     $partOne = array_slice($musicQueue, 0, $currentIndex);
-                //     $partTwo = array_slice($musicQueue, $currentIndex);
 
-                //     $partOne[$key] = $musicLiked;
-                //     $partOne[$key]['key'] = $key + 1;
-                //     foreach ($partTwo as $key2 => $music2) {
-                //         dd($key2, $key, 2);
-                //         $partTwo[$key2]['key'] = $key2 + $key + 2;
-                //     }
-                // }
+            $musicQueue[$key]['key'] = $key + 1;
+        }
+
+
+
+        $musicQueuepart1 = array_slice($musicQueue, 0, $currentIndex);
+        $musicQueuepart1[$currentIndex + 1] = $musicLiked;
+        $musicQueuepart2 = array_slice($musicQueue, $currentIndex);
+        $musicQueue = array_merge($musicQueuepart1, $musicQueuepart2);
+        $musicPosition = $currentIndex + 1;
+
+        // on parcourt la liste et on vérifie si la musicPosition a plus de like que la prochaine music
+        // si la prochaine à plus ou égale de like on les échange de place
+        // sinon on break
+        for ($i = $musicPosition + 1; $i < count($musicQueue); $i++) {
+            if ($musicQueue[$i]['nbrLike'] >= $musicQueue[$musicPosition]['nbrLike']) {
+                $musicQueue[$i]['key'] = $musicPosition;
+                $musicQueue[$musicPosition]['key'] = $i;
+                $musicPosition = $i;
+            } else {
+                break;
             }
         }
+
+        dd($musicQueue);
+
 
         // on parcourt pour renvoyer false si 0 like on été trouvé
         // if (!$found) {
@@ -868,8 +869,8 @@ class SpotifyController extends AbstractController
         // }
 
         $activeSession->setMusicQueue($musicQueue);
-        $entityManager->persist($activeSession);
-        $entityManager->flush();
+        // $entityManager->persist($activeSession);
+        // $entityManager->flush();
         return $this->json([
             'musicQueue' => $musicQueue,
         ]);

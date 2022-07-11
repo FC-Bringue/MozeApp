@@ -4,16 +4,8 @@
 
 {% block body %}
 <div>
-    {# <div id="root"> #}
-    <div>
-        <script>
-            {# Subscribe to updates of several Book resources and to all Review resources matching the given pattern #}
-           const eventSource = new EventSource("{{ mercure('http://localhost/spotify')|escape('js') }}");
-            eventSource.onmessage = event => {
-                const data = JSON.parse(event.data);
-                console.log(data);
-            };
-        </script>
+    <div id="root">
+    
     </div>
 </div>
 {% endblock %}
