@@ -93,31 +93,21 @@ input {
   }
 }
 
-
-
-
 //landing
 
-
-.landing-header{
-
-  background-image:
-  linear-gradient(
-        rgba(0, 0, 0, 0.3), 
-        rgba(30, 30, 32, 100
-        )
-      ),
-  url(../../img/background/Background.png);
+.landing-header {
+  background-image: linear-gradient(rgba(0, 0, 0, 0.3), rgba(30, 30, 32, 100)),
+    url(../../img/background/Background.png);
   background-size: cover;
   min-height: 100vh;
-  .nav-link{
-    color: white!important;
+  .nav-link {
+    color: white !important;
     padding: 15px;
-    font-weight: bold!important;
+    font-weight: bold !important;
   }
-  .Header-content{
+  .Header-content {
     padding-top: 190px;
-    h1{
+    h1 {
       font-size: 60px;
       color: white;
       font-weight: 500;
@@ -126,71 +116,75 @@ input {
     }
   }
 }
-.landing-Content{
-  background: rgb(30,30,32);
-  background: linear-gradient(180deg, rgba(30,30,32,1) 48%, rgba( 70,69,69,1) 98%);
-  p{
+.landing-Content {
+  background: rgb(30, 30, 32);
+  background: linear-gradient(
+    180deg,
+    rgba(30, 30, 32, 1) 48%,
+    rgba(70, 69, 69, 1) 98%
+  );
+  p {
     text-align: center;
     color: white;
     font-size: 44px;
     line-height: 60px;
     padding-bottom: 50px;
   }
-  h2{
+  h2 {
     color: white;
     font-size: 44px;
     line-height: 60px;
     padding-bottom: 50px;
   }
- .colExample{
+  .colExample {
     color: white;
     font-size: 27px;
     font-weight: 600;
   }
-  .note{
+  .note {
     width: 112px;
   }
-  .Pourquoi{
+  .Pourquoi {
     padding-bottom: 10rem;
     overflow: hidden;
   }
-  .beige{
-    color: #FFDFA7;
+  .beige {
+    color: #ffdfa7;
   }
 }
 
-.landing-Footer{
-  background: rgb(70,69,69);
-  background: linear-gradient(180deg, rgba(70,69,69,1) 15%, rgba(122,118,118,1) 95%);
+.landing-Footer {
+  background: rgb(70, 69, 69);
+  background: linear-gradient(
+    180deg,
+    rgba(70, 69, 69, 1) 15%,
+    rgba(122, 118, 118, 1) 95%
+  );
 
-.footer-link{
-  .footer-title{
-    color: white;
+  .footer-link {
+    .footer-title {
+      color: white;
       font-weight: 600;
-  }
-  li{
-    list-style: none;
-  }
-  ul{
-    padding-left: 0px;
-  }
-  a{
-    color: white;
+    }
+    li {
+      list-style: none;
+    }
+    ul {
+      padding-left: 0px;
+    }
+    a {
+      color: white;
+    }
   }
 }
-}
-
-
-
 
 $circle-w: 50px;
 $circle-bg: #fff;
-$arrow-bg:#55544F;
-$body-bg: #9DDCDC;
-$bezier: cubic-bezier(0.770, 0.000, 0.175, 1.000);
-$bezier-bounce: cubic-bezier(.87,-.41,.19,1.44);
+$arrow-bg: #55544f;
+$body-bg: #9ddcdc;
+$bezier: cubic-bezier(0.77, 0, 0.175, 1);
+$bezier-bounce: cubic-bezier(0.87, -0.41, 0.19, 1.44);
 $anim-timing: 3s;
-
 
 .ico {
   margin: 0 auto;
@@ -208,33 +202,31 @@ $anim-timing: 3s;
     display: inline-block;
     height: $circle-w;
     width: $circle-w;
-    
+
     position: absolute;
     top: 50%;
-    left:50%;
+    left: 50%;
     transform: translateX(-50%) translateY(-50%);
     transform-origin: 0%;
-    
+
     &.circle-top {
       height: $circle-w / 3;
       width: $circle-w / 2.4;
       animation: blob-1-anim $anim-timing $bezier infinite;
       z-index: 0;
-      top:24px;
+      top: 24px;
     }
     &.circle-bottom {
       height: $circle-w / 3;
       width: $circle-w / 2.4;
-      animation: blob-2-anim $anim-timing $bezier  infinite;
+      animation: blob-2-anim $anim-timing $bezier infinite;
       z-index: 9;
-      bottom:0px;
+      bottom: 0px;
     }
-    
   }
-  
-  
-  .st-arrow{
-    fill:$arrow-bg;
+
+  .st-arrow {
+    fill: $arrow-bg;
     animation: scrolly $anim-timing $bezier forwards infinite;
     perspective: 9000px;
     transform: translateZ(0);
@@ -243,237 +235,232 @@ $anim-timing: 3s;
 }
 
 .svg {
-  z-index:9;
-  position:relative;
+  z-index: 9;
+  position: relative;
   width: 70px;
   top: 13px;
 }
-  
+
 @keyframes blob-1-anim {
-  0%{
-    transform:translateX(-50%) translateY(0);
+  0% {
+    transform: translateX(-50%) translateY(0);
   }
-  14%{
-    transform:translateX(-50%) translateY(-8px);
+  14% {
+    transform: translateX(-50%) translateY(-8px);
   }
   24% {
-    transform:translateX(-50%) translateY(0);
+    transform: translateX(-50%) translateY(0);
   }
   100% {
-    transform:translateX(-50%) translateY(0);
+    transform: translateX(-50%) translateY(0);
   }
 }
 
 @keyframes blob-2-anim {
   0% {
     //transform: scale(1) translate(-50%,-150%);
-    transform: scale(1) translate(-50%,10px);
+    transform: scale(1) translate(-50%, 10px);
   }
   30% {
     //transform: scale(1) translate(-50%,-50%);
-    transform: scale(1) translate(-50%,10px);
+    transform: scale(1) translate(-50%, 10px);
   }
   70% {
     //transform: scale(1) translate(-50%,-50%);
-    transform: scale(1) translate(-50%,10px);
-    
+    transform: scale(1) translate(-50%, 10px);
   }
   95% {
     //transform: scale(1) translate(-50%,-50%);
-    transform: scale(1) translate(-50%,26px);
-    
-    
+    transform: scale(1) translate(-50%, 26px);
   }
   100% {
     //transform: scaleX(1.5) translate(-50%,140%);
-    transform: scale(1) translate(-50%,10px);
+    transform: scale(1) translate(-50%, 10px);
   }
 }
 
 @keyframes scrolly {
   0% {
-    transform: translate3d(0,-150%,0) rotateX(90deg) scale(0.5) skewX(3deg);
+    transform: translate3d(0, -150%, 0) rotateX(90deg) scale(0.5) skewX(3deg);
   }
   30% {
-    transform: translate3d(0,0,0) rotateX(0deg) scale(1) skewX(0deg);
+    transform: translate3d(0, 0, 0) rotateX(0deg) scale(1) skewX(0deg);
   }
   70% {
-    transform: translate3d(0,0,0) rotateX(0deg) scale(1) skewX(0deg);
+    transform: translate3d(0, 0, 0) rotateX(0deg) scale(1) skewX(0deg);
   }
   95% {
-    transform: translate3d(0,50%,0) rotateX(-90deg) scale(0.5) skewX(-3deg);
+    transform: translate3d(0, 50%, 0) rotateX(-90deg) scale(0.5) skewX(-3deg);
   }
   100% {
-    transform: translate3d(0,50%,0) rotateX(-90deg) scale(0.5) skewX(-3deg);
+    transform: translate3d(0, 50%, 0) rotateX(-90deg) scale(0.5) skewX(-3deg);
   }
 }
 
-
 //AppUser
 
-
-.AppUser{
-  background: rgb(0,0,0);
-  background: linear-gradient(180deg, rgba(0,0,0,0.74) 0%, rgba(0,0,0,0.94) 100%);
-//starting
-  .Starting{
+.AppUser {
+  background: rgb(0, 0, 0);
+  background: linear-gradient(
+    180deg,
+    rgba(0, 0, 0, 0.74) 0%,
+    rgba(57, 57, 57, 0.94) 100%
+  );
+  //starting
+  .Starting {
     height: 100vh;
   }
-  .logoCenter{
+  .logoCenter {
     text-align: center;
     top: 45vh;
     position: relative;
-    img{
+    img {
       max-width: 300px;
     }
-
   }
   //SessionName
-  .SessionName{
+  .SessionName {
     color: white;
     height: 100vh;
-    .row{
+    .row {
       height: 33vh;
     }
-    h2{font-size: 7em;}
+    h2 {
+      font-size: 7em;
+    }
   }
-  .name{
+  .name {
     width: inherit;
     height: 5rem;
     border-radius: 15px;
     font-size: 2rem;
   }
-  span{
+  span {
     font-size: 2rem;
   }
-  .send{
+  .send {
     border: 1px solid;
     border-radius: 50px;
     padding: 10px;
   }
 }
 
-.musicListe{
+.musicListe {
   max-height: 54vh;
   overflow: scroll;
-    .MusicPlayerImageTitle{
-      padding-left: 0;
-      padding-right: 0;
-    }
-    ul{
-      list-style: none;
-    }
+  .MusicPlayerImageTitle {
+    padding-left: 0;
+    padding-right: 0;
+  }
+  ul {
+    list-style: none;
+  }
 }
 
-.RunningSession{
+.RunningSession {
   height: 100vh;
-  .SessionName{
+  .SessionName {
     height: 33vh;
     align-items: center;
   }
-  h3{
+  h3 {
     font-size: 3rem;
     color: white;
   }
-  .playlistBtn{
+  .playlistBtn {
     background: none;
     border: 1px solid white;
     color: white;
     border-radius: 10px;
     font-size: 19px;
   }
-  .title{
+  .title {
     word-break: break-all;
   }
-  .upVoteNbr{
-    color: #B8B8B8;
-    img{
-      width: 40px!important;
+  .upVoteNbr {
+    color: #b8b8b8;
+    img {
+      width: 40px !important;
       margin-right: 0;
     }
-   
   }
 }
 //footer app
 
-.footerApp{
+.footerApp {
   position: absolute;
   bottom: 0;
   background-color: #212121;
-  .row{
+  .row {
     height: 8em;
     margin: 0;
   }
-  label{
+  label {
     margin: 0 auto;
   }
-  .footerIcon{
+  .footerIcon {
     width: 70px;
   }
 }
 
 //musicplayer
-.MusicPlayer{
+.MusicPlayer {
   position: absolute;
-    bottom: 133px;
-    background-color: #212121;
-    width: 100%;
+  bottom: 133px;
+  background-color: #212121;
+  width: 100%;
 }
-.MusicPlayerContainer{
+.MusicPlayerContainer {
   width: 100%;
   display: flex;
   flex-direction: row;
   justify-content: space-evenly;
 }
-.MusicPlayerImageTitle{
+.MusicPlayerImageTitle {
   padding: 1rem 3rem;
   display: flex;
   flex-direction: row;
-  width: auto!important;
-  img{
-    width: 135px!important;
+  width: auto !important;
+  img {
+    width: 135px !important;
     height: auto;
     margin-right: 25px;
   }
-  
 }
-.MusicPlayerInfo{
+.MusicPlayerInfo {
   display: flex;
   flex-direction: column;
 }
-.MusicPlayerImage{
+.MusicPlayerImage {
   width: 60px;
   height: 60px;
   border-radius: 5px;
 }
 
-.MusicPlayerTitle{
+.MusicPlayerTitle {
   /* kaleko bold en 20px */
-  font-family: 'Kaleko 105';
+  font-family: "Kaleko 105";
   font-size: 20px;
   /* color FFFFF */
-  color: #FFFFFF;
+  color: #ffffff;
 }
-.MusicPlayerArtist{
-  color: #B8B8B8;
+.MusicPlayerArtist {
+  color: #b8b8b8;
 }
 
-.MusicPlayerBar{
+.MusicPlayerBar {
   width: 100%;
   align-items: center;
   /* on mets à droite */
   /* justify-content: flex-end; */
-  
 }
-.MusicPlayerBarFill{
-  background: #D8D8D8;
+.MusicPlayerBarFill {
+  background: #d8d8d8;
   border-radius: 3px;
   height: 10px;
- 
-
 }
 
-.MusicPlayerBarFillRect{
+.MusicPlayerBarFillRect {
   position: relative;
   background: #b24040;
   border-radius: 3px;
@@ -482,25 +469,27 @@ $anim-timing: 3s;
   /* on centre en hauteur*/
 }
 
-
-//music search 
-.appMusicSearh{
-min-height: 100vh;
-.search{
-  width: 80%;
+//music search
+.appMusicSearh {
+  min-height: 100vh;
+  .search {
+    width: 80%;
     height: 51px;
     border-radius: 10px;
-}
-.send{border-color:   white;}
-span{color: #B8B8B8;}
+  }
+  .send {
+    border-color: white;
+  }
+  span {
+    color: #b8b8b8;
+  }
 }
 
 //appprofile
-.AppProfile{
+.AppProfile {
   height: 100vh;
   color: white;
-  p{
+  p {
     font-size: 3rem;
-
   }
 }

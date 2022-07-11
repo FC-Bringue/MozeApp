@@ -14,6 +14,8 @@ import {
   setNameGuest,
   setTokenGuest,
 } from "../../../../../helpers/redux/slices/guestSlice";
+import Loader from "../sessionName/loader";
+import { setDisplayApp } from "../../../../../helpers/redux/slices/websiteWorkerSlice";
 
 const Profile = () => {
   const navigate = useNavigate();
@@ -25,8 +27,10 @@ const Profile = () => {
   const { sessionid } = useParams();
   const tokenStored = useSelector((state: any) => state.guest.tokenGuest);
   const nameStored = useSelector((state: any) => state.guest.nameGuest);
-
+  const loader = useSelector((state: any) => state.websiteWorker.displayApp);
   useEffect(() => {
+    dispatch(setDisplayApp(false));
+    console.log(tokenStored);
     axios
       .post(
         "/api/get/isAlreadyCreated",
@@ -37,11 +41,11 @@ const Profile = () => {
       )
       .then((res) => {
         console.log(res.data.message);
-        if (res.data.message) {
-          navigate(`/app/${sessionid}/profile`);
-        } else {
+
+        if (!res.data.message) {
           navigate(`/app/${sessionid}/addguest`);
         }
+        dispatch(setDisplayApp(true));
       })
       .catch((err) => {
         console.log(err);
@@ -79,35 +83,41 @@ const Profile = () => {
   }
   return (
     <>
-      <div className="AppProfile">
-        <Container className="Session">
-          <Row className="d-flex align-items-center">
-            <Col className="p-4 text-center">
-              <img src={profil} title="MozeLogo" className="w-50" />
-              <p>{nameStored && nameStored}</p>
-            </Col>
-          </Row>
-          <Row>
-            <span>changer le pseudo :</span>
-          </Row>
-          <Row>
-            <Col className="d-flex align-items-center">
-              <input
-                type="search"
-                name="name"
-                className="name"
-                placeholder="Ex : xX_jf_Xx"
-                onChange={(event) => setUsername(event.target.value)}
-              />
-              <div className="send ms-3" onClick={addPseudo}>
-                <img src={Arrow} title="MozeLogo" className="w-100" />
-              </div>
-            </Col>
-          </Row>
-        </Container>
-      </div>
-      <MusicPlayer />
-      <Footer />
+      {loader ? (
+        <>
+          <div className="AppProfile">
+            <Container className="Session">
+              <Row className="d-flex align-items-center">
+                <Col className="p-4 text-center">
+                  <img src={profil} title="MozeLogo" className="w-50" />
+                  <p>{nameStored && nameStored}</p>
+                </Col>
+              </Row>
+              <Row>
+                <span>changer le pseudo :</span>
+              </Row>
+              <Row>
+                <Col className="d-flex align-items-center">
+                  <input
+                    type="search"
+                    name="name"
+                    className="name"
+                    placeholder="Ex : xX_jf_Xx"
+                    onChange={(event) => setUsername(event.target.value)}
+                  />
+                  <div className="send ms-3" onClick={addPseudo}>
+                    <img src={Arrow} title="MozeLogo" className="w-100" />
+                  </div>
+                </Col>
+              </Row>
+            </Container>
+          </div>
+          <MusicPlayer />
+          <Footer />
+        </>
+      ) : (
+        <Loader />
+      )}
     </>
   );
 };
