@@ -19,7 +19,7 @@
 #general > .generalName > div {
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  margin-top: 60px;
 }
 
 #general > .generalName > div > input {
@@ -36,12 +36,6 @@
   margin-right: auto;
   margin-left: auto;
   width: 200px;
-}
-
-#general > .generalName > div {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
 }
 
 #general > .generalName > div > input {
