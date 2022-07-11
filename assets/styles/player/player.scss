@@ -11,6 +11,8 @@
   border-radius: 1.5em;
 
   > .infos {
+    display: flex;
+    justify-content: space-between;
     > .name {
       > h1 {
         font-size: 1.5em;

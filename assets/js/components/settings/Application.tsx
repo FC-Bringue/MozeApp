@@ -37,15 +37,12 @@ const Application = () => {
     axios
       .get("/api/get/isConnected", config)
       .then((res) => {
-        const isConnected = useSelector(
-          (state: any) => state.userInfos.isConnected
-        );
         console.log("isLOggedToSpotify", res.data);
         dispatch(setIsLoggedToSpotify(true));
         dispatch(setDisplayParams(true));
       })
       .catch((err) => {
-        console.log("isLOggedToSpotify", err);
+        console.log("isLOggedToSpotifyERR", err);
         dispatch(setIsLoggedToSpotify(false));
         dispatch(setDisplayParams(true));
       });
