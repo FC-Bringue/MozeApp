@@ -1,15 +1,15 @@
 body {
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
+    "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-    background-color: #302F2C !important;
+  background-color: #302f2c !important;
 }
 
 code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
     monospace;
 }
 
@@ -22,6 +22,9 @@ code {
   width: 40% !important;
 }
 
+#TV {
+}
+
 #MusicList {
   display: flex;
   flex-direction: column;
@@ -29,7 +32,7 @@ code {
   margin-right: auto;
   overflow: hidden;
   max-height: 65vh;
-  /* -ms-overflow-style: none; 
+  /* -ms-overflow-style: none;
   scrollbar-width: none; */
 }
 

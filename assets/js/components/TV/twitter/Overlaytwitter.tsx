@@ -5,6 +5,7 @@ import Cellule from "./Cellule";
 import { TwitterResponse } from "../../../../helpers/propsType/TwitterResponse";
 import { twitterjson } from "../../../../helpers/sample/twitter.json";
 import "../../../../styles/TV/Twitter.css";
+import axios from "axios";
 // import { twi_response } from "../../helpers/sample/twitter.json";
 
 const Overlaytwitter = () => {
@@ -15,8 +16,14 @@ const Overlaytwitter = () => {
   const [celluleHeight, setCelluleHeight] = useState<number | any>(0);
 
   useEffect(() => {
-    setGetHashtag(twitterjson);
-    console.log(getHashtag);
+    axios
+      .get("/api/twitter/getHashtag?hashtag=" + getHashtag.hashtag)
+      .then((res: any) => {
+        setGetHashtag(res.data);
+      })
+      .catch((err: any) => {
+        console.log(err);
+      });
   }, []);
 
   return (
@@ -58,7 +65,10 @@ const Overlaytwitter = () => {
             width="35"
             height="35"
           ></img>
-          <p className="head_twibox" style={{ color: "white", margin: "5px" }}> Current Feed : </p>
+          <p className="head_twibox" style={{ color: "white", margin: "5px" }}>
+            {" "}
+            Current Feed :{" "}
+          </p>
           <p className="head_twibox">#DYING</p>
         </div>
 
@@ -67,13 +77,7 @@ const Overlaytwitter = () => {
             (tweet: TwitterResponse, id: number, item: any) => {
               const userData = getHashtag.result.includes.users![id];
               const test = getHashtag.result.data![id];
-              return (
-                <Cellule
-                  key={id}
-                  tweetData={test}
-                  userData={userData}
-                />
-              );
+              return <Cellule key={id} tweetData={test} userData={userData} />;
             }
           )}
       </section>
