@@ -4,6 +4,7 @@ import { ImCross, ImArrowRight2, ImArrowLeft2 } from "react-icons/im";
 import { BsCheckLg } from "react-icons/bs";
 import Switch from "react-switch";
 import { Bars } from "react-loader-spinner";
+import SimpleBar from "simplebar-react";
 
 import { useEffect, useState } from "react";
 import "../../../styles/session/lights/lights.scss";
@@ -11,6 +12,7 @@ import axios from "axios";
 
 import {
   setNewSessionLights,
+  setTmpLights,
   setTmpSession,
 } from "../../../helpers/redux/slices/tempSlice";
 import { setNewSessionName } from "../../../helpers/redux/slices/tempSlice";
@@ -45,6 +47,7 @@ const SessionConfig = () => {
   const displayConfig = useSelector(
     (state: any) => state.websiteWorker.displayConfig
   );
+  const tmpLights = useSelector((state: any) => state.tempSlice.tmpLights);
 
   const [isChecked, setIsChecked] = useState(false);
 
@@ -94,6 +97,7 @@ const SessionConfig = () => {
               id: res.idPlaylist,
             })
           );
+          dispatch(setTmpLights(res.lights));
           dispatch(setDisplayConfig(true));
         })
         .catch((err) => {
@@ -105,6 +109,7 @@ const SessionConfig = () => {
               id: null,
             })
           );
+          dispatch(setTmpLights(null));
         });
     } else if (tmpSession) {
       dispatch(setDisplayConfig(true));
@@ -212,6 +217,7 @@ const SessionConfig = () => {
                           checkedIcon={false}
                           height={30}
                           width={50}
+                          className={activeSession && "hidden"}
                         />
                         <HiOutlineTrash
                           size={"3em"}
@@ -262,6 +268,7 @@ const SessionConfig = () => {
                 onClick={() => {
                   navigate("config-lights");
                 }}
+                className={"tmpLights"}
               >
                 <h2>Lumieres</h2>
                 <p>
@@ -269,22 +276,25 @@ const SessionConfig = () => {
                   lumières que vous voulez !
                 </p>
                 <div>
-                  <div>
+                  <div className="nmbLights">
                     <p>
                       Nombres de lumieres configurées :{" "}
-                      {getTmpLights && getTmpLights.lengths}
+                      {tmpLights && tmpLights.length}
                     </p>
                   </div>
-                  <div>
+                  <div className="IPLights">
                     <p>IPs des lumieres :</p>
-                    {getTmpLights &&
-                      getTmpLights.lights.map((light: any) => {
-                        return <p>{light.ip}</p>;
-                      })}
+                    <ul>
+                      {tmpLights &&
+                        tmpLights.map((light: any) => {
+                          return <li>{light.ip}</li>;
+                        })}
+                    </ul>
                   </div>
                 </div>
               </div>
-              <div
+              {/* Events non disponible pour le moment */}
+              {/* <div
                 onClick={() => {
                   navigate("config-events");
                 }}
@@ -292,7 +302,7 @@ const SessionConfig = () => {
                 <h2>Evenements</h2>
                 <p>Proposez a vos invités des activités qui vous plairont !</p>
                 <div>ACTIF - CURRENT COLOR</div>
-              </div>
+              </div> */}
             </div>
             {onNew && (
               <div className="containerBtn">
@@ -322,7 +332,7 @@ const SessionConfig = () => {
                             urlPlaylist: getTmpPlaylist.images[0].url,
                             PlaylistName: getTmpPlaylist.name,
                             hashtag: getTmpHashtag,
-                            lights: getTmpLights,
+                            lights: tmpLights,
                             events: [],
                           },
                           config
@@ -341,7 +351,7 @@ const SessionConfig = () => {
                                 urlPlaylist: getTmpPlaylist.images[0].url,
                                 PlaylistName: getTmpPlaylist.name,
                                 hashtag: getTmpHashtag,
-                                lights: getTmpLights,
+                                lights: tmpLights,
                                 events: [],
                               },
                             })
@@ -361,7 +371,7 @@ const SessionConfig = () => {
                         });
                     }}
                   >
-                    <p>SUIVANT</p>
+                    <p>SAUVEGARDER</p>
                     <BsCheckLg size={"2em"} />
                   </div>
                 ) : (
@@ -376,7 +386,7 @@ const SessionConfig = () => {
                             urlPlaylist: getTmpPlaylist.images[0].url,
                             PlaylistName: getTmpPlaylist.name,
                             hashtag: getTmpHashtag,
-                            lights: getTmpLights,
+                            lights: tmpLights,
                             events: [],
                           },
                         })
