@@ -7,18 +7,20 @@ import registerSlice from "./slices/registerSlice";
 import loginSlice from "./slices/loginSlice";
 import userInfosSlice from "./slices/userInfosSlice";
 import tempSlice from "./slices/tempSlice";
+import guestSlice from "./slices/guestSlice";
 
 const reducers = combineReducers({
   register: registerSlice,
   login: loginSlice,
   userInfos: userInfosSlice,
   tempSlice: tempSlice,
+  guest: guestSlice
 });
 
 const persistConfig = {
   key: "root",
   storage,
-  whitelist: ["userInfos"],
+  whitelist: ["userInfos","guest"],
 };
 
 const persistedReducer = persistReducer(persistConfig, reducers);

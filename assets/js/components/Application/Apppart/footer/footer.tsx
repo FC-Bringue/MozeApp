@@ -4,16 +4,17 @@ import btnleft from "../../../../../img/icons/Sort.png";
 import btnmid from "../../../../../img/icons/Vector.png";
 import btnright from "../../../../../img/icons/profil.png";
 import { animate, motion } from "framer-motion"
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 
 const Starting: React.FC<{}> = () => {
     const navigate = useNavigate();
+    const {sessionid} = useParams();
     return(
         <section className='footerApp w-100'>
             <Row>
                 <Col className='d-flex  align-items-center'>
                     <motion.label  whileHover={{scale: 1.2}} initial={{scale: 1}}>
-                        <div id="navigate-Acceuil" onClick={async () => { navigate("acceuil")}}>
+                        <div id="navigate-Acceuil" onClick={async () => { navigate(`/app/${sessionid}/acceuil`)}}>
                             <img src={btnleft} title="MozeLogo" className='footerIcon'/>
                         </div>
                     </motion.label>
@@ -30,7 +31,7 @@ const Starting: React.FC<{}> = () => {
                 
                 <Col className='d-flex  align-items-center'>
                     <motion.label  whileHover={{scale: 1.2}} initial={{scale: 1}}>
-                         <div id="navigate-Profile" onClick={async () => { navigate("profile")}}>
+                         <div id="navigate-Profile" onClick={async () => { navigate(`/app/${sessionid}/profile`)}}>
                             <img src={btnright} title="MozeLogo" className='footerIcon'/>
                         </div>
                     </motion.label>

@@ -429,11 +429,13 @@ $anim-timing: 3s;
   padding: 1rem 3rem;
   display: flex;
   flex-direction: row;
+  width: auto!important;
   img{
     width: 135px!important;
     height: auto;
     margin-right: 25px;
   }
+  
 }
 .MusicPlayerInfo{
   display: flex;

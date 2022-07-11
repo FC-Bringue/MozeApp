@@ -1,16 +1,40 @@
-import React from 'react';
-import { useNavigate } from "react-router-dom";
+import React, {useEffect} from 'react';
+import { useNavigate, useParams } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
 import { Container, Row, Col } from 'react-bootstrap';
 import UpVote from "../../../../../img/icons/upvote.png";
-import { animate, motion } from "framer-motion"
-import { useAnimation } from 'framer-motion';
 import Footer  from '../footer/footer';
 import MozeLogo from "../../../../../img/logos/MOZE.png";
 import MusicPlayer  from '../MusicPlayer/MusicPlayer';
+import axios from 'axios';
 
 
-const Starting: React.FC<{}> = () => {
+
+const Starting = () => {
+
     const navigate = useNavigate();
+    const {sessionid} = useParams();
+
+    const tokenStored = useSelector((state:any)=>state.guest.tokenGuest)
+    
+    useEffect(()=>{
+
+        axios
+        .post("/api/get/isAlreadyCreated",{
+            token:tokenStored},
+            {headers:{"Content-Type" : "multipart/form-data"}}
+        ).then((res)=>{
+            console.log(res.data.message)
+            if (res.data.message){
+                navigate(`/app/${sessionid}/acceuil`)
+            }else{
+                navigate(`/app/${sessionid}/addguest`)
+            }
+        }).catch((err)=>{
+            console.log(err)
+        })
+
+    },[])
     return(
         <div className='RunningSession'>
             <Container className='Session'>
@@ -20,11 +44,11 @@ const Starting: React.FC<{}> = () => {
                      </Col>
                 </Row>
                 <Row className='d-flex align-items-center text-center'>
-                    <Col lg={9} sm={9} xs={9} className='title'>
+                    <Col lg={9} sm={9} xs={9}>
                         <h3 className='w-80'>prochaine musiques</h3>
                     </Col>
                     <Col lg={3} sm={3} xs={3} className=''>
-                        <button className='playlistBtn'  onClick={async () => { navigate("search")}}> Voir la playlist </button>
+                        <button className='playlistBtn'  onClick={async () => { navigate(`/app/${sessionid}/music`)}}> Voir la playlist </button>
                     </Col>
                 </Row>
                 <Row>

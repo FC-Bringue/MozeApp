@@ -1,46 +1,87 @@
 import React, {useState, useEffect} from 'react';
 import { useDispatch, useSelector } from "react-redux";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { Container, Row, Col } from 'react-bootstrap';
 import Arrow from "../../../../../img/icons/Arrow_right.png";
 import { animate, motion } from "framer-motion"
 import { useAnimation } from 'framer-motion';
 import { useCookies } from "react-cookie";
+import axios from 'axios';
+import {setNameGuest, setTokenGuest} from '../../../../../helpers/redux/slices/guestSlice';
+
 
 
 
 
 const Pseudo = () => {
+    const {sessionid} = useParams();
     const navigate = useNavigate();
     const dispatch = useDispatch();
     const pseudo = useSelector((state: any) => state.login.pseudo);
-    const [cookies, setCookie, removeCookie] = useCookies(["user"]);
+    const [cookies, setCookie, removeCookie] = useCookies(["user","token","sessionUrl"]);
     const [name, setUsername] = useState('')
-    const [token, setuserToken] = useState('')
+    const token = (Math.random() + 1).toString(36).substring(7);
+    const queryString = window.location.search;
+    const urlParams = new URLSearchParams(queryString);
+    const tokenStored = useSelector((state:any)=>state.guest.tokenGuest)
 
+    useEffect(()=>{
+
+        axios
+        .post("/api/get/isAlreadyCreated",{
+            token:tokenStored},
+            {headers:{"Content-Type" : "multipart/form-data"}}
+        ).then((res)=>{
+            console.log(res.data.message)
+            if (res.data.message){
+                navigate(`/app/${sessionid}/acceuil`)
+            }else{
+                navigate(`/app/${sessionid}/addguest`)
+            }
+        }).catch((err)=>{
+            console.log(err)
+        })
+
+    },[])
    
 
 
     function handleCookie() {
-        setCookie("user", name, {
-          path: "/"
-        });
-        
-
+        setCookie("user", name, {path: "/"});
+        setCookie("token", token, {path: "/"});
+        dispatch(setNameGuest(name));
+        dispatch(setTokenGuest(token));
       }
       function handleRemoveCookie() {
         removeCookie("user");
       }
    
-      function addPseudo(){
+      function addGuest(){
         handleRemoveCookie();
         handleCookie();
-        let r = (Math.random() + 1).toString(36).substring(7);
-        console.log(    r);
-        navigate('acceuil')
+        console.log( token);
+        {console.log(name)}
+         
+        
+        axios.post("/api/set/guest/"+sessionid,{name:name,token:token},{headers:{"Content-Type" : "multipart/form-data"}}).then((res)=>{
+            console.log(res)
+            console.log(res.status);
+            if (res.status === 200){
+                navigate(`/app/${sessionid}/acceuil`)
+            }else{
+                navigate(`/app/${sessionid}/addguest`)
+            }
+        }).catch((err)=>{
+            console.log(err)
+        })
+    
     }
 
-      {console.log(name)}
+
+    
+      
+
+      
     return(
         <>
        <Container className='SessionName'>
@@ -66,7 +107,7 @@ const Pseudo = () => {
             <Row>
                 <Col className='text-center'>
                     <motion.label  whileHover={{scale: 1.2}} initial={{scale: 1}}>
-                        <div className='send'  onClick={addPseudo} >
+                        <div className='send'  onClick={addGuest} >
                             <img src={Arrow} title="MozeLogo" className='w-100'/>
                         </div>
                     </motion.label>

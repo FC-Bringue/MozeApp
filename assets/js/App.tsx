@@ -19,6 +19,12 @@ import SessionConfig from "./components/session/SessionConfig";
 import Lights from "./components/session/lights/Step0Lights";
 import ListIt from "./components/session/SessionList";
 import Appuser from "./components/Application/Appuser";
+import AppMusicSearch from "./components/Application/Apppart/AppMusicSearch/AppMusicSearch";
+import AppPlaylist from "./components/Application/Apppart/AppPlaylist/AppPlaylist";
+import Acceuil from "./components/Application/Apppart/AppAcceuil/AppAccueil";
+import UserProfile from "./components/Application/Apppart/AppProfile/AppProfile";
+import SessionName from "./components/Application/Apppart/sessionName/sessionApp";
+
 import AppContainer from "./components/Application/AppContainer";
 
 
@@ -62,12 +68,16 @@ const App = () => {
           <Route path=":sessionID" element={<Parametres />} />
         </Route>
 
-        <Route path="app" element={<AppContainer/>} >
-          <Route path=":applicationSection" element={<AppContainer/>} />
+        <Route path="app/:sessionid" element={<AppContainer/>} >
+        {/* <Route path=":applicationSection" element={<AppContainer/>} /> */}
+          <Route path="search" element={<AppMusicSearch/>} />
+          <Route path="music" element={<AppPlaylist/>} />
+          <Route path="acceuil" element={<Acceuil/>} />
+          <Route path="profile" element={<UserProfile/>} />
+          <Route path="addGuest" element={<SessionName/>} />
         </Route>
 
         <Route path="login" element={<Login />} />
-        <Route path="App" element={<Appuser />} />
         <Route path="register" element={<Signup />} />
         <Route path="/" element={<Index />} />
         {/* END */}
