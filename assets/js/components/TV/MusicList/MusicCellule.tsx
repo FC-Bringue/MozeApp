@@ -32,6 +32,9 @@ const MusicCellule = ({
       className={
         "cellule " + (musicName === "Time Machine" ? "activeMusic" : "hidden")
       }
+      style={{
+        translateY: "200px",
+      }}
       animate={{ y: -celluleHeight }}
       transition={{ /* repeat: Infinity, ease: "easeInOut", */ duration: 25 }}
       ref={celluleRef}
