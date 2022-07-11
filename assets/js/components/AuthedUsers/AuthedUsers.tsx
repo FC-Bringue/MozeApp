@@ -27,6 +27,10 @@ const AuthedUsers = () => {
     (state: any) => state.userInfos.isLoggedToSpotify
   );
 
+  const sessionActiveURL = useSelector(
+    (state: any) => state.active.urlActiveSession
+  );
+
   useEffect(() => {
     if (!bearerToken) {
       navigate("/login");
@@ -126,7 +130,7 @@ const AuthedUsers = () => {
     <>
       <Navigation />
       <Outlet />
-      <PlayerSpotify />
+      {sessionActiveURL && <PlayerSpotify />}
     </>
   );
 };

@@ -1019,4 +1019,5 @@ class SpotifyController extends AbstractController
             'message' => 'Music correctly played'
         ]);
     }
+
 }

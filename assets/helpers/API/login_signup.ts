@@ -3,8 +3,8 @@ import { useDispatch } from "react-redux";
 import { setToken } from "../redux/slices/userInfosSlice";
 import { createUserProps, loginUserProps } from "../types/login_signup";
 
-export const createUser = (infos: createUserProps) => {
-  axios
+export const createUser = async (infos: createUserProps) => {
+  var restmp = await axios
     .post("/api/users", {
       email: infos.email,
       password: infos.password,
@@ -12,12 +12,14 @@ export const createUser = (infos: createUserProps) => {
     })
     .then((res) => {
       console.log(res);
-      return { message: "successful connexion", infos: "[PLACEHOLDR]" };
+      return res;
     })
     .catch((err) => {
       console.log(err);
-      return { message: "successful connexion", infos: "[PLACEHOLDR]" };
+      return err;
     });
+
+  return restmp;
 };
 
 export const loginUser = async (infos: loginUserProps) => {
