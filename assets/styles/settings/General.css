@@ -1,77 +1,113 @@
 #general {
-    display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
-    justify-content: center;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: center;
 }
 
 #general > form {
-    display: flex;
-    justify-content: space-around;
-    margin-top: 1em;
-    margin-bottom: 1em;
-    font-weight: 700;
-    text-align: center;
-    width: 400px;
-    height: 400px;
+  display: flex;
+  justify-content: space-around;
+  margin-top: 1em;
+  margin-bottom: 1em;
+  font-weight: 700;
+  text-align: center;
+  width: 350px;
+  height: 350px;
 }
 
-
-#general > .generalLog {
-    border-right: 1px solid;
-    border-color: white;
-
+#general > .generalName > div {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 }
 
-#general > .generalLog > div {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
+#general > .generalName > div > input {
+  margin-top: 10px;
+  margin-bottom: 10px;
+  margin-right: auto;
+  margin-left: auto;
+  width: 300px;
 }
 
-#general > .generalLog > div > input {
-    margin-top: 10px;
-    margin-bottom: 10px;
-    margin-right: auto;
-    margin-left: auto;
-    width: 300px;
+#general > .generalName > div > button {
+  border-radius: 5px;
+  margin-top: 30px;
+  margin-right: auto;
+  margin-left: auto;
+  width: 200px;
 }
 
-#general > .generalLog > div > button  {
-    border:  solid;
-    border-color: grey;
-    border-radius: 5px;
-    margin-top: 30px;
-    margin-right: auto;
-    margin-left: auto;
-    width: 200px;
+#general > .generalName > div {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 }
 
-#general > .generalReinit > div > input {
-    margin-top: 10px;
-    margin-bottom: 10px;
-    margin-right: auto;
-    margin-left: auto;
-    width: 300px;
+#general > .generalName > div > input {
+  margin-top: 20px;
 }
 
-#general > .generalReinit > div > button  {
-    border:  solid;
-    border-color: grey;
-    border-radius: 5px;
-    margin-top: 30px;
-    margin-right: auto;
-    margin-left: auto;
-    width: 200px;
+#general > .generalReinitMail > div {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 }
 
-#general > .generalReinit > div {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
+#general > .generalReinitMail > div > input {
+  margin-top: 10px;
+  margin-bottom: 10px;
+  margin-right: auto;
+  margin-left: auto;
+  width: 300px;
 }
 
+#general > .generalReinitMail > div > button {
+  border-radius: 5px;
+  margin-top: 30px;
+  margin-right: auto;
+  margin-left: auto;
+  width: 200px;
+}
 
-#general > .generalReinit > div > input {
-    margin-top: 20px;
+#general > .generalReinitMail > div {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+#general > .generalReinitMail > div > input {
+  margin-top: 20px;
+}
+
+#general > .generalReinitPassword > div {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+#general > .generalReinitPassword > div > input {
+  margin-top: 10px;
+  margin-bottom: 10px;
+  margin-right: auto;
+  margin-left: auto;
+  width: 300px;
+}
+
+#general > .generalReinitPassword > div > button {
+  border-radius: 5px;
+  margin-top: 30px;
+  margin-right: auto;
+  margin-left: auto;
+  width: 250px;
+}
+
+#general > .generalReinitPassword > div {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+#general > .generalReinitPassword > div > input {
+  margin-top: 20px;
 }

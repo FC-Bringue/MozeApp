@@ -84,9 +84,9 @@ const General = () => {
 
   return (
     <section id="general">
-      <form className="generalLog">
+      <form className="generalName">
         <div>
-          <p>Nom</p>
+          <a>Nom</a>
           <input
             type="text"
             placeholder="Nom"
@@ -95,7 +95,7 @@ const General = () => {
             }}
           />
           <button
-            className="btn"
+            className="btn btn-secondary"
             onClick={(e) => {
               ModifyName(e);
             }}
@@ -104,7 +104,7 @@ const General = () => {
           </button>
         </div>
       </form>
-      <form className="generalReinit">
+      <form className="generalReinitMail">
         <div>
           <a>Réinitialiser l'adresse mail</a>
           <input
@@ -121,7 +121,7 @@ const General = () => {
             }}
           />
           <button
-            className="btn"
+            className="btn btn-secondary"
             onClick={(e) => {
               ModifyMail(e);
             }}
@@ -129,6 +129,8 @@ const General = () => {
             Modifier l'e-mail
           </button>
         </div>
+      </form>
+      <form className="generalReinitPassword">
         <div>
           <a>Réinitialiser le mot de passe</a>
           <input
@@ -145,7 +147,7 @@ const General = () => {
             }}
           />
           <button
-            className="btn"
+            className="btn btn-secondary"
             onClick={(e) => {
               ModifyPassword(e);
             }}
