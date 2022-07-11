@@ -7,7 +7,7 @@ import logoHome from "../img/icons/logoHome.svg";
 import dashboard from "../img/icons/dashboard.svg";
 import play from "../img/icons/play.svg";
 import setting from "../img/icons/setting.svg";
-import logoMoze from "../img/logos/Moze.svg";
+import logoMoze from "../img/logos/MOZE.svg";
 
 import { tabRedirects } from "../helpers/functions/tabRedirects";
 

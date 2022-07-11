@@ -1,5 +1,5 @@
 import React from "react";
-import MozeLogo from "../../../../../img/logos/Moze.svg";
+import MozeLogo from "../../../../../img/logos/MOZE.svg";
 
 const Content: React.FC<{}> = () => {
   return (
