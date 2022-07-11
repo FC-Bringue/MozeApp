@@ -13,18 +13,15 @@
   margin-top: 1em;
   margin-bottom: 1em;
   font-weight: 700;
+  width: 450px;
 }
 
 #applications > .spotify {
   background-color: #65d36e;
 }
 
-#applications > .amazon {
-  background-color: #301edf;
-}
-
-#applications > .deezer {
-  background-color: #000000;
+#applications > .mozeyee {
+  background-color: #212121;
 }
 
 #applications > div > p {
@@ -39,4 +36,15 @@
 
 .appLogo > img {
   width: auto;
+}
+
+.mozeyeetxt {
+  vertical-align: center;
+}
+
+.loaderContainer {
+  margin: auto;
+  display: flex;
+  justify-content: center;
+  margin-top: 10%;
 }

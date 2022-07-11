@@ -47,7 +47,7 @@ const Navigation = () => {
       <div
         className={`${tab === "settings" ? "active" : ""} btn-nav`}
         onClick={() => {
-          navigate("/dashboard/settings");
+          navigate("/dashboard/settings/general");
         }}
       >
         {/* <div>
