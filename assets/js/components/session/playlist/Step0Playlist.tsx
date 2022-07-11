@@ -2,6 +2,7 @@ import { ImCross, ImArrowRight2, ImArrowLeft2 } from "react-icons/im";
 import { BsCheckLg } from "react-icons/bs";
 import { useEffect, useState } from "react";
 import { useParams, useNavigate, Outlet } from "react-router-dom";
+import { useSelector } from "react-redux";
 
 import Step1Lights from "./Step1Playlist";
 
@@ -15,6 +16,11 @@ const Playlist = () => {
 
   const { sessionID, onNew } = useParams();
   const navigate = useNavigate();
+
+  const getTmpName = useSelector(
+    (state: any) => state.tempSlice.newSessionName
+  );
+  const tmpSession = useSelector((state: any) => state.tempSlice.tmpSession);
 
   const stepHolder = (step: number) => {
     switch (step) {
@@ -40,7 +46,10 @@ const Playlist = () => {
         >
           <ImCross size={"2em"} />
         </div>
-        <h4>Nom de la session</h4>
+        <h4>
+          {getTmpName && getTmpName}
+          {tmpSession && !getTmpName && tmpSession.parameters.SessionName}
+        </h4>
         <h2>Choix de la playlist</h2>
         <div id="playlist-params">{stepHolder(lightsCount)}</div>
         {lightsCount != "done" && (

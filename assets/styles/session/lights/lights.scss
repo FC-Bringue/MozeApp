@@ -76,6 +76,17 @@
         border-radius: 10px;
         color: white;
       }
+
+      > .plsBtn {
+        background-color: transparent;
+        outline: none;
+        border: solid white 1px;
+        margin: 0.5rem;
+        font-size: 1em;
+        padding: 0.1em;
+        border-radius: 10px;
+        color: white;
+      }
     }
   }
 
@@ -119,6 +130,9 @@
 }
 
 .tmpPlaylist {
+  > h2 {
+    text-decoration: underline;
+  }
   > div {
     display: flex;
     justify-content: space-around;
@@ -131,6 +145,38 @@
       font-weight: 900;
       font-style: italic;
       font-size: 2em;
+    }
+  }
+}
+
+.tmpLights {
+  > h2 {
+    text-decoration: underline;
+  }
+
+  > div {
+    font-weight: 600;
+    > .nmbLights > p {
+      font-style: italic;
+    }
+
+    > .IPLights {
+      > p {
+        font-style: italic;
+      }
+      > ul {
+        display: flex;
+        justify-content: space-around;
+        flex-wrap: wrap;
+        overflow-y: auto;
+        height: 35vh;
+        > li {
+          margin-left: 1em;
+          margin-right: 1em;
+          margin-bottom: 1em;
+          font-size: 1.5em;
+        }
+      }
     }
   }
 }

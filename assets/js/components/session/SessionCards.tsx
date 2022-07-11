@@ -2,6 +2,7 @@ import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 
 import {
+  setTmpLights,
   setTmpPlaylist,
   setTmpSession,
 } from "../../../helpers/redux/slices/tempSlice";
@@ -33,6 +34,7 @@ const SessionCards = ({ item }: SessionCardsProps) => {
             id: item.parameters.idPlaylist,
           })
         );
+        dispatch(setTmpLights(item.parameters.lights));
         navigate("/dashboard/sessions/" + item.parameters.sessionID);
       }}
     >
@@ -51,12 +53,12 @@ const SessionCards = ({ item }: SessionCardsProps) => {
           <div>
             <img src={music} title="music" />
           </div>
-          {item.parameters.events != [] && item.parameters.events && (
+          {/* item.parameters.events != [] && item.parameters.events && (
             <div>
               <img src={party} title="party" />
             </div>
-          )}
-          {item.parameters.lights && (
+          )*/}
+          {item.parameters.lights && item.parameters.lights != [] && (
             <div>
               <img src={light} title="light" />
             </div>

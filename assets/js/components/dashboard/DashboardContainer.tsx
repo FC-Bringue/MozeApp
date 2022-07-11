@@ -3,18 +3,20 @@ import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { Bars } from "react-loader-spinner";
 import { ImPlus } from "react-icons/im";
+import { AiOutlinePoweroff } from "react-icons/ai";
+import axios from "axios";
 import SimpleBar from "simplebar-react";
 
 import TracksData from "./tracks/TracksData";
 
+import { setMozeYeelightControlToken } from "../../../helpers/redux/slices/userInfosSlice";
+
 import "../../../styles/dashboard/resume.scss";
 import "simplebar/dist/simplebar.min.css";
-import { AiOutlinePoweroff } from "react-icons/ai";
-import { Dropdown } from "react-bootstrap";
-import { setMozeYeelightControlToken } from "../../../helpers/redux/slices/userInfosSlice";
 
 const DashboardContainer = () => {
   const [display, setDisplay] = useState(false);
+  const [lightsDuplicate, setLightsDuplicate] = useState([]);
   const dispatch = useDispatch();
   const activeSession = useSelector(
     (state: any) => state.active.activeSessionInfos
@@ -32,9 +34,66 @@ const DashboardContainer = () => {
     console.log("activeSessionAAAAAAA", activeSession);
 
     if (activeSession === "true") {
+      useEffect(() => {
+        setLightsDuplicate(activeSession.session.parameters.lights);
+        console.log("lightsDuplicateupdatedDashboardRsume", lightsDuplicate);
+      }, [activeSession.session.parameters.lights]);
       setDisplay(!display);
     }
   }, [activeSession]);
+
+  const handleChangeLight = (action: any, color: any) => {
+    console.log("color", color);
+    if (!mozeYeelightToken) {
+      return;
+    }
+    const config = {
+      headers: {
+        Authorization: `Bearer ${mozeYeelightToken}`,
+      },
+    };
+
+    activeSession.session.parameters.lights.forEach(
+      (light: any, index: any) => {
+        var newLights = [...lightsDuplicate];
+        //If the index is already inside a Json inside the array, update the ip value of the Json, else create a new Json with the ip value
+        if (newLights.map((item: any) => item.index).includes(index)) {
+          newLights = [
+            ...newLights.filter((item: any) => item.index !== index),
+            {
+              index: index,
+              ip: light.ip,
+              color: color,
+              flow: [],
+            },
+          ];
+        } else {
+          newLights.push({
+            ip: light.ip,
+            color: color,
+            flow: [],
+            index: index,
+          });
+        }
+      }
+    );
+
+    axios
+      .post(
+        "http://localhost:3001/api/changeLight",
+        {
+          listOfLights: lightsDuplicate,
+          typeOfAction: action,
+        },
+        config
+      )
+      .then((res) => {
+        console.log("changeLight", res);
+      })
+      .catch((err) => {
+        console.log("changeLight", err);
+      });
+  };
 
   return (
     <section id="resume">
@@ -43,7 +102,13 @@ const DashboardContainer = () => {
         <>
           {activeSession ? (
             <>
-              <h1>{activeSession.session.parameters.SessionName}</h1>
+              <h1>
+                {activeSession.session.parameters.SessionName}{" "}
+                <span>
+                  {"#"}
+                  {activeSession.session.parameters.hashtag}
+                </span>
+              </h1>
               <section className="session-list-resume">
                 <div className="playlistDetails">
                   <h3>Votre playlist en cours :</h3>
@@ -73,26 +138,56 @@ const DashboardContainer = () => {
                       </p>
                     </div>
                     <div className="lightsAction">
-                      <div className="quickPower">
+                      <div
+                        className="quickPower"
+                        onClick={() => {
+                          handleChangeLight("power", "#000000");
+                        }}
+                      >
                         <p>Allumer</p>
                         <AiOutlinePoweroff size={"6em"} />
                       </div>
                       <div className="quickChange">
                         <p>Changer de couleur</p>
                         <div className="btnColorContainer">
-                          <div className="btnColor red">
+                          <div
+                            className="btnColor red"
+                            onClick={() => {
+                              handleChangeLight("color", "#FF0000");
+                            }}
+                          >
                             <p>Rouge</p>
                           </div>
-                          <div className="btnColor green">
+                          <div
+                            className="btnColor green"
+                            onClick={() => {
+                              handleChangeLight("color", "#00FF00");
+                            }}
+                          >
                             <p>Vert</p>
                           </div>
-                          <div className="btnColor blue">
+                          <div
+                            className="btnColor blue"
+                            onClick={() => {
+                              handleChangeLight("color", "#0000FF");
+                            }}
+                          >
                             <p>Bleu</p>
                           </div>
-                          <div className="btnColor pink">
+                          <div
+                            className="btnColor pink"
+                            onClick={() => {
+                              handleChangeLight("color", "#FF00FF");
+                            }}
+                          >
                             <p>Rose</p>
                           </div>
-                          <div className="btnColor purple">
+                          <div
+                            className="btnColor purple"
+                            onClick={() => {
+                              handleChangeLight("color", "#800080");
+                            }}
+                          >
                             <p>Violet</p>
                           </div>
                           <div className="btnColor plus">

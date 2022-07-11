@@ -26,7 +26,12 @@ const AuthedUsers = () => {
   );
 
   useEffect(() => {
+    if (!bearerToken) {
+      navigate("/login");
+    }
+
     dispatch(setDisplayResume(false));
+
     if (pathname === "/dashboard" || pathname === "/dashboard/") {
       navigate("/dashboard/resume");
     }
@@ -36,10 +41,7 @@ const AuthedUsers = () => {
         Authorization: `Bearer ${bearerToken}`,
       },
     };
-    console.log("isAuthed", bearerToken);
-    if (!bearerToken) {
-      navigate("/");
-    }
+
     let JWTExpires = axios
       .get("/api/checkPermission", config)
       .then((res) => {
