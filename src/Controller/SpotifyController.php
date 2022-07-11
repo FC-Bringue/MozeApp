@@ -8,7 +8,8 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Contracts\HttpClient\HttpClientInterface;
-
+use Symfony\Component\Mercure\HubInterface;
+use Symfony\Component\Mercure\Update;
 
 use App\Entity\Spotify;
 use App\Entity\User;
@@ -488,14 +489,14 @@ class SpotifyController extends AbstractController
     }
 
     /**
-     * @Route("/api/set/spotify/playlist/next/{idSession}", name="app_set_spotify_next_playlist", methods={"GET", "POST"})
+     * @Route("/api/set/spotify/playlist/next/{urlSession}", name="app_set_spotify_next_playlist", methods={"GET", "POST"})
      */
-    public function setSpotifyNextPlaylist(HttpClientInterface $client, Request $request, SessionRepository $sessionRepository, EntityManagerInterface $entityManager, $idSession): Response
+    public function setSpotifyNextPlaylist(HubInterface $hub, HttpClientInterface $client, Request $request, SessionRepository $sessionRepository, EntityManagerInterface $entityManager, $urlSession): Response
     {
-        $session = $sessionRepository->find($idSession);
-        $activeSession = $session->getActiveSession();
+        $activeSession = $entityManager->getRepository(ActiveSessionEntity::class)->findOneBy(['url' => $urlSession]);
+        $session = $activeSession->getSession();
         $user = $session->getUser();
-
+        $max = count($activeSession->getMusicQueue());
         $auth = getallheaders()['Authorization'];
         $response = $client->request('GET', 'http://caddy/api/have/session/active/' . $user->getId(), [
             'headers' => [
@@ -511,25 +512,70 @@ class SpotifyController extends AbstractController
             ]);
         }
         $currentIndex = $activeSession->getCurrentIndex();
-        $currentIndex++;
+        if ($max > $currentIndex) {
+            $currentIndex++;
+        }
         $activeSession->setCurrentIndex($currentIndex);
+        /// spotify conf
+        $client_id = 'cbca15d571cc47e9818eb3558233bd97';
+        $client_secret = '48e424fe8f4b4bb6b6eb4da248f4534e';
+        $sessionSpotify = new SpotifySession($client_id, $client_secret);
+
+        $spotify = $user->getSpotify();
+        $sessionSpotify->setAccessToken($spotify->getToken());
+        $sessionSpotify->setRefreshToken($spotify->getRefreshToken());
+        $api = new SpotifyWebAPI();
+
+        $accessToken = $spotify->getToken();
+
+
+        $api->setAccessToken($accessToken);
+        //////
+
+        while (true) {
+            try {
+                $devices = $api->getMyDevices();
+                foreach ($devices->devices as $key => $value) {
+                    if ($value->is_active) {
+                        if ($max >= $currentIndex) {
+                            $api->next();
+                        }
+                        break;
+                    }
+                }
+                break;
+            } catch (SpotifyWebAPIException $e) {
+                $sessionSpotify->refreshAccessToken($sessionSpotify->getRefreshToken());
+                $api->setAccessToken($sessionSpotify->getAccessToken());
+                $spotify->setToken($sessionSpotify->getAccessToken());
+                $entityManager->persist($spotify);
+                $entityManager->flush();
+            }
+        }
+
         $entityManager->persist($activeSession);
         $entityManager->flush();
 
+        $update = new Update(
+            'http://localhost/spotify',
+            json_encode(['status' => 'next'])
+        );
+        $hub->publish($update);
         return $this->json([
-            'message' => ' Music correctly changed',
+            'message' => 'Music correctly changed',
+            'current index' => $currentIndex,
         ]);
     }
 
     /**
-     * @Route("/api/set/spotify/playlist/previous/{idSession}", name="app_set_spotify_previous_playlist", methods={"GET", "POST"})
+     * @Route("/api/set/spotify/playlist/previous/{urlSession}", name="app_set_spotify_previous_playlist", methods={"GET", "POST"})
      */
-    public function setSpotifyPreviousPlaylist(HttpClientInterface $client, Request $request, SessionRepository $sessionRepository, EntityManagerInterface $entityManager, $idSession): Response
+    public function setSpotifyPreviousPlaylist(HubInterface $hub, HttpClientInterface $client, Request $request, SessionRepository $sessionRepository, EntityManagerInterface $entityManager, $urlSession): Response
     {
-        $session = $sessionRepository->find($idSession);
-        $activeSession = $session->getActiveSession();
+        $activeSession = $entityManager->getRepository(ActiveSessionEntity::class)->findOneBy(['url' => $urlSession]);
+        $session = $activeSession->getSession();
         $user = $session->getUser();
-
+        $min = 1;
         $auth = getallheaders()['Authorization'];
         $response = $client->request('GET', 'http://caddy/api/have/session/active/' . $user->getId(), [
             'headers' => [
@@ -545,18 +591,61 @@ class SpotifyController extends AbstractController
             ]);
         }
         $currentIndex = $activeSession->getCurrentIndex();
-        if ($currentIndex == 0) {
-            return $this->json([
-                'message' => 'Vous êtes déjà sur la première musique',
-            ]);
+        if ($min <= $currentIndex) {
+            $currentIndex--;
         }
-        $currentIndex--;
         $activeSession->setCurrentIndex($currentIndex);
+
+        /// spotify conf
+        $client_id = 'cbca15d571cc47e9818eb3558233bd97';
+        $client_secret = '48e424fe8f4b4bb6b6eb4da248f4534e';
+        $sessionSpotify = new SpotifySession($client_id, $client_secret);
+
+        $spotify = $user->getSpotify();
+        $sessionSpotify->setAccessToken($spotify->getToken());
+        $sessionSpotify->setRefreshToken($spotify->getRefreshToken());
+        $api = new SpotifyWebAPI();
+
+        $accessToken = $spotify->getToken();
+
+
+        $api->setAccessToken($accessToken);
+        //////
+
+        while (true) {
+            try {
+                $devices = $api->getMyDevices();
+                foreach ($devices->devices as $key => $value) {
+                    if ($value->is_active) {
+                        if ($min <= $currentIndex) {
+                            $api->previous();
+                        }
+                        break;
+                    }
+                }
+                break;
+            } catch (SpotifyWebAPIException $e) {
+                $sessionSpotify->refreshAccessToken($sessionSpotify->getRefreshToken());
+                $api->setAccessToken($sessionSpotify->getAccessToken());
+                $spotify->setToken($sessionSpotify->getAccessToken());
+                $entityManager->persist($spotify);
+                $entityManager->flush();
+            }
+        }
+
         $entityManager->persist($activeSession);
         $entityManager->flush();
 
+        $update = new Update(
+            'http://localhost/spotify',
+            json_encode(['status' => 'previous'])
+        );
+        $hub->publish($update);
+
+
         return $this->json([
-            'message' => ' Music correctly changed',
+            'message' => 'Music correctly changed',
+            'current index' => $currentIndex,
         ]);
     }
 
@@ -783,6 +872,150 @@ class SpotifyController extends AbstractController
         $entityManager->flush();
         return $this->json([
             'musicQueue' => $musicQueue,
+        ]);
+    }
+
+
+    /**
+     * @Route("/api/set/spotify/playlist/pause/{urlSession}", name="app_set_spotify_pause_playlist", methods={"GET", "POST"})
+     */
+    public function setSpotifyPausePlaylist(HubInterface $hub, HttpClientInterface $client, Request $request, SessionRepository $sessionRepository, EntityManagerInterface $entityManager, $urlSession): Response
+    {
+        $activeSession = $entityManager->getRepository(ActiveSessionEntity::class)->findOneBy(['url' => $urlSession]);
+        $session = $activeSession->getSession();
+        $user = $session->getUser();
+        $auth = getallheaders()['Authorization'];
+        $response = $client->request('GET', 'http://caddy/api/have/session/active/' . $user->getId(), [
+            'headers' => [
+                'Authorization' => $auth
+            ]
+        ]);
+        $content = $response->getContent();
+        $content = json_decode($content, true);
+        $content = $content['message'];
+        if ($content == "false") {
+            return $this->json([
+                'message' => 'Aucune session n\'est en cours',
+            ]);
+        }
+
+        /// spotify conf
+        $client_id = 'cbca15d571cc47e9818eb3558233bd97';
+        $client_secret = '48e424fe8f4b4bb6b6eb4da248f4534e';
+        $sessionSpotify = new SpotifySession($client_id, $client_secret);
+
+        $spotify = $user->getSpotify();
+        $sessionSpotify->setAccessToken($spotify->getToken());
+        $sessionSpotify->setRefreshToken($spotify->getRefreshToken());
+        $api = new SpotifyWebAPI();
+
+        $accessToken = $spotify->getToken();
+
+
+        $api->setAccessToken($accessToken);
+        //////
+
+        while (true) {
+            try {
+                $devices = $api->getMyDevices();
+                foreach ($devices->devices as $key => $value) {
+                    if ($value->is_active) {
+                        $api->pause();
+                        break;
+                    }
+                }
+                break;
+            } catch (SpotifyWebAPIException $e) {
+                $sessionSpotify->refreshAccessToken($sessionSpotify->getRefreshToken());
+                $api->setAccessToken($sessionSpotify->getAccessToken());
+                $spotify->setToken($sessionSpotify->getAccessToken());
+                $entityManager->persist($spotify);
+                $entityManager->flush();
+            }
+        }
+
+        $entityManager->persist($activeSession);
+        $entityManager->flush();
+
+        $update = new Update(
+            'http://localhost/spotify',
+            json_encode(['status' => 'pause'])
+        );
+        $hub->publish($update);
+        return $this->json([
+            'message' => 'Music correctly paused'
+        ]);
+    }
+
+
+    /**
+     * @Route("/api/set/spotify/playlist/play/{urlSession}", name="app_set_spotify_play_playlist", methods={"GET", "POST"})
+     */
+    public function setSpotifyPlayPlaylist(HubInterface $hub, HttpClientInterface $client, Request $request, SessionRepository $sessionRepository, EntityManagerInterface $entityManager, $urlSession): Response
+    {
+        $activeSession = $entityManager->getRepository(ActiveSessionEntity::class)->findOneBy(['url' => $urlSession]);
+        $session = $activeSession->getSession();
+        $user = $session->getUser();
+        $auth = getallheaders()['Authorization'];
+        $response = $client->request('GET', 'http://caddy/api/have/session/active/' . $user->getId(), [
+            'headers' => [
+                'Authorization' => $auth
+            ]
+        ]);
+        $content = $response->getContent();
+        $content = json_decode($content, true);
+        $content = $content['message'];
+        if ($content == "false") {
+            return $this->json([
+                'message' => 'Aucune session n\'est en cours',
+            ]);
+        }
+
+        /// spotify conf
+        $client_id = 'cbca15d571cc47e9818eb3558233bd97';
+        $client_secret = '48e424fe8f4b4bb6b6eb4da248f4534e';
+        $sessionSpotify = new SpotifySession($client_id, $client_secret);
+
+        $spotify = $user->getSpotify();
+        $sessionSpotify->setAccessToken($spotify->getToken());
+        $sessionSpotify->setRefreshToken($spotify->getRefreshToken());
+        $api = new SpotifyWebAPI();
+
+        $accessToken = $spotify->getToken();
+
+
+        $api->setAccessToken($accessToken);
+        //////
+
+        while (true) {
+            try {
+                $devices = $api->getMyDevices();
+                foreach ($devices->devices as $key => $value) {
+                    if ($value->is_active) {
+                        $api->play();
+                        break;
+                    }
+                }
+                break;
+            } catch (SpotifyWebAPIException $e) {
+                $sessionSpotify->refreshAccessToken($sessionSpotify->getRefreshToken());
+                $api->setAccessToken($sessionSpotify->getAccessToken());
+                $spotify->setToken($sessionSpotify->getAccessToken());
+                $entityManager->persist($spotify);
+                $entityManager->flush();
+            }
+        }
+
+        $entityManager->persist($activeSession);
+        $entityManager->flush();
+
+        $update = new Update(
+            'http://localhost/spotify',
+            json_encode(['status' => 'play'])
+        );
+        $hub->publish($update);
+        return $this->json([
+            'message' => 'Music correctly played'
         ]);
     }
 }

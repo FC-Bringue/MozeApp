@@ -23,11 +23,7 @@ crossorigin="anonymous"></script>
 </html>
 <script>
 
-const eventSource = new EventSource("{{ mercure('https://localhost/session/6eSP1m4cxzimFQUebvK3Qn')|escape('js') }}");
-eventSource.onmessage = event => {
-    const data = JSON.parse(event.data);
-    console.log(data);
-}
+
 // dom load
 {# document.addEventListener('DOMContentLoaded', () => {
     window.onSpotifyWebPlaybackSDKReady = () => {
