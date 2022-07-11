@@ -60,6 +60,7 @@
     margin-left: auto;
     margin-right: auto;
     overflow-y: auto;
+    min-width: 30%;
 
     > .cell {
       margin-left: 2.5%;
@@ -113,6 +114,23 @@
       width: 25%;
       text-align: left;
       margin: 1em;
+    }
+  }
+}
+
+.tmpPlaylist {
+  > div {
+    display: flex;
+    justify-content: space-around;
+    height: 70%;
+    > img {
+      height: 95%;
+      border-radius: 1em;
+    }
+    > p {
+      font-weight: 900;
+      font-style: italic;
+      font-size: 2em;
     }
   }
 }

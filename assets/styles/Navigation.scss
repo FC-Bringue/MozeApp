@@ -15,7 +15,7 @@
 #navigation > div {
   margin-left: auto;
   margin-right: auto;
-  width: 80%;
+  width: 100%;
   display: flex;
   justify-content: flex-start;
   font-weight: 400;
@@ -52,4 +52,30 @@
   font-size: 0.9em;
   margin-left: auto;
   margin-right: auto;
+}
+
+.btn-nav {
+  display: flex;
+  justify-content: flex-start;
+  border-top: 1px solid;
+  border-bottom: 1px solid;
+  height: 5%;
+
+  > svg {
+    margin-left: 1em;
+    margin-right: 0.3em;
+    margin-top: auto;
+    margin-bottom: auto;
+  }
+  > p {
+    margin-right: auto;
+    margin-left: 0;
+  }
+
+  &:nth-child(4) {
+    border-bottom: none;
+  }
+}
+.btn-nav.actif {
+  opacity: 0.6;
 }

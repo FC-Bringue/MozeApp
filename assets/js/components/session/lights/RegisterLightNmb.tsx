@@ -1,11 +1,7 @@
-import { useEffect, useRef } from "react";
+import { useRef } from "react";
 
-const Step2Lights = ({ setNmbOfLights, setCanClick }: any) => {
+const RegisterLightNmb = ({ setNmbOfLights }: any) => {
   const inputRef = useRef(document.createElement("input"));
-
-  useEffect(() => {
-    setNmbOfLights("noClick");
-  }, []);
 
   const checkValidity = (e: any) => {
     var value = e.target.value;
@@ -41,7 +37,7 @@ const Step2Lights = ({ setNmbOfLights, setCanClick }: any) => {
           className="inputText"
           type={"text"}
           onBlur={(e) => checkValidity(e)}
-          onChange={(e) => setCanClick(true)}
+          onChange={(e) => console.log("onChange")}
           placeholder={"min. 1"}
           ref={inputRef}
         />
@@ -50,4 +46,4 @@ const Step2Lights = ({ setNmbOfLights, setCanClick }: any) => {
   );
 };
 
-export default Step2Lights;
+export default RegisterLightNmb;
