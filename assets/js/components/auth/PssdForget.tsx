@@ -1,15 +1,12 @@
+import mozeLogo from "../../../img/logos/MOZE.svg";
+
 import "../../../styles/auth/PssdForget.scss";
 
 const PssdForget = () => {
   return (
     <div id="pssdfgt">
       <div>
-        <img
-          src={
-            "https://upload.wikimedia.org/wikipedia/commons/a/a5/Google_Chrome_icon_%28September_2014%29.svg"
-          }
-          title="logo"
-        />
+        <img src={mozeLogo} title="logo" />
       </div>
       <div>
         <form>

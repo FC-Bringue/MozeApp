@@ -1,4 +1,5 @@
 import {useNavigate} from "react-router-dom";
+import axios from "axios";
 
 import amazonMusic from "../../../img/logos/amazonMusic.png";
 import spotify from "../../../img/logos/spotify.png";
@@ -7,14 +8,31 @@ import deezer from "../../../img/logos/deezer.png";
 import "../../../styles/settings/Parametres.css";
 import "../../../styles/settings/Application.css";
 
+import { useSelector } from "react-redux";
 
 const Application = () => {
-  const navigate = useNavigate();
+  const bearerToken = useSelector((state: any) => state.userInfos.token);
+  const config = {
+    headers: {
+      Authorization: `Bearer ${bearerToken}`,
+    },
+  };
 
   return (
     <section id="applications">
-      <div className="spotify"
-      onClick={() => navigate("localhost/api/get/spotify/TokenUrl")}
+      <div
+        className="spotify"
+        onClick={() => {
+          axios
+            .get("/api/get/spotify/TokenUrl", config)
+            .then((res) => {
+              console.log(res);
+              window.location.replace(res.data.url);
+            })
+            .catch((ee) => {
+              console.log(ee);
+            });
+        }}
       >
         <p>CONNECTER SON COMPTE</p>
         <div className="appLogo">

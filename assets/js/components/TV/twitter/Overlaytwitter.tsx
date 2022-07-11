@@ -34,7 +34,8 @@ const Overlaytwitter = () => {
           background:
             "linear-gradient(180deg, rgba(7,9,17,1) 0%, rgba(50,70,89,1) 60%, rgba(52,73,93,1) 100%)",
           borderRadius: "25px",
-          padding: "0.5em",
+          position: "relative",
+          // padding: "0.5em",
         }}
       >
         <div
@@ -43,12 +44,11 @@ const Overlaytwitter = () => {
             display: "flex",
             flexWrap: "wrap",
             height: "3em",
-            overflowY: "hidden",
-            margin: "auto",
+            // margin: "auto",
             width: "100%",
-            justifyContent: "space-between",
+            // justifyContent: "space-between",
             background: "#000C19",
-            borderRadius: "25px",
+            // borderRadius: "25px",
             padding: "0.5em",
           }}
         >
@@ -58,23 +58,20 @@ const Overlaytwitter = () => {
             width="35"
             height="35"
           ></img>
-          <p className="head_twibox" style={{ color: "white" }}>
-            Current Feed:
-          </p>
-          <p className="head_twibox">#ANTOINELEBG</p>
+          <p className="head_twibox" style={{ color: "white", margin: "5px" }}> Current Feed : </p>
+          <p className="head_twibox">#DYING</p>
         </div>
 
         {getHashtag &&
           getHashtag.result.data!.map(
-            (tweet: TwitterResponse, index: number, item: any) => {
-              const userData = getHashtag.result.includes.users.username;
+            (tweet: TwitterResponse, id: number, item: any) => {
+              const userData = getHashtag.result.includes.users![id];
+              const test = getHashtag.result.data![id];
               return (
                 <Cellule
-                  key={index}
-                  tweetData={item}
+                  key={id}
+                  tweetData={test}
                   userData={userData}
-                  setCelluleHeight={setCelluleHeight}
-                  // celluleHeight={celluleHeight * (getHashtag.data!.length / 2)}
                 />
               );
             }

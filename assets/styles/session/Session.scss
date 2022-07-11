@@ -5,23 +5,84 @@
   color: white;
   padding-left: 2em;
   padding-top: 2em;
-}
+  > .loaderContainer {
+    margin: auto;
+    display: flex;
+    justify-content: center;
+    margin-top: 20%;
+  }
+  > h1 {
+    margin-left: 5%;
+    font-size: 3.5em;
+    font-weight: 800;
+    font-style: italic;
+  }
+  > .title {
+    display: flex;
+    justify-content: space-between;
+    > h1 {
+      margin-left: 5%;
+      font-size: 3.5em;
+      font-weight: 800;
+      font-style: italic;
 
-#sessions > h4 {
-  font-weight: 400;
-  font-style: italic;
-}
+      > .forceLittle {
+        font-size: 0.5em;
+        font-weight: 100;
+        font-style: normal;
+      }
+    }
 
-#sessions > h1 {
-  margin-left: 5%;
-  font-size: 3.5em;
-  font-weight: 800;
-  font-style: italic;
+    > .actionsBtn {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+  }
+  > h4 {
+    font-weight: 400;
+    font-style: italic;
+  }
+
+  > .newSession > .containerBtn.forceRight {
+    justify-content: flex-end !important;
+  }
 }
 
 .session-list {
   display: flex;
   flex-wrap: wrap;
+
+  > .actiuvationContainer {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    margin: auto;
+    text-align: center;
+    padding-top: 15vh;
+
+    > .h1Question {
+      font-weight: 600;
+      font-size: 2.5rem;
+      margin-top: 0;
+      margin-bottom: 0.5rem;
+    }
+    > .pQuestion {
+      font-size: 2em;
+      font-style: italic;
+    }
+  }
+}
+
+.session-item.newOne {
+  background-color: transparent;
+  border: 3px solid rgba($color: #ffffff, $alpha: 0.5);
+
+  > .iconsPlus {
+    margin: auto;
+    opacity: 0.7;
+    color: white;
+  }
 }
 
 .session-item {
@@ -67,10 +128,23 @@
 
 #params-options {
   height: 78vh;
+  width: 95%;
 }
 
 #params-options > div {
+  height: 35vh;
+  border-bottom: 1px solid white;
+  margin-bottom: 1em;
+}
+
+#params-options > div.inactif {
   height: 26vh;
+  border-bottom: 1px solid white;
+  margin-bottom: 1em;
+}
+
+#params-options > div:last-child {
+  border-bottom: none;
 }
 
 #paramsSessions {
@@ -103,6 +177,12 @@
 .containerBtn {
   display: flex;
   justify-content: space-between;
+  width: 95%;
+}
+.containerBtn.lights {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
 }
 
 .passTo {
@@ -126,4 +206,31 @@
 .noClick {
   pointer-events: none;
   opacity: 0.5;
+}
+
+.newSession {
+  margin: auto;
+  height: 80vh;
+  display: flex;
+  flex-direction: column;
+  width: 95%;
+  justify-content: space-around;
+
+  > p {
+    margin-top: 1em;
+    margin-bottom: 1em;
+    font-size: 2em;
+  }
+
+  > input {
+    background-color: transparent;
+    outline: none;
+    border: solid white 1px;
+    margin: 0.5rem;
+    font-size: 2em;
+    padding: 0.1em;
+    border-radius: 10px;
+    color: white;
+    width: 40%;
+  }
 }

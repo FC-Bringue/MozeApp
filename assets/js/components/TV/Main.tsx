@@ -7,6 +7,7 @@ function Main() {
   return (
     <div id="TVMainContent">
       <Overlaytwitter />
+      <OverlayInstagram />
       <MusicList />
     </div>
   );

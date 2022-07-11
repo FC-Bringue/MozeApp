@@ -1,32 +1,24 @@
-import { Route, Routes, useNavigate, useParams } from "react-router-dom";
+import {
+  Outlet,
+  Route,
+  Routes,
+  useNavigate,
+  useParams,
+} from "react-router-dom";
 import "../../../styles/settings/Parametres.css";
-import SessionUtil from "../session/SessionUtil";
-import Application from "./Application";
-import General from "./General";
+import { useSelector } from "react-redux";
 
 const Parametres = () => {
   const navigate = useNavigate();
   let { subTab } = useParams();
+  const barname = useSelector((state: any) => state.userInfos.name);
 
   console.log("subTab", subTab);
-
-  const selectTab = (tabToDisplay: string) => {
-    switch (tabToDisplay) {
-      case "general":
-        return <General />;
-      case "audio":
-        return <SessionUtil />;
-      case "linked-apps":
-        return <Application />;
-      default:
-        return <Application />;
-    }
-  };
 
   return (
     <section id="parametres">
       <h4>PARAMETRES</h4>
-      <h1>LE MACUMBA {/* Mettre un value pour le titre */}</h1>
+      <h1>{barname && barname}</h1>
       <div className="navigation">
         <div className={subTab === "general" ? "param-nav-active" : ""}
             onClick={() => navigate("settings/general")}
@@ -35,18 +27,12 @@ const Parametres = () => {
         </div>
         <div
           className={subTab === "linked-apps" ? "param-nav-active" : ""}
-          onClick={() => navigate("settings/linked-apps")}
+          onClick={() => navigate("linked-apps")}
         >
           <p>APPLICATIONS</p>
         </div>
-        <div
-          className={subTab === "audio" ? "param-nav-active" : ""}
-          onClick={() => navigate("settings/audio")}
-        >
-          <p>SORTIE AUDIO</p>
-        </div>
       </div>
-      {selectTab(subTab)}
+      <Outlet />
     </section>
   );
 };
