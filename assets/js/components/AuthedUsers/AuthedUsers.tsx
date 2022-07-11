@@ -82,8 +82,9 @@ const AuthedUsers = () => {
           });
       });
 
+    console.log("beforeislogged");
     axios
-      .get("/api/get/spotify/userplaylist", config)
+      .get("/api/get/isConnected", config)
       .then((res) => {
         console.log("isLOggedToSpotify", res.data);
         dispatch(setIsLoggedToSpotify(true));

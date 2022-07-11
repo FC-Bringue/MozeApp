@@ -5,13 +5,13 @@ import { setMail, setName, setUserId } from "../redux/slices/userInfosSlice";
 
 const dispatch = useDispatch();
 const bearerToken = useSelector((state: any) => state.userInfos.token);
-const config = {
-  headers: {
-    Authorization: `Bearer ${bearerToken}`,
-  },
-};
 
 export const userInfos = () => {
+  const config = {
+    headers: {
+      Authorization: `Bearer ${bearerToken}`,
+    },
+  };
   axios
     .get("/api/getUserInfos", config)
     .then(async (res) => {

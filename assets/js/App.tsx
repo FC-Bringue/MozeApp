@@ -12,6 +12,7 @@ import Parametres from "./components/settings/Parametres";
 import Index from "./components/landing/index";
 import Tv from "./components/TV/Tv";
 import NewSession from "./components/session/NewSession";
+import General from "./components/settings/General"
 import Application from "./components/settings/Application";
 import SessionConfig from "./components/session/SessionConfig";
 import Lights from "./components/session/lights/Step0Lights";
@@ -59,7 +60,7 @@ const App = () => {
           {/* SETTINGS PAGE */}
           <Route path="settings" element={<Parametres />}>
             {/*  <Route path="" element={<AuthedUsers />} /> */}
-            <Route path="audio" element={<SessionContainer />} />
+            <Route path="general" element={<General />} />
             <Route path="linked-apps" element={<Application />} />
           </Route>
         </Route>

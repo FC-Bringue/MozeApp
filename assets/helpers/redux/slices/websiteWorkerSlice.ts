@@ -3,6 +3,7 @@ import { createSlice } from "@reduxjs/toolkit";
 const initialState = {
   displayResume: false,
   displayConfig: false,
+  displayParams: false,
 } as const;
 
 export const websiteWorkerSlice = createSlice({
@@ -15,11 +16,14 @@ export const websiteWorkerSlice = createSlice({
     setDisplayConfig: (state, action) => {
       state.displayConfig = action.payload;
     },
+    setDisplayParams: (state, action) => {
+      state.displayParams = action.payload;
+    },
   },
 });
 
 // Reducers and actions
-export const { setDisplayResume, setDisplayConfig } =
+export const { setDisplayResume, setDisplayConfig, setDisplayParams } =
   websiteWorkerSlice.actions;
 
 export default websiteWorkerSlice.reducer;
