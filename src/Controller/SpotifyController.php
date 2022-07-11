@@ -188,8 +188,13 @@ class SpotifyController extends AbstractController
         $sessionActiveRepository = $entityManager->getRepository(ActiveSessionEntity::class);
         $activeSession = $sessionActiveRepository->findOneBy(['url' => $urlSession]);
         $currentSession = $activeSession->getSession();
-        $hastag = $currentSession->getParameters()['hashtag'];
-        $sessionName = $currentSession->$this->getParameters()['SessionName'];
+        // is defined $currentSession->getParameters()['hashtag']
+        if (isset($currentSession->getParameters()['hashtag'])) {
+            $hastag = $currentSession->getParameters()['hashtag'];
+        } else {
+            $hastag = "";
+        }
+        $sessionName = $currentSession->getParameters()['SessionName'];
 
         // $activeSession = $currentSession->getActiveSession();
         $parameters = $currentSession->getParameters();
@@ -221,7 +226,7 @@ class SpotifyController extends AbstractController
         $client_secret = '48e424fe8f4b4bb6b6eb4da248f4534e';
         $session = new SpotifySession($client_id, $client_secret);
         $api = new SpotifyWebAPI();
-        $user = $this->getUser();
+        $user = $currentSession->getUser();
         $spotify = $user->getSpotify();
         $accessToken = $spotify->getToken();
         $api->setAccessToken($accessToken);
@@ -841,16 +846,20 @@ class SpotifyController extends AbstractController
         $musicQueuepart1[$currentIndex + 1] = $musicLiked;
         $musicQueuepart2 = array_slice($musicQueue, $currentIndex);
         $musicQueue = array_merge($musicQueuepart1, $musicQueuepart2);
-        $musicPosition = $currentIndex + 1;
+        $musicPosition = $currentIndex;
 
         // on parcourt la liste et on vérifie si la musicPosition a plus de like que la prochaine music
         // si la prochaine à plus ou égale de like on les échange de place
         // sinon on break
-        for ($i = $musicPosition + 1; $i < count($musicQueue); $i++) {
-            if ($musicQueue[$i]['nbrLike'] >= $musicQueue[$musicPosition]['nbrLike']) {
-                $musicQueue[$i]['key'] = $musicPosition;
-                $musicQueue[$musicPosition]['key'] = $i;
-                $musicPosition = $i;
+        for ($i = $musicPosition; $i < count($musicQueue); $i++) {
+            if ($musicQueue[$i + 1]['nbrLike'] >= $musicQueue[$musicPosition]['nbrLike']) {
+                // dd('There is a song with more like than the current song', $musicQueue[$i + 1], $musicQueue[$musicPosition]);
+                // on échange les deux musiques
+                $temp = $musicQueue[$i + 1];
+                $musicQueue[$i + 1] = $musicQueue[$musicPosition];
+                $musicQueue[$musicPosition] = $temp;
+                // on change la position de la musique
+                $musicPosition = $i + 1;
             } else {
                 break;
             }
