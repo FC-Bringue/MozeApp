@@ -13,7 +13,7 @@ import {
   setNameGuest,
   setTokenGuest,
 } from "../../../../../helpers/redux/slices/guestSlice";
-import { BiUpvote } from "react-icons/bi";
+import { BiPlusCircle } from "react-icons/bi";
 import { useNavigate, useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import Loader from "../sessionName/loader";
@@ -27,6 +27,17 @@ const Starting: React.FC<{}> = () => {
   const loader = useSelector((state: any) => state.websiteWorker.displayApp);
   const tokenStored = useSelector((state: any) => state.guest.tokenGuest);
   const [searchmusicList, setSearchMusicList] = useState([]);
+  const controls = useAnimation();
+
+  const squareVariants = {
+    visible: {
+      opacity: 1,
+
+      transition: { duration: 10 },
+      transitionEnd: { display: "none" },
+    },
+    hidden: { opacity: 0 },
+  };
 
   const searchData = () => {
     axios
@@ -65,6 +76,9 @@ const Starting: React.FC<{}> = () => {
         console.log(res.data);
         setSearchMusicList(res.data.results);
         console.log(searchmusicList);
+        if (res.status === 200) {
+          controls.start("visible");
+        }
       })
       .catch((err) => {
         console.log(err);
@@ -126,6 +140,16 @@ const Starting: React.FC<{}> = () => {
                   </form>
                 </Col>
               </Row>
+              <Row className="text-center">
+                <motion.h1
+                  animate={controls}
+                  initial="hidden"
+                  variants={squareVariants}
+                  className="popup"
+                >
+                  Musique Ajoutée
+                </motion.h1>
+              </Row>
               <Row>
                 <Col className="text-center musicliste">
                   <ul>
@@ -149,8 +173,9 @@ const Starting: React.FC<{}> = () => {
                               </div>
 
                               <div className="upVoteNbr ms-auto d-flex align-items-baseline">
-                                <BiUpvote
+                                <BiPlusCircle
                                   size={"2em"}
+                                  color={"white"}
                                   onClick={() => {
                                     addmusic(
                                       item.id,
