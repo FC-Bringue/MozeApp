@@ -25,14 +25,17 @@ class TwitterController extends AbstractController
         $this->client = $client;
     }
 
-    /** 
+    /**
     * @Route("/api/twitter/getHashtag", name="app_twitter", methods={"GET", "POST"})
     */
     public function index(): Response
     {
+
+        $hashtag = $_GET['hashtag'];
+
         $return = $this->client->tweetSearch()
         ->addFilterOnKeywordOrPhrase([
-            'concours',
+            $hashtag
         ])
         ->showUserDetails()
         ->performRequest();

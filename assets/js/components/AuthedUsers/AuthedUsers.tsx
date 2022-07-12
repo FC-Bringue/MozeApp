@@ -10,7 +10,10 @@ import {
   setIsLoggedToSpotify,
 } from "../../../helpers/redux/slices/userInfosSlice";
 import { setUrlActiveSession } from "../../../helpers/redux/slices/activeSlice";
-import { setDisplayResume } from "../../../helpers/redux/slices/websiteWorkerSlice";
+import {
+  setDisplayResume,
+  setResetOne,
+} from "../../../helpers/redux/slices/websiteWorkerSlice";
 
 import Navigation from "../../Navigation";
 import PlayerSpotify from "../player/PlayerSpotify";
@@ -26,6 +29,11 @@ const AuthedUsers = () => {
   const loggedToSpotify = useSelector(
     (state: any) => state.userInfos.isLoggedToSpotify
   );
+  const sessionActiveURL = useSelector(
+    (state: any) => state.active.urlActiveSession
+  );
+  const resetOne = useSelector((state: any) => state.websiteWorker.resetOne);
+  const currentMusic = useSelector((state: any) => state.active.currentMusic);
 
   useEffect(() => {
     if (!bearerToken) {
@@ -98,6 +106,7 @@ const AuthedUsers = () => {
               .then((res) => {
                 console.log("URL", res);
                 dispatch(setUrlActiveSession(res.data.url));
+                dispatch(setResetOne(resetOne + 1));
                 dispatch(setDisplayResume(true));
               })
               .catch((err) => {
@@ -126,7 +135,7 @@ const AuthedUsers = () => {
     <>
       <Navigation />
       <Outlet />
-      <PlayerSpotify />
+      {sessionActiveURL && currentMusic && <PlayerSpotify />}
     </>
   );
 };

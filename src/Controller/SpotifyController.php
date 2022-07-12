@@ -285,7 +285,6 @@ class SpotifyController extends AbstractController
                 }
                 break;
             } catch (SpotifyWebAPIException $e) {
-                dd($e);
                 $session->refreshAccessToken($session->getRefreshToken());
                 $api->setAccessToken($session->getAccessToken());
                 $spotify->setToken($session->getAccessToken());
@@ -436,7 +435,6 @@ class SpotifyController extends AbstractController
                 }
                 break;
             } catch (SpotifyWebAPIException $e) {
-                dd($e);
                 $session->refreshAccessToken($session->getRefreshToken());
                 $api->setAccessToken($session->getAccessToken());
                 $spotify->setToken($session->getAccessToken());
@@ -820,7 +818,7 @@ class SpotifyController extends AbstractController
     /**
      * @Route("/api/like/song/spotify", name="app_like_song_spotify", methods={"GET", "POST"})
      */
-    public function likeSongSpotify(HttpClientInterface $client, Request $request, SessionRepository $sessionRepository, EntityManagerInterface $entityManager): Response
+    public function likeSongSpotify(HubInterface $hub, HttpClientInterface $client, Request $request, SessionRepository $sessionRepository, EntityManagerInterface $entityManager): Response
     {
         $url = $_POST['url'];
         $songId = $_POST['songId'];
@@ -877,6 +875,11 @@ class SpotifyController extends AbstractController
         $activeSession->setMusicQueue($musicQueue);
         $entityManager->persist($activeSession);
         $entityManager->flush();
+        $update = new Update(
+            'http://localhost/spotify',
+            json_encode(['status' => 'refresh'])
+        );
+        $hub->publish($update);
         return $this->json([
             'musicQueue' => $musicQueue,
         ]);
@@ -1034,20 +1037,6 @@ class SpotifyController extends AbstractController
         $activeSession = $entityManager->getRepository(ActiveSessionEntity::class)->findOneBy(['url' => $urlSession]);
         $session = $activeSession->getSession();
         $user = $session->getUser();
-        // $auth = getallheaders()['Authorization'];
-        // $response = $client->request('GET', 'http://caddy/api/have/session/active/' . $user->getId(), [
-        //     'headers' => [
-        //         'Authorization' => $auth
-        //     ]
-        // ]);
-        // $content = $response->getContent();
-        // $content = json_decode($content, true);
-        // $content = $content['message'];
-        // if ($content == "false") {
-        //     return $this->json([
-        //         'message' => 'Aucune session n\'est en cours',
-        //     ]);
-        // }
 
         /// spotify conf
         $client_id = 'cbca15d571cc47e9818eb3558233bd97';
@@ -1082,7 +1071,6 @@ class SpotifyController extends AbstractController
 
         ]);
     }
-
 
     /**
      * @Route("/api/send/spotify/token/{urlToken}", name="app_send_spotify_token_url", methods={"GET", "POST"})

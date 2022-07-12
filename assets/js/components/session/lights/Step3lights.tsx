@@ -2,8 +2,6 @@ import { useEffect, useState } from "react";
 import { AiFillInfoCircle } from "react-icons/ai";
 import { useDispatch } from "react-redux";
 
-import { setNewSessionLights } from "../../../../helpers/redux/slices/tempSlice";
-
 const Step3Lights = ({ NmbOfLights, dataLights, setDataLights }: any) => {
   const dispatch = useDispatch();
   const [data, setData] = useState<any>(

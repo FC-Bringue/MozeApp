@@ -6,7 +6,10 @@ import { ImPlus } from "react-icons/im";
 import { AiOutlinePoweroff } from "react-icons/ai";
 import axios from "axios";
 import SimpleBar from "simplebar-react";
-import { setUrlActiveSession } from "../../../helpers/redux/slices/activeSlice";
+import {
+  setCurrentMusic,
+  setUrlActiveSession,
+} from "../../../helpers/redux/slices/activeSlice";
 
 import TracksData from "./tracks/TracksData";
 
@@ -14,12 +17,14 @@ import { setMozeYeelightControlToken } from "../../../helpers/redux/slices/userI
 
 import "../../../styles/dashboard/resume.scss";
 import "simplebar/dist/simplebar.min.css";
+import { setResetOne } from "../../../helpers/redux/slices/websiteWorkerSlice";
 
 const DashboardContainer = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const location = useLocation();
 
+  const [refresh, setRefresh] = useState(0);
   const [display, setDisplay] = useState(false);
   const [lightsDuplicate, setLightsDuplicate] = useState([]);
 
@@ -36,6 +41,26 @@ const DashboardContainer = () => {
   const sessionActiveURL = useSelector(
     (state: any) => state.active.urlActiveSession
   );
+  const resetOne = useSelector((state: any) => state.websiteWorker.resetOne);
+
+  const url = new URL("https://localhost/.well-known/mercure");
+  url.searchParams.set("topic", "http://localhost/spotify");
+  const eventSource = new EventSource(url);
+  eventSource.onmessage = (event) => {
+    dispatch(setResetOne(resetOne + 1));
+  };
+
+  useEffect(() => {
+    axios
+      .get("/api/get/spotify/playlist/current/url/" + sessionActiveURL)
+      .then((res) => {
+        console.log(res.data);
+        dispatch(setCurrentMusic(res.data["current music"]));
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }, [resetOne]);
 
   useEffect(() => {
     console.log("activeSessionAAAAAAA", activeSession);
@@ -112,6 +137,13 @@ const DashboardContainer = () => {
             <>
               <h1>
                 {activeSession.session.parameters.SessionName}{" "}
+                {activeSession.session.parameters.hashtag != null &&
+                  activeSession.session.parameters.hashtag != "" && (
+                    <span>
+                      {"#"}
+                      {activeSession.session.parameters.hashtag}
+                    </span>
+                  )}
                 <span>
                   {"#"}
                   {activeSession.session.parameters.hashtag}
