@@ -7,6 +7,8 @@ import {
   setNewSessionName,
   setNewSessionHashtag,
   setTmpPlaylist,
+  setNewSessionLights,
+  setTmpLights,
 } from "../../../helpers/redux/slices/tempSlice";
 
 const StepOne = ({ setSessionName, setSessionHashtag, setStep }: any) => {
@@ -42,6 +44,8 @@ const StepOne = ({ setSessionName, setSessionHashtag, setStep }: any) => {
             className="passTo "
             onClick={() => {
               dispatch(setTmpPlaylist(null));
+              dispatch(setNewSessionLights(null));
+              dispatch(setTmpLights(null));
               navigate("config");
             }}
           >

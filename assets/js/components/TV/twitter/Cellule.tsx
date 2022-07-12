@@ -2,7 +2,7 @@ import {
   DataEntity,
   UsersEntity,
 } from "../../../../helpers/propsType/TwitterResponse";
-import "../../../../styles/TV/Tv.css";
+import "../../../../styles/TV/Tv.scss";
 import "../../../../styles/TV/Twitter.css";
 
 import { motion } from "framer-motion";
@@ -14,49 +14,42 @@ type AppProps = {
   userData: any;
 };
 
-const Cellule = ({ tweetData, userData}: AppProps) => {
+const Cellule = ({ tweetData, userData }: AppProps) => {
   const celluleRef = useRef<HTMLDivElement>(null);
-  console.log("tweetdata", tweetData);
-  console.log("Cellule", userData);
-
-  const getMinutesSinceNow = (created_at: string) => {
-    //Get the number of minutes since the tweet was created
-    const date = new Date(created_at);
-    const now = new Date();
-    const diff = now.getTime() - date.getTime();
-    const minutes = Math.floor(diff / 60000);
-    return minutes;
-  };
 
   return (
     <>
-      <motion.div
-        className="celluleTwitter text-white d-flex flex-column"
-        style={{
-          width: "45%",
-          margin: "0.5em",
-          padding: "0.5em",
-          minHeight: "20%",
-          backgroundColor: "#232932",
-          translateY: "-1000px",
-        }}
-        animate={{ y: 1000 }}
-        transition={{
-          /* repeat: Infinity, ease: "easeInOut", */ duration: 10,
-          ease: "easeInOut",
-        }}
-        ref={celluleRef}
-      >
-        {userData && tweetData && (
+      {userData && tweetData && (
+        <motion.div
+          className="celluleTwitter text-white d-flex flex-column"
+          style={{
+            width: "45%",
+            margin: "0.5em",
+            padding: "0.5em",
+            minHeight: "20%",
+            backgroundColor: "#232932",
+            translateY: "-1000px",
+          }}
+          animate={{ y: 1000 }}
+          transition={{
+            repeat: Infinity,
+            repeatType: "reverse",
+            ease: "easeInOut",
+            duration: 20,
+          }}
+          ref={celluleRef}
+        >
           <>
             <div className="header-cellule d-flex justify-content-between">
               <div className="cellule-name d-flex justify-content-around">
                 <div>
-                  <img
-                    src={userData.profile_image_url}
-                    alt={"PDP"}
-                    className="rounded-circle"
-                  />
+                  {userData.profile_image_url && (
+                    <img
+                      src={userData.profile_image_url}
+                      alt={"PDP"}
+                      className="rounded-circle"
+                    />
+                  )}
                 </div>
                 <div>
                   <p
@@ -87,8 +80,8 @@ const Cellule = ({ tweetData, userData}: AppProps) => {
               {tweetData.text}
             </p>
           </>
-        )}
-      </motion.div>
+        </motion.div>
+      )}
     </>
   );
 };

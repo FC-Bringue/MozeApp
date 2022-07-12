@@ -14,6 +14,8 @@ const PlayerSpotify = () => {
   const playingState = useSelector(
     (state: any) => state.tempSlice.tmpPlayingState
   );
+  const currentMusic = useSelector((state: any) => state.active.currentMusic);
+
   const config = {
     headers: {
       Authorization: `Bearer ${getBearer}`,
@@ -101,10 +103,13 @@ const PlayerSpotify = () => {
       }
     >
       <div className="infos">
-        <img src={""} alt="" />
+        <div className="imageContainer">
+          {currentMusic && <img src={currentMusic.cover} alt="" />}
+        </div>
+
         <div className="name">
-          <h1>AAAAAAAAAAAAAAAA</h1>
-          <h3>AAAAAAAAAAAAAAAAAAAAAAAAAA</h3>
+          {currentMusic && <h1> {currentMusic.name} </h1>}
+          {currentMusic && <h3> {currentMusic.artist} </h3>}
         </div>
       </div>
       <div className="controls">

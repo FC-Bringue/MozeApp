@@ -1,12 +1,11 @@
-import React from 'react';
+import React from "react";
 
-import MusicPlayer from './MusicPlayer';
+import MusicPlayer from "./MusicPlayer";
 
-
-function Footer() {
+function Footer({ currentMusic }: any) {
   return (
     <>
-        <MusicPlayer/>
+      <MusicPlayer currentMusic={currentMusic} />
     </>
   );
 }

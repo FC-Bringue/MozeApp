@@ -10,6 +10,7 @@ type AppProps = {
   musicCover: any;
   setCelluleHeight: any;
   celluleHeight: any;
+  currentNameMusic: any;
 };
 
 const MusicCellule = ({
@@ -19,6 +20,7 @@ const MusicCellule = ({
   musicCover,
   setCelluleHeight,
   celluleHeight,
+  currentNameMusic,
 }: AppProps) => {
   const celluleRef = useRef<HTMLDivElement>(null);
 
@@ -30,30 +32,28 @@ const MusicCellule = ({
   return (
     <motion.div
       className={
-        "cellule " + (musicName === "Time Machine" ? "activeMusic" : "hidden")
+        "cellule " + (musicName === currentNameMusic ? "activeMusic" : "")
       }
-      style={{
-        translateY: "200px",
-      }}
       animate={{ y: -celluleHeight }}
-      transition={{ /* repeat: Infinity, ease: "easeInOut", */ duration: 25 }}
+      transition={{
+        repeat: Infinity,
+        repeatType: "loop",
+        ease: "easeInOut",
+        duration: 20,
+      }}
       ref={celluleRef}
     >
       <div>
         <div className="imgContainer">
           <img src={musicCover} alt="" />
         </div>
-        <div>
-          <p>{musicName}</p>
-          <p>
-            {artistName.map((item: any, index: any) => {
-              return <>{item.name} </>;
-            })}
-          </p>
+        <div style={{ overflow: "hidden" }}>
+          <p style={{ fontWeight: "600", fontSize: "1.5em" }}>{musicName}</p>
+          <p style={{ fontWeight: "600" }}>{artistName}</p>
         </div>
       </div>
       <div className="likes">
-        <p>{typeOfSong}</p>
+        <p style={{ fontWeight: "600", fontSize: "1.5em" }}>{typeOfSong}</p>
         <div>
           <img src={heart} alt="" className="icon" />
         </div>
