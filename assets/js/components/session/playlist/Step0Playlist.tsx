@@ -3,10 +3,13 @@ import { BsCheckLg } from "react-icons/bs";
 import { useEffect, useState } from "react";
 import { useParams, useNavigate, Outlet } from "react-router-dom";
 import { useSelector } from "react-redux";
+import { motion } from "framer-motion";
 
 import Step1Lights from "./Step1Playlist";
 
 import "../../../../styles/session/playlist/playlist.scss";
+
+const transition = { duration: 0.6, ease: [0.6, 0.01, -0.05, 0.9] };
 
 const Playlist = () => {
   const [lightsCount, setLightsCount] = useState<any>(1);
@@ -55,7 +58,13 @@ const Playlist = () => {
         {lightsCount != "done" && (
           <div className="containerBtn">
             {lightsCount > 1 && (
-              <div
+              <motion.div
+                style={{
+                  cursor: "pointer",
+                }}
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.9 }}
+                transition={transition}
                 className={" passTo"}
                 onClick={() => {
                   var retourBy = lightsCount - 1;
@@ -67,7 +76,7 @@ const Playlist = () => {
               >
                 <ImArrowLeft2 size={"2em"} />
                 <p>RETOUR</p>
-              </div>
+              </motion.div>
             )}
 
             <div

@@ -1,5 +1,5 @@
 import { useState } from "react";
-
+import { motion } from "framer-motion";
 import { ImCross, ImArrowRight2, ImArrowLeft2 } from "react-icons/im";
 import { useNavigate, useParams } from "react-router-dom";
 import { useDispatch } from "react-redux";
@@ -10,6 +10,8 @@ import {
   setNewSessionLights,
   setTmpLights,
 } from "../../../helpers/redux/slices/tempSlice";
+
+const transition = { duration: 0.6, ease: [0.6, 0.01, -0.05, 0.9] };
 
 const StepOne = ({ setSessionName, setSessionHashtag, setStep }: any) => {
   const navigate = useNavigate();
@@ -32,15 +34,27 @@ const StepOne = ({ setSessionName, setSessionHashtag, setStep }: any) => {
           onChange={(e) => dispatch(setNewSessionHashtag(e.target.value))}
         />
         <div className="containerBtn">
-          <div
+          <motion.div
+            style={{
+              cursor: "pointer",
+            }}
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.9 }}
+            transition={transition}
             className="passTo"
             onClick={() => navigate("/dashboard/sessions")}
           >
             <ImArrowLeft2 size={"2em"} />
             <p>RETOUR</p>
-          </div>
+          </motion.div>
 
-          <div
+          <motion.div
+            style={{
+              cursor: "pointer",
+            }}
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.9 }}
+            transition={transition}
             className="passTo "
             onClick={() => {
               dispatch(setTmpPlaylist(null));
@@ -51,7 +65,7 @@ const StepOne = ({ setSessionName, setSessionHashtag, setStep }: any) => {
           >
             <p>SUIVANT</p>
             <ImArrowRight2 size={"2em"} />
-          </div>
+          </motion.div>
         </div>
       </div>
     </>
@@ -64,14 +78,14 @@ const NewSession = () => {
   const [sessionHashtag, setSessionHashtag] = useState(null);
 
   return (
-    <section id="sessions">
+    <motion.section id="sessions" exit={{ opacity: 0 }} transition={transition}>
       <h4>SESSIONS</h4>
       <StepOne
         setSessionHashtag={setSessionHashtag}
         setSessionName={setSessionName}
         setStep={setStep}
       />
-    </section>
+    </motion.section>
   );
 };
 

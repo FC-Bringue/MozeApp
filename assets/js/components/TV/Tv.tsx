@@ -4,13 +4,15 @@ import "../../../styles/TV/Tv.scss";
 import Header from "./Header";
 import Footer from "./Footer";
 import Main from "./Main";
-import { useLocation, useParams } from "react-router-dom";
+import { useLocation, useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
+import { Bars } from "react-loader-spinner";
 
 declare const window: any;
 
 function Tv() {
   const location = useLocation();
+  const navigate = useNavigate();
   const [isPlaying, setIsPlaying] = useState(false);
   const [hashtag, setHashtag] = useState(null);
   const [currentMusic, setCurrentMusic] = useState(null);
@@ -19,6 +21,11 @@ function Tv() {
   const [refresh, setRefresh] = useState(0);
   const [player, setPlayer] = useState(undefined);
   const [spotifyCurrent, setSpotifyCurrent] = useState(null);
+  const [spotifyCurrentName, setSpotifyCurrentName] = useState(null);
+  const [spotifyCurrentArtist, setSpotifyCurrentArtist] = useState(null);
+  const [spotifyCurrentCover, setSpotifyCurrentCover] = useState(null);
+  const [test, setTest] = useState(null);
+  const [display, setDisplay] = useState(false);
 
   const { urluid } = useParams();
 
@@ -48,6 +55,7 @@ function Tv() {
       })
       .catch((err) => {
         console.log(err);
+        navigate("*");
       });
   }, [refresh]);
 
@@ -89,7 +97,15 @@ function Tv() {
 
             console.log("curr", state.track_window.current_track);
             setSpotifyCurrent(state.track_window.current_track);
-            console.log(state.paused);
+            setTest(state.track_window.current_track.name);
+            setSpotifyCurrentName(state.track_window.current_track.name);
+            setSpotifyCurrentArtist(
+              state.track_window.current_track.artists[0].name
+            );
+            setSpotifyCurrentCover(
+              state.track_window.current_track.album.images[0].url
+            );
+            console.log("pause", state.paused);
 
             player.getCurrentState().then((state: any) => {
               !state ? console.log(false) : console.log(true);
@@ -98,30 +114,51 @@ function Tv() {
 
           player.connect();
         };
+
+        setDisplay(true);
       })
       .catch((err) => {
         console.log(err);
+        navigate("/*");
       });
   }, []);
 
   return (
-    <div id="TV">
-      <header className="App-header">
-        <Header name={name} />
-      </header>
+    <div id="TV" className={!display ? "forceWidth" : ""}>
+      {display ? (
+        <>
+          <header className="App-header">
+            <Header name={name} />
+          </header>
 
-      <main>
-        <Main
-          hashtag={hashtag}
-          musicList={musicList}
-          currentNameMusic={currentMusic && currentMusic.name}
-          spotifyCurrent={spotifyCurrent}
-        />
-      </main>
+          <main>
+            <Main
+              hashtag={hashtag}
+              musicList={musicList}
+              currentNameMusic={currentMusic && currentMusic.name}
+              spotifyCurrent={spotifyCurrent}
+              spotifyCurrentName={spotifyCurrentName}
+              spotifyCurrentArtist={spotifyCurrentArtist}
+              spotifyCurrentCover={spotifyCurrentCover}
+            />
+          </main>
 
-      <footer className="fixed-bottom">
-        <Footer currentMusic={currentMusic} />
-      </footer>
+          <footer className="fixed-bottom">
+            <Footer
+              currentMusic={currentMusic}
+              spotifyCurrentName={spotifyCurrentName}
+              spotifyCurrentArtist={spotifyCurrentArtist}
+              spotifyCurrentCover={spotifyCurrentCover}
+            />
+          </footer>
+        </>
+      ) : (
+        <>
+          <div className={"loaderContainer"}>
+            <Bars color="#595251" height={200} width={200} />
+          </div>
+        </>
+      )}
     </div>
   );
 }

@@ -3,6 +3,9 @@ import General from "./General";
 import "../../../styles/settings/Parametres.css";
 import { useSelector } from "react-redux";
 import { useEffect } from "react";
+import { motion } from "framer-motion";
+
+const transition = { duration: 0.6, ease: [0.6, 0.01, -0.05, 0.9] };
 
 const Parametres = () => {
   const location = useLocation();
@@ -14,14 +17,20 @@ const Parametres = () => {
   let { subTab } = useParams();
   const barname = useSelector((state: any) => state.userInfos.name);
 
-  useEffect(() => {
-    navigate("/dashboard/settings/general");
-  }, []);
-
   console.log("subTab", subTab);
 
+  useEffect(() => {
+    if (location.pathname === "/dashboard/settings") {
+      navigate(`/dashboard/settings/general`);
+    }
+  }, []);
+
   return (
-    <section id="parametres">
+    <motion.section
+      id="parametres"
+      exit={{ opacity: 0 }}
+      transition={transition}
+    >
       <h4>PARAMETRES</h4>
       <h1>{barname && barname}</h1>
       <div className="navigation">
@@ -47,7 +56,7 @@ const Parametres = () => {
         </div>
       </div>
       <Outlet />
-    </section>
+    </motion.section>
   );
 };
 

@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import axios from "axios";
 import { useSelector, useDispatch } from "react-redux";
 import { BsPlay, BsSkipStart, BsSkipEnd, BsPause } from "react-icons/bs";
@@ -6,8 +6,12 @@ import { BsPlay, BsSkipStart, BsSkipEnd, BsPause } from "react-icons/bs";
 import "../../../styles/player/player.scss";
 import { setTmpPlayingState } from "../../../helpers/redux/slices/tempSlice";
 import { useLocation } from "react-router-dom";
+import { motion } from "framer-motion";
+
+const transition = { duration: 0.6, ease: [0.6, 0.01, -0.05, 0.9] };
 
 const PlayerSpotify = () => {
+  const [cooldown, setCooldown] = useState(true);
   const location = useLocation();
   const dispatch = useDispatch();
   const getBearer = useSelector((state: any) => state.userInfos.token);
@@ -53,6 +57,7 @@ const PlayerSpotify = () => {
   );
 
   const playOrPause = () => {
+    if (!cooldown) return;
     var callURL = `/api/set/spotify/playlist`;
     if (playingState) {
       callURL = callURL + "/pause";
@@ -65,6 +70,9 @@ const PlayerSpotify = () => {
       .get(callURL, config)
       .then((res) => {
         console.log("res", res);
+        setTimeout(() => {
+          setCooldown(false);
+        }, 2500);
       })
       .catch((err) => {
         console.log("err", err);
@@ -72,10 +80,14 @@ const PlayerSpotify = () => {
   };
 
   const previous = () => {
+    if (!cooldown) return;
     axios
       .get(`/api/set/spotify/playlist/previous/${sessionActiveURL}`, config)
       .then((res) => {
         console.log("res", res);
+        setTimeout(() => {
+          setCooldown(false);
+        }, 2500);
       })
       .catch((err) => {
         console.log("err", err);
@@ -83,10 +95,14 @@ const PlayerSpotify = () => {
   };
 
   const next = () => {
+    if (!cooldown) return;
     axios
       .get(`/api/set/spotify/playlist/next/${sessionActiveURL}`, config)
       .then((res) => {
         console.log("res", res);
+        setTimeout(() => {
+          setCooldown(false);
+        }, 2500);
       })
       .catch((err) => {
         console.log("err", err);
@@ -94,7 +110,9 @@ const PlayerSpotify = () => {
   };
 
   return (
-    <section
+    <motion.section
+      exit={{ opacity: 0 }}
+      transition={transition}
       id="spotifyPlayer"
       className={
         (location.pathname === "/dashboard/sessions/new" ||
@@ -143,7 +161,7 @@ const PlayerSpotify = () => {
           <BsSkipEnd size={"4em"} className="next" />
         </div>
       </div>
-    </section>
+    </motion.section>
   );
 };
 

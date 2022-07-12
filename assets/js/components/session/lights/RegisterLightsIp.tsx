@@ -11,7 +11,11 @@ const RegisterLightsIp = ({ NmbOfLights }: any) => {
   const [lightsDuplicate, setLightsDuplicate] = useState([]);
 
   useEffect(() => {
-    setLightsDuplicate(oldLights);
+    console.log("oldLights", oldLights);
+    console.log("lightsDuplicate", lightsDuplicate);
+    if (oldLights != null) {
+      setLightsDuplicate(oldLights);
+    }
   }, [oldLights]);
 
   return (
