@@ -7,6 +7,7 @@ import { FaUserAlt, FaMusic } from "react-icons/fa";
 import { animate, motion } from "framer-motion";
 import { useNavigate, useParams } from "react-router-dom";
 import { useDispatch } from "react-redux";
+import { BiUpvote } from "react-icons/bi";
 import { setDisplayApp } from "../../../../../helpers/redux/slices/websiteWorkerSlice";
 
 const Starting: React.FC<{}> = () => {
@@ -40,7 +41,7 @@ const Starting: React.FC<{}> = () => {
               }}
             >
               {/* <img src={btnmid} title="MozeLogo" className="footerIcon" /> */}
-              <FaMusic className="footerIcon" />
+              <FaMusic className="footerIcon" size={"4em"} color={"white"} />
             </div>
           </motion.label>
           <input type="submit" id="upload-button" style={{ display: "none" }} />
@@ -56,7 +57,7 @@ const Starting: React.FC<{}> = () => {
               }}
             >
               {/* <img src={btnright} title="MozeLogo" className="footerIcon" /> */}
-              <FaUserAlt className="footerIcon" />
+              <FaUserAlt className="footerIcon" size={"4em"} color={"white"} />
             </div>
           </motion.label>
         </Col>

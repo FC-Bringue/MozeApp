@@ -9,7 +9,11 @@ import {
   setUserId,
   setIsLoggedToSpotify,
 } from "../../../helpers/redux/slices/userInfosSlice";
-import { setDisplayResume } from "../../../helpers/redux/slices/websiteWorkerSlice";
+import { setUrlActiveSession } from "../../../helpers/redux/slices/activeSlice";
+import {
+  setDisplayResume,
+  setResetOne,
+} from "../../../helpers/redux/slices/websiteWorkerSlice";
 
 import Navigation from "../../Navigation";
 import PlayerSpotify from "../player/PlayerSpotify";
@@ -25,6 +29,11 @@ const AuthedUsers = () => {
   const loggedToSpotify = useSelector(
     (state: any) => state.userInfos.isLoggedToSpotify
   );
+  const sessionActiveURL = useSelector(
+    (state: any) => state.active.urlActiveSession
+  );
+  const resetOne = useSelector((state: any) => state.websiteWorker.resetOne);
+  const currentMusic = useSelector((state: any) => state.active.currentMusic);
 
   useEffect(() => {
     if (!bearerToken) {
@@ -75,10 +84,9 @@ const AuthedUsers = () => {
           .then((res) => {
             console.log("Une session est active", res.data);
             dispatch(setActiveSessionInfos(res.data.sessionActive));
-            dispatch(setDisplayResume(true));
 
             if (res.data.message === "true") {
-              return res.data.sessionActive.id;
+              return res.data.sessionActive.session.parameters.sessionID;
             } else {
               return false;
             }
@@ -87,11 +95,19 @@ const AuthedUsers = () => {
             console.log("active session", err);
           })
           .then((res) => {
+            console.log("res before url", res, !res);
             if (!res) return;
+            console.log("res after url", res, !res);
             axios
-              .get(`/api/get/url/session/${res}`)
+              .get(`/api/get/url/session/${res}`, {
+                headers: { Authorization: `Bearer ${bearerToken}` },
+              })
+
               .then((res) => {
                 console.log("URL", res);
+                dispatch(setUrlActiveSession(res.data.url));
+                dispatch(setResetOne(resetOne + 1));
+                dispatch(setDisplayResume(true));
               })
               .catch((err) => {
                 console.log("errURL", err);
@@ -119,7 +135,7 @@ const AuthedUsers = () => {
     <>
       <Navigation />
       <Outlet />
-      <PlayerSpotify />
+      {sessionActiveURL && currentMusic && <PlayerSpotify />}
     </>
   );
 };

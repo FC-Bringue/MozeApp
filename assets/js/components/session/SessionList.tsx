@@ -6,8 +6,10 @@ import axios from "axios";
 import { useSelector, useDispatch } from "react-redux";
 import { setSessionList } from "../../../helpers/redux/slices/userInfosSlice";
 import { Bars } from "react-loader-spinner";
+import { useNavigate } from "react-router-dom";
 
 const ListIt = () => {
+  const navigate = useNavigate();
   const [display, setDisplay] = useState(false);
 
   const dispatch = useDispatch();
@@ -61,7 +63,14 @@ const ListIt = () => {
               <h1 className="h1Question">
                 Il est nécessaire de lier votre compte spotify !
               </h1>
-              <p className="pQuestion">Merci de le faire dans les parametres</p>
+              <p
+                className="pQuestion"
+                onClick={() => {
+                  navigate("/dashboard/settings/linked-apps");
+                }}
+              >
+                Merci de le faire dans les parametres
+              </p>
             </div>
           )}
         </section>

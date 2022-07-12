@@ -1,28 +1,53 @@
-import React from "react";
-import { Container, Row, Col } from "react-bootstrap";
-import Arrow from "../../../../../img/icons/Arrow_right.png";
-import { animate, motion } from "framer-motion";
-import { useAnimation } from "framer-motion";
-import Footer from "../footer/footer";
-import MozeLogo from "../../../../../img/logos/MOZE.svg";
+import React, { useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
+import axios from "axios";
 
 const Starting: React.FC<{}> = () => {
+  const [currentMusic, setCurrentMusic] = useState(null);
+  const { sessionid } = useParams();
+
+  const fetchData = () => {
+    axios
+      .post(`/api/get/spotify/playlist/current/url/${sessionid}`)
+      .then((res) => {
+        console.log(res.data);
+        setCurrentMusic(res.data["current music"]);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
+  useEffect(() => {
+    fetchData();
+  });
+
   return (
     <>
-      <div className="MusicPlayer">
-        <div className="MusicPlayerImageTitle">
-          <img src={MozeLogo} title="MozeLogo" className="w-100" />
-          <div className="MusicPlayerInfo">
-            <span className="MusicPlayerTitle">Beat It</span>
-            <span className="MusicPlayerArtist">Michael Jackson</span>
+      <>
+        <div className="MusicPlayer">
+          <div className="MusicPlayerImageTitle">
+            <img
+              src={currentMusic && currentMusic.cover}
+              title="MozeLogo"
+              className="w-100"
+            />
+            <div className="MusicPlayerInfo">
+              <span className="MusicPlayerTitle">
+                {currentMusic && currentMusic.name}
+              </span>
+              <span className="MusicPlayerArtist">
+                {currentMusic && currentMusic.artist}
+              </span>
+            </div>
+          </div>
+          <div className="MusicPlayerBar">
+            <div className="MusicPlayerBarFill">
+              <div className="MusicPlayerBarFillRect"></div>
+            </div>
           </div>
         </div>
-        <div className="MusicPlayerBar">
-          <div className="MusicPlayerBarFill">
-            <div className="MusicPlayerBarFillRect"></div>
-          </div>
-        </div>
-      </div>
+      </>
     </>
   );
 };
