@@ -285,7 +285,6 @@ class SpotifyController extends AbstractController
                 }
                 break;
             } catch (SpotifyWebAPIException $e) {
-                dd($e);
                 $session->refreshAccessToken($session->getRefreshToken());
                 $api->setAccessToken($session->getAccessToken());
                 $spotify->setToken($session->getAccessToken());
@@ -436,7 +435,6 @@ class SpotifyController extends AbstractController
                 }
                 break;
             } catch (SpotifyWebAPIException $e) {
-                dd($e);
                 $session->refreshAccessToken($session->getRefreshToken());
                 $api->setAccessToken($session->getAccessToken());
                 $spotify->setToken($session->getAccessToken());
