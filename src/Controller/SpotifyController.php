@@ -1034,20 +1034,6 @@ class SpotifyController extends AbstractController
         $activeSession = $entityManager->getRepository(ActiveSessionEntity::class)->findOneBy(['url' => $urlSession]);
         $session = $activeSession->getSession();
         $user = $session->getUser();
-        // $auth = getallheaders()['Authorization'];
-        // $response = $client->request('GET', 'http://caddy/api/have/session/active/' . $user->getId(), [
-        //     'headers' => [
-        //         'Authorization' => $auth
-        //     ]
-        // ]);
-        // $content = $response->getContent();
-        // $content = json_decode($content, true);
-        // $content = $content['message'];
-        // if ($content == "false") {
-        //     return $this->json([
-        //         'message' => 'Aucune session n\'est en cours',
-        //     ]);
-        // }
 
         /// spotify conf
         $client_id = 'cbca15d571cc47e9818eb3558233bd97';
