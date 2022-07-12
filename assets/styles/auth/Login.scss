@@ -384,6 +384,15 @@ $anim-timing: 3s;
       margin-right: 0;
     }
   }
+  .search {
+    width: 100%;
+    height: 4rem;
+    font-size: 3rem;
+  }
+  .musicliste {
+    height: 65vh;
+    overflow: scroll;
+  }
 }
 //footer app
 

@@ -20,7 +20,7 @@ const Starting: React.FC<{}> = () => {
 
   useEffect(() => {
     fetchData();
-  });
+  }, []);
 
   return (
     <>

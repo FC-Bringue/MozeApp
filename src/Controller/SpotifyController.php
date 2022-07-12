@@ -865,7 +865,7 @@ class SpotifyController extends AbstractController
             }
         }
 
-        dd($musicQueue);
+       
 
 
         // on parcourt pour renvoyer false si 0 like on été trouvé

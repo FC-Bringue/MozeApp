@@ -12,7 +12,6 @@ import axios from "axios";
 import Loader from "../sessionName/loader";
 
 import { setDisplayApp } from "../../../../../helpers/redux/slices/websiteWorkerSlice";
-import { iteratorSymbol } from "immer/dist/internal";
 
 const Starting = () => {
   const navigate = useNavigate();
@@ -24,6 +23,27 @@ const Starting = () => {
   const [data, setData] = useState<any>([]);
   const [currentMusic, setCurrentMusic] = useState([]);
   const [musicList, setMusicList] = useState([]);
+  const [upVote, setUpVote] = useState([]);
+
+  const upVoteMusic = (songId: any) => {
+    axios
+      .post(
+        `/api/like/song/spotify`,
+        {
+          url: sessionid,
+          songId: songId,
+        },
+        { headers: { "Content-Type": "multipart/form-data" } }
+      )
+      .then((res) => {
+        console.log(res.data);
+        setUpVote(res.data.results);
+        console.log(upVote);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
 
   const fetchData = () => {
     axios
@@ -112,8 +132,13 @@ const Starting = () => {
                               </div>
 
                               <div className="upVoteNbr ms-auto d-flex align-items-baseline">
-                                <BiUpvote size={"2em"} />
-                                <span className="p-2">20</span>
+                                <BiUpvote
+                                  size={"2em"}
+                                  onClick={() => {
+                                    upVoteMusic(item.id);
+                                  }}
+                                />
+                                <span className="p-2">{item.nbrLike}</span>
                               </div>
                             </div>
                           </li>
