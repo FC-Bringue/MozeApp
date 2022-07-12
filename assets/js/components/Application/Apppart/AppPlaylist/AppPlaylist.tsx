@@ -23,6 +23,22 @@ const AppPlaylist = () => {
   const dispatch = useDispatch();
   const loader = useSelector((state: any) => state.websiteWorker.displayApp);
   const tokenStored = useSelector((state: any) => state.guest.tokenGuest);
+  const [currentMusic, setCurrentMusic] = useState([]);
+  const [musicList, setMusicList] = useState([]);
+
+  const fetchData = () => {
+    axios
+      .post(`/api/get/spotify/playlist/current/url/${sessionid}`)
+      .then((res) => {
+        console.log(res.data);
+        setCurrentMusic(res.data["current music"]);
+        setMusicList(res.data["next music"]);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
   useEffect(() => {
     dispatch(setDisplayApp(false));
     console.log(tokenStored);
@@ -45,6 +61,7 @@ const AppPlaylist = () => {
       .catch((err) => {
         console.log(err);
       });
+    fetchData();
   }, []);
 
   return (
@@ -77,280 +94,33 @@ const AppPlaylist = () => {
               <Row>
                 <Col className=" musicListe">
                   <ul>
-                    <li>
-                      <div className="MusicPlayerImageTitle d-flex align-items-center">
-                        <img
-                          src={MozeLogo}
-                          title="MozeLogo"
-                          className="w-100"
-                        />
-                        <div className="MusicPlayerInfo">
-                          <span className="MusicPlayerTitle">Beat It</span>
-                          <span className="MusicPlayerArtist">
-                            Michael Jackson
-                          </span>
-                        </div>
+                    {musicList &&
+                      musicList.map((item: any) => (
+                        <>
+                          <li>
+                            <div className="MusicPlayerImageTitle d-flex align-items-center">
+                              <img
+                                src={item.cover}
+                                title="MozeLogo"
+                                className="w-100"
+                              />
+                              <div className="MusicPlayerInfo">
+                                <span className="MusicPlayerTitle">
+                                  {item.name}
+                                </span>
+                                <span className="MusicPlayerArtist">
+                                  {item.artist}
+                                </span>
+                              </div>
 
-                        <div className="upVoteNbr ms-auto d-flex align-items-baseline">
-                          {/* <img src={UpVote} title="Upvote" /> */}
-                          <BiUpvote />
-                          <span className="p-2">20</span>
-                          <button className="playlistBtn">UpVote</button>
-                        </div>
-                      </div>
-                    </li>
-                    <li>
-                      <div className="MusicPlayerImageTitle">
-                        <img
-                          src={MozeLogo}
-                          title="MozeLogo"
-                          className="w-100"
-                        />
-                        <div className="MusicPlayerInfo">
-                          <span className="MusicPlayerTitle">Beat It</span>
-                          <span className="MusicPlayerArtist">
-                            Michael Jackson
-                          </span>
-                        </div>
-                        <div className="upVoteNbr ms-auto d-flex align-items-baseline">
-                          {/* <img src={UpVote} title="Upvote" /> */}
-                          <BiUpvote />
-                          <span className="p-2">20</span>
-                          <button className="playlistBtn">UpVote</button>
-                        </div>
-                      </div>
-                    </li>
-                    <li>
-                      <div className="MusicPlayerImageTitle">
-                        <img
-                          src={MozeLogo}
-                          title="MozeLogo"
-                          className="w-100"
-                        />
-                        <div className="MusicPlayerInfo">
-                          <span className="MusicPlayerTitle">Beat It</span>
-                          <span className="MusicPlayerArtist">
-                            Michael Jackson
-                          </span>
-                        </div>
-                        <div className="upVoteNbr ms-auto d-flex align-items-baseline">
-                          {/* <img src={UpVote} title="Upvote" /> */}
-                          <BiUpvote />
-                          <span className="p-2">20</span>
-                          <button className="playlistBtn">UpVote</button>
-                        </div>
-                      </div>
-                    </li>
-                    <li>
-                      <div className="MusicPlayerImageTitle">
-                        <img
-                          src={MozeLogo}
-                          title="MozeLogo"
-                          className="w-100"
-                        />
-                        <div className="MusicPlayerInfo">
-                          <span className="MusicPlayerTitle">Beat It</span>
-                          <span className="MusicPlayerArtist">
-                            Michael Jackson
-                          </span>
-                        </div>
-                        <div className="upVoteNbr ms-auto d-flex align-items-baseline">
-                          {/* <img src={UpVote} title="Upvote" /> */}
-                          <BiUpvote />
-                          <span className="p-2">20</span>
-                          <button className="playlistBtn">UpVote</button>
-                        </div>
-                      </div>
-                    </li>
-                    <li>
-                      <div className="MusicPlayerImageTitle">
-                        <img
-                          src={MozeLogo}
-                          title="MozeLogo"
-                          className="w-100"
-                        />
-                        <div className="MusicPlayerInfo">
-                          <span className="MusicPlayerTitle">Beat It</span>
-                          <span className="MusicPlayerArtist">
-                            Michael Jackson
-                          </span>
-                        </div>
-                        <div className="upVoteNbr ms-auto d-flex align-items-baseline">
-                          {/* <img src={UpVote} title="Upvote" /> */}
-                          <BiUpvote />
-                          <span className="p-2">20</span>
-                          <button className="playlistBtn">UpVote</button>
-                        </div>
-                      </div>
-                    </li>
-                    <li>
-                      <div className="MusicPlayerImageTitle">
-                        <img
-                          src={MozeLogo}
-                          title="MozeLogo"
-                          className="w-100"
-                        />
-                        <div className="MusicPlayerInfo">
-                          <span className="MusicPlayerTitle">Beat It</span>
-                          <span className="MusicPlayerArtist">
-                            Michael Jackson
-                          </span>
-                        </div>
-                        <div className="upVoteNbr ms-auto d-flex align-items-baseline">
-                          {/* <img src={UpVote} title="Upvote" /> */}
-                          <BiUpvote />
-                          <span className="p-2">20</span>
-                          <button className="playlistBtn">UpVote</button>
-                        </div>
-                      </div>
-                    </li>
-                    <li>
-                      <div className="MusicPlayerImageTitle">
-                        <img
-                          src={MozeLogo}
-                          title="MozeLogo"
-                          className="w-100"
-                        />
-                        <div className="MusicPlayerInfo">
-                          <span className="MusicPlayerTitle">Beat It</span>
-                          <span className="MusicPlayerArtist">
-                            Michael Jackson
-                          </span>
-                        </div>
-                        <div className="upVoteNbr ms-auto d-flex align-items-baseline">
-                          {/* <img src={UpVote} title="Upvote" /> */}
-                          <BiUpvote />
-                          <span className="p-2">20</span>
-                          <button className="playlistBtn">UpVote</button>
-                        </div>
-                      </div>
-                    </li>
-                    <li>
-                      <div className="MusicPlayerImageTitle">
-                        <img
-                          src={MozeLogo}
-                          title="MozeLogo"
-                          className="w-100"
-                        />
-                        <div className="MusicPlayerInfo">
-                          <span className="MusicPlayerTitle">Beat It</span>
-                          <span className="MusicPlayerArtist">
-                            Michael Jackson
-                          </span>
-                        </div>
-                        <div className="upVoteNbr ms-auto d-flex align-items-baseline">
-                          {/* <img src={UpVote} title="Upvote" /> */}
-                          <BiUpvote />
-                          <span className="p-2">20</span>
-                          <button className="playlistBtn">UpVote</button>
-                        </div>
-                      </div>
-                    </li>
-                    <li>
-                      <div className="MusicPlayerImageTitle">
-                        <img
-                          src={MozeLogo}
-                          title="MozeLogo"
-                          className="w-100"
-                        />
-                        <div className="MusicPlayerInfo">
-                          <span className="MusicPlayerTitle">Beat It</span>
-                          <span className="MusicPlayerArtist">
-                            Michael Jackson
-                          </span>
-                        </div>
-                        <div className="upVoteNbr ms-auto d-flex align-items-baseline">
-                          {/* <img src={UpVote} title="Upvote" /> */}
-                          <BiUpvote />
-                          <span className="p-2">20</span>
-                          <button className="playlistBtn">UpVote</button>
-                        </div>
-                      </div>
-                    </li>
-                    <li>
-                      <div className="MusicPlayerImageTitle">
-                        <img
-                          src={MozeLogo}
-                          title="MozeLogo"
-                          className="w-100"
-                        />
-                        <div className="MusicPlayerInfo">
-                          <span className="MusicPlayerTitle">Beat It</span>
-                          <span className="MusicPlayerArtist">
-                            Michael Jackson
-                          </span>
-                        </div>
-                        <div className="upVoteNbr ms-auto d-flex align-items-baseline">
-                          {/* <img src={UpVote} title="Upvote" /> */}
-                          <BiUpvote />
-                          <span className="p-2">20</span>
-                          <button className="playlistBtn">UpVote</button>
-                        </div>
-                      </div>
-                    </li>
-                    <li>
-                      <div className="MusicPlayerImageTitle">
-                        <img
-                          src={MozeLogo}
-                          title="MozeLogo"
-                          className="w-100"
-                        />
-                        <div className="MusicPlayerInfo">
-                          <span className="MusicPlayerTitle">Beat It</span>
-                          <span className="MusicPlayerArtist">
-                            Michael Jackson
-                          </span>
-                        </div>
-                        <div className="upVoteNbr ms-auto d-flex align-items-baseline">
-                          {/* <img src={UpVote} title="Upvote" /> */}
-                          <BiUpvote />
-                          <span className="p-2">20</span>
-                          <button className="playlistBtn">UpVote</button>
-                        </div>
-                      </div>
-                    </li>
-                    <li>
-                      <div className="MusicPlayerImageTitle">
-                        <img
-                          src={MozeLogo}
-                          title="MozeLogo"
-                          className="w-100"
-                        />
-                        <div className="MusicPlayerInfo">
-                          <span className="MusicPlayerTitle">Beat It</span>
-                          <span className="MusicPlayerArtist">
-                            Michael Jackson
-                          </span>
-                        </div>
-                        <div className="upVoteNbr ms-auto d-flex align-items-baseline">
-                          {/* <img src={UpVote} title="Upvote" /> */}
-                          <BiUpvote />
-                          <span className="p-2">20</span>
-                          <button className="playlistBtn">UpVote</button>
-                        </div>
-                      </div>
-                    </li>
-                    <li>
-                      <div className="MusicPlayerImageTitle">
-                        <img
-                          src={MozeLogo}
-                          title="MozeLogo"
-                          className="w-100"
-                        />
-                        <div className="MusicPlayerInfo">
-                          <span className="MusicPlayerTitle">Beat It</span>
-                          <span className="MusicPlayerArtist">
-                            Michael Jackson
-                          </span>
-                        </div>
-                        <div className="upVoteNbr ms-auto d-flex align-items-baseline">
-                          {/* <img src={UpVote} title="Upvote" /> */}
-                          <BiUpvote />
-                          <span className="p-2">20</span>
-                          <button className="playlistBtn">UpVote</button>
-                        </div>
-                      </div>
-                    </li>
+                              <div className="upVoteNbr ms-auto d-flex align-items-baseline">
+                                <BiUpvote size={"2em"} />
+                                <span className="p-2">20</span>
+                              </div>
+                            </div>
+                          </li>
+                        </>
+                      ))}
                   </ul>
                 </Col>
               </Row>

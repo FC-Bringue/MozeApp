@@ -3,12 +3,16 @@ import Overlaytwitter from "./twitter/Overlaytwitter";
 import OverlayInstagram from "./instagram/OverlayInstagram";
 import MusicList from "./MusicList/MusicList";
 
-function Main() {
+function Main({ hashtag, musicList, currentNameMusic, spotifyCurrent }: any) {
   return (
     <div id="TVMainContent">
-      <Overlaytwitter />
+      <Overlaytwitter hashtag={hashtag} />
       {/* <OverlayInstagram /> */}
-      <MusicList />
+      <MusicList
+        musicList={musicList}
+        currentNameMusic={currentNameMusic}
+        spotifyCurrent={spotifyCurrent}
+      />
     </div>
   );
 }

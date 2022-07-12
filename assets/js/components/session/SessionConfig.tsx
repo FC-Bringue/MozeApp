@@ -22,6 +22,7 @@ import { setTmpPlaylist } from "../../../helpers/redux/slices/tempSlice";
 import { HiOutlineTrash } from "react-icons/hi";
 import { setActiveSessionInfos } from "../../../helpers/redux/slices/activeSlice";
 import { setDisplayConfig } from "../../../helpers/redux/slices/websiteWorkerSlice";
+import { setUrlActiveSession } from "../../../helpers/redux/slices/activeSlice";
 
 const SessionConfig = () => {
   const navigate = useNavigate();
@@ -48,6 +49,9 @@ const SessionConfig = () => {
     (state: any) => state.websiteWorker.displayConfig
   );
   const tmpLights = useSelector((state: any) => state.tempSlice.tmpLights);
+  const sessionActiveURL = useSelector(
+    (state: any) => state.active.urlActiveSession
+  );
 
   const [isChecked, setIsChecked] = useState(false);
 
@@ -152,6 +156,7 @@ const SessionConfig = () => {
           console.log(res.data);
           setIsChecked(false);
           dispatch(setActiveSessionInfos(null));
+          dispatch(setUrlActiveSession(null));
           navigate("/dashboard/sessions");
         })
         .catch((err) => {

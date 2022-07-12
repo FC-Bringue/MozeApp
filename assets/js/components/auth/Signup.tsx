@@ -1,3 +1,5 @@
+import { useNavigate } from "react-router-dom";
+
 import { useSelector, useDispatch } from "react-redux";
 
 import { createUser } from "../../../helpers/API/login_signup";
@@ -15,25 +17,11 @@ import "../../../styles/auth/Signup.scss";
 
 const Signup = () => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const mail = useSelector((state: any) => state.register.email);
   const password = useSelector((state: any) => state.register.password);
   const name = useSelector((state: any) => state.register.name);
-
-  /* const [user, setUser] = useState({
-    lastName: "",
-    firstName: "",
-    email: "",
-    password: "",
-    passwordConfirm: "",
-  }); */
-
-  /* const handleCreateInputUpdate = (value: string, typeChange: string) => {
-    setUser({
-      ...user,
-      [typeChange]: value,
-    });
-  }; */
 
   return (
     <div id="signup">
@@ -89,13 +77,18 @@ const Signup = () => {
           </div>
         </form>
         <div
-          onClick={() =>
-            createUser({
+          onClick={async () => {
+            let response = await createUser({
               email: mail,
               password: password,
               name: name,
-            })
-          }
+            });
+            if (response.status === 200) {
+              navigate("/login");
+            } else {
+              console.log("response", response);
+            }
+          }}
         >
           <p>S'inscrire</p>
         </div>

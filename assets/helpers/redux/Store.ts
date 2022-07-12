@@ -12,6 +12,7 @@ import tempSlice from "./slices/tempSlice";
 import guestSlice from "./slices/guestSlice";
 import activeSlice from "./slices/activeSlice";
 import websiteWorkerSlice from "./slices/websiteWorkerSlice";
+import TVSlice from "./slices/TVSlice";
 
 const reducers = combineReducers({
   register: registerSlice,
@@ -21,6 +22,7 @@ const reducers = combineReducers({
   guest: guestSlice,
   active: activeSlice,
   websiteWorker: websiteWorkerSlice,
+  TVSlice: TVSlice,
 });
 
 const persistConfig = {

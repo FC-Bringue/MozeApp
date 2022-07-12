@@ -15,6 +15,7 @@ import { setIsLoggedToSpotify } from "../../../helpers/redux/slices/userInfosSli
 import "../../../styles/settings/Parametres.css";
 import "../../../styles/settings/Application.css";
 import { setDisplayParams } from "../../../helpers/redux/slices/websiteWorkerSlice";
+import { responsivePropType } from "react-bootstrap/esm/createUtilityClasses";
 
 const Application = () => {
   const dispatch = useDispatch();
@@ -37,15 +38,17 @@ const Application = () => {
     axios
       .get("/api/get/isConnected", config)
       .then((res) => {
-        const isConnected = useSelector(
-          (state: any) => state.userInfos.isConnected
-        );
         console.log("isLOggedToSpotify", res.data);
-        dispatch(setIsLoggedToSpotify(true));
+        if (res.data.message === "Not Connected") {
+          dispatch(setIsLoggedToSpotify(false));
+        } else {
+          dispatch(setIsLoggedToSpotify(true));
+        }
+
         dispatch(setDisplayParams(true));
       })
       .catch((err) => {
-        console.log("isLOggedToSpotify", err);
+        console.log("isLOggedToSpotifyERR", err);
         dispatch(setIsLoggedToSpotify(false));
         dispatch(setDisplayParams(true));
       });

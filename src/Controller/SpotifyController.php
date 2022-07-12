@@ -1069,7 +1069,6 @@ class SpotifyController extends AbstractController
         ]);
     }
 
-
     /**
      * @Route("/api/send/spotify/token/{urlToken}", name="app_send_spotify_token_url", methods={"GET", "POST"})
      */
