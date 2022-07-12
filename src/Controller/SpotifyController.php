@@ -1076,11 +1076,26 @@ class SpotifyController extends AbstractController
                 $entityManager->flush();
             }
         }
-        dd($currentTrack);
 
         return $this->json([
             'message' => 'Music correctly paused',
 
+        ]);
+    }
+
+
+    /**
+     * @Route("/api/send/spotify/token/{urlToken}", name="app_send_spotify_token_url", methods={"GET", "POST"})
+     */
+    public function sendSpotifyTokenUrl(HubInterface $hub, HttpClientInterface $client, Request $request, SessionRepository $sessionRepository, EntityManagerInterface $entityManager, $urlToken): Response
+    {
+        $activeSession = $entityManager->getRepository(ActiveSessionEntity::class)->findOneBy(['url' => $urlToken]);
+        $session = $activeSession->getSession();
+        $user = $session->getUser();
+        $spotify = $user->getSpotify();
+        $token = $spotify->getToken();
+        return $this->json([
+            'token' => $token,
         ]);
     }
 }
