@@ -40,7 +40,8 @@ const AuthedUsers = () => {
       navigate("/login");
     }
 
-    dispatch(setDisplayResume(false));
+    console.log("displayResume");
+    dispatch(setDisplayResume(true));
 
     if (pathname === "/dashboard" || pathname === "/dashboard/") {
       navigate("/dashboard/resume");
@@ -111,11 +112,17 @@ const AuthedUsers = () => {
               })
               .catch((err) => {
                 console.log("errURL", err);
+                setDisplayResume(true);
               });
           })
           .catch((err) => {
             console.log("active session", err);
+            setDisplayResume(true);
           });
+      })
+      .catch((err) => {
+        console.log("userinfos", err);
+        setDisplayResume(true);
       });
 
     console.log("beforeislogged");

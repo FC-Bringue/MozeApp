@@ -6,18 +6,20 @@ import { ImPlus } from "react-icons/im";
 import { AiOutlinePoweroff } from "react-icons/ai";
 import axios from "axios";
 import SimpleBar from "simplebar-react";
-import {
-  setCurrentMusic,
-  setUrlActiveSession,
-} from "../../../helpers/redux/slices/activeSlice";
-
 import TracksData from "./tracks/TracksData";
+import { motion } from "framer-motion";
 
+import { setCurrentMusic } from "../../../helpers/redux/slices/activeSlice";
 import { setMozeYeelightControlToken } from "../../../helpers/redux/slices/userInfosSlice";
+import {
+  setResetOne,
+  setDisplayResume,
+} from "../../../helpers/redux/slices/websiteWorkerSlice";
 
 import "../../../styles/dashboard/resume.scss";
 import "simplebar/dist/simplebar.min.css";
-import { setResetOne } from "../../../helpers/redux/slices/websiteWorkerSlice";
+
+const transition = { duration: 0.6, ease: [0.6, 0.01, -0.05, 0.9] };
 
 const DashboardContainer = () => {
   const dispatch = useDispatch();
@@ -58,6 +60,7 @@ const DashboardContainer = () => {
         dispatch(setCurrentMusic(res.data["current music"]));
       })
       .catch((err) => {
+        setDisplayResume(true);
         console.log(err);
       });
   }, [resetOne]);
@@ -128,8 +131,12 @@ const DashboardContainer = () => {
       });
   };
 
+  useEffect(() => {
+    console.log("displayResume", displayResume);
+  }, [displayResume]);
+
   return (
-    <section id="resume">
+    <motion.section id="resume" exit={{ opacity: 0 }} transition={transition}>
       <h4>{barname && barname}</h4>
       {displayResume ? (
         <>
@@ -278,12 +285,15 @@ const DashboardContainer = () => {
             <section className="noSession">
               <h1>Vous n'avez actuellement aucune sessions en cours.</h1>
               <p className="question">Pourquoi ne pas en déclencher une ?</p>
-              <div
+              <motion.div
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.9 }}
+                transition={transition}
                 className="btn"
                 onClick={() => navigate("/dashboard/sessions")}
               >
                 <p>Liste des sessions</p>
-              </div>
+              </motion.div>
             </section>
           )}
         </>
@@ -294,7 +304,7 @@ const DashboardContainer = () => {
           </div>
         </>
       )}
-    </section>
+    </motion.section>
   );
 };
 

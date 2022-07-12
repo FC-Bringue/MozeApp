@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-
+import { motion } from "framer-motion";
 import SessionCards from "./SessionCards";
 import SessionAdd from "./SessionAdd";
 import axios from "axios";
@@ -8,9 +8,12 @@ import { setSessionList } from "../../../helpers/redux/slices/userInfosSlice";
 import { Bars } from "react-loader-spinner";
 import { useNavigate } from "react-router-dom";
 
+const transition = { duration: 0.6, ease: [0.6, 0.01, -0.05, 0.9] };
+
 const ListIt = () => {
   const navigate = useNavigate();
   const [display, setDisplay] = useState(false);
+  const [logged, setLogged] = useState(false);
 
   const dispatch = useDispatch();
   const bearerToken = useSelector((state: any) => state.userInfos.token);
@@ -19,17 +22,35 @@ const ListIt = () => {
     (state: any) => state.userInfos.isLoggedToSpotify
   );
   useEffect(() => {
+    console.log("loggedToSpotifySess", loggedToSpotify);
+
     const config = {
       headers: {
         Authorization: `Bearer ${bearerToken}`,
       },
     };
+
     axios
       .get("/api/get/sessionList", config)
       .then((res) => {
         console.log("/api/get/sessionList", res.data.sessions);
         dispatch(setSessionList(res.data.sessions));
-        setDisplay(!display);
+
+        axios
+          .get("/api/get/isConnected", config)
+          .then((res) => {
+            console.log("isLOggedToSpotifyLA", res.data);
+            if (res.data.message === "Not Connected") {
+              setLogged(false);
+            } else {
+              setLogged(true);
+            }
+            setDisplay(!display);
+          })
+          .catch((err) => {
+            console.log("isLOggedToSpotifyERR", err);
+            setDisplay(!display);
+          });
       })
       .catch((e) => {
         console.log(e);
@@ -37,12 +58,12 @@ const ListIt = () => {
   }, []);
 
   return (
-    <section id="sessions">
+    <motion.section id="sessions" exit={{ opacity: 0 }} transition={transition}>
       <h4>SESSIONS</h4>
       <h1>LISTE DES SESSIONS</h1>
       {display ? (
         <section className="session-list">
-          {loggedToSpotify ? (
+          {logged ? (
             <>
               {sessionList &&
                 sessionList.map((item: any, index: any) => (
@@ -79,7 +100,7 @@ const ListIt = () => {
           <Bars color="#595251" height={200} width={200} />
         </div>
       )}
-    </section>
+    </motion.section>
   );
 };
 

@@ -1,6 +1,6 @@
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-
+import { motion } from "framer-motion";
 import {
   setTmpLights,
   setTmpPlaylist,
@@ -16,14 +16,22 @@ type SessionCardsProps = {
   item: any;
 };
 
+const transition = { duration: 0.6, ease: [0.6, 0.01, -0.05, 0.9] };
+
 const SessionCards = ({ item }: SessionCardsProps) => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   console.log(item, "item");
 
   return (
-    <div
+    <motion.div
+      whileHover={{ scale: 1.05 }}
+      whileTap={{ scale: 0.9 }}
+      transition={transition}
       className="session-item"
+      style={{
+        cursor: "pointer",
+      }}
       onClick={() => {
         dispatch(setTmpSession(item));
         dispatch(setDisplayConfig(true));
@@ -65,7 +73,7 @@ const SessionCards = ({ item }: SessionCardsProps) => {
           )}
         </div>
       </div>
-    </div>
+    </motion.div>
   );
 };
 
