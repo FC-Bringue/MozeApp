@@ -18,6 +18,7 @@ function Tv() {
   const [name, setName] = useState(null);
   const [refresh, setRefresh] = useState(0);
   const [player, setPlayer] = useState(undefined);
+  const [spotifyCurrent, setSpotifyCurrent] = useState(null);
 
   const { urluid } = useParams();
 
@@ -51,16 +52,17 @@ function Tv() {
   }, [refresh]);
 
   useEffect(() => {
-    const script = document.createElement("script");
-    script.src = "https://sdk.scdn.co/spotify-player.js";
-    script.async = true;
-    document.body.appendChild(script);
-
     axios
       .post("/api/send/spotify/token/" + urluid)
       .then((res) => {
-        console.log(res.data.token);
+        const script = document.createElement("script");
+        script.src = "https://sdk.scdn.co/spotify-player.js";
+        script.async = true;
+        document.body.appendChild(script);
+
         window.onSpotifyWebPlaybackSDKReady = () => {
+          console.log("onSpotifyWebPlaybackSDKReady");
+          console.log(res.data.token);
           const player = new window.Spotify.Player({
             name: "MozeApp TV",
             getOAuthToken: (cb: any) => {
@@ -72,11 +74,26 @@ function Tv() {
           setPlayer(player);
 
           player.addListener("ready", ({ device_id }: any) => {
+            window.focus();
             console.log("Ready with Device ID", device_id);
           });
 
           player.addListener("not_ready", ({ device_id }: any) => {
             console.log("Device ID has gone offline", device_id);
+          });
+
+          player.addListener("player_state_changed", (state: any) => {
+            if (!state) {
+              return;
+            }
+
+            console.log("curr", state.track_window.current_track);
+            setSpotifyCurrent(state.track_window.current_track);
+            console.log(state.paused);
+
+            player.getCurrentState().then((state: any) => {
+              !state ? console.log(false) : console.log(true);
+            });
           });
 
           player.connect();
@@ -98,6 +115,7 @@ function Tv() {
           hashtag={hashtag}
           musicList={musicList}
           currentNameMusic={currentMusic && currentMusic.name}
+          spotifyCurrent={spotifyCurrent}
         />
       </main>
 
