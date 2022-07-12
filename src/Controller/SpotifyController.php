@@ -818,7 +818,7 @@ class SpotifyController extends AbstractController
     /**
      * @Route("/api/like/song/spotify", name="app_like_song_spotify", methods={"GET", "POST"})
      */
-    public function likeSongSpotify(HttpClientInterface $client, Request $request, SessionRepository $sessionRepository, EntityManagerInterface $entityManager): Response
+    public function likeSongSpotify(HubInterface $hub, HttpClientInterface $client, Request $request, SessionRepository $sessionRepository, EntityManagerInterface $entityManager): Response
     {
         $url = $_POST['url'];
         $songId = $_POST['songId'];
@@ -875,6 +875,11 @@ class SpotifyController extends AbstractController
         $activeSession->setMusicQueue($musicQueue);
         $entityManager->persist($activeSession);
         $entityManager->flush();
+        $update = new Update(
+            'http://localhost/spotify',
+            json_encode(['status' => 'refresh'])
+        );
+        $hub->publish($update);
         return $this->json([
             'musicQueue' => $musicQueue,
         ]);
