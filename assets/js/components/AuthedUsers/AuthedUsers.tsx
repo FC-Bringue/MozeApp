@@ -76,6 +76,26 @@ const AuthedUsers = () => {
             console.log("Une session est active", res.data);
             dispatch(setActiveSessionInfos(res.data.sessionActive));
             dispatch(setDisplayResume(true));
+
+            if (res.data.message === "true") {
+              return res.data.sessionActive.id;
+            } else {
+              return false;
+            }
+          })
+          .catch((err) => {
+            console.log("active session", err);
+          })
+          .then((res) => {
+            if (!res) return;
+            axios
+              .get(`/api/get/url/session/${res}`)
+              .then((res) => {
+                console.log("URL", res);
+              })
+              .catch((err) => {
+                console.log("errURL", err);
+              });
           })
           .catch((err) => {
             console.log("active session", err);

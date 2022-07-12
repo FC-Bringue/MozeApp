@@ -1,6 +1,6 @@
 import React from "react";
 import { Container, Row, Col } from "react-bootstrap";
-import MozeLogo from "../../../../../img/logos/MOZE.svg";
+import MozeLogo from "../../../../../img/logos/Moze.svg";
 
 const Starting: React.FC<{}> = () => {
   return (
