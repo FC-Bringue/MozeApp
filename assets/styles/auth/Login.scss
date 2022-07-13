@@ -470,20 +470,6 @@ $anim-timing: 3s;
   /* on mets à droite */
   /* justify-content: flex-end; */
 }
-.MusicPlayerBarFill {
-  background: #d8d8d8;
-  border-radius: 3px;
-  height: 10px;
-}
-
-.MusicPlayerBarFillRect {
-  position: relative;
-  background: #b24040;
-  border-radius: 3px;
-  width: calc(100% * 0.25);
-  height: 10px;
-  /* on centre en hauteur*/
-}
 
 //music search
 .appMusicSearh {

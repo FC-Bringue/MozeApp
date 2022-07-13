@@ -1,5 +1,11 @@
 import React, { useState, useEffect } from "react";
-import { Outlet, useParams } from "react-router-dom";
+import {
+  Navigate,
+  Outlet,
+  useLocation,
+  useParams,
+  useNavigate,
+} from "react-router-dom";
 import Loader from "./Apppart/sessionName/loader";
 import SessionName from "./Apppart/sessionName/sessionApp";
 import UserProfile from "./Apppart/AppProfile/AppProfile";
@@ -9,37 +15,21 @@ import AppMusicSearch from "./Apppart/AppMusicSearch/AppMusicSearch";
 import { useDispatch, useSelector } from "react-redux";
 import axios from "axios";
 import { AnimatePresence } from "framer-motion";
-
 function App() {
   let { applicationSection } = useParams();
+  const location = useLocation();
+  const navigate = useNavigate();
+  const { sessionid } = useParams();
 
-  const pageVariants = {
-    initial: {
-      opacity: 0,
-    },
-    in: {
-      opacity: 1,
-    },
-    out: {
-      opacity: 0,
-    },
-  };
-
-  const selectTab = (tabToDisplay: string) => {
-    console.log(tabToDisplay);
-    switch (tabToDisplay) {
-      case "search":
-        return <AppMusicSearch />;
-      case "music":
-        return <AppPlaylist />;
-      case "acceuil":
-        return <Acceuil />;
-      case "profile":
-        return <UserProfile />;
-      default:
-        return <SessionName />;
+  useEffect(() => {
+    console.log(location.pathname);
+    if (
+      location.pathname === `/app/${sessionid}` ||
+      location.pathname === `/app/${sessionid}/`
+    ) {
+      navigate(`/app/${sessionid}/addGuest`);
     }
-  };
+  }, []);
 
   return (
     <section className="w-100 AppUser">
