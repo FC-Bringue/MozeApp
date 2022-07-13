@@ -13,7 +13,7 @@ function Header({ name }: any) {
         <div className="ms-auto qrcodemtn">
           <p>Prenez le controle !</p>
           <QRCode
-            value={`${window.location.origin}/app/${urluid}`}
+            value={`${window.location.origin}/app/${urluid}/addGuest`}
             size={100}
           />
         </div>

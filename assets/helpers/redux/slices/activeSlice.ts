@@ -4,6 +4,7 @@ const initialState: any = {
   activeSessionInfos: null,
   urlActiveSession: null,
   currentMusic: null,
+  currentFromSpotify: null,
 } as const;
 
 export const activeSlice = createSlice({
@@ -19,11 +20,18 @@ export const activeSlice = createSlice({
     setCurrentMusic: (state, action) => {
       state.currentMusic = action.payload;
     },
+    setCurrentFromSpotify: (state, action) => {
+      state.currentFromSpotify = action.payload;
+    },
   },
 });
 
 // Reducers and actions
-export const { setActiveSessionInfos, setUrlActiveSession, setCurrentMusic } =
-  activeSlice.actions;
+export const {
+  setActiveSessionInfos,
+  setUrlActiveSession,
+  setCurrentMusic,
+  setCurrentFromSpotify,
+} = activeSlice.actions;
 
 export default activeSlice.reducer;

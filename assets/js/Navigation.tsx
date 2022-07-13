@@ -8,8 +8,10 @@ import dashboard from "../img/icons/dashboard.svg";
 import play from "../img/icons/play.svg";
 import setting from "../img/icons/setting.svg";
 import logoMoze from "../img/logos/MOZE.svg";
-
+import { motion } from "framer-motion";
 import { tabRedirects } from "../helpers/functions/tabRedirects";
+
+const transition = { duration: 0.6, ease: [0.6, 0.01, -0.05, 0.9] };
 
 import "../styles/Navigation.scss";
 
@@ -23,7 +25,11 @@ const Navigation = () => {
       <div onClick={() => navigate("/dashboard/resume")}>
         <img src={logoMoze} title="logo" />
       </div>
-      <div
+      <motion.div
+        whileHover={{ opacity: 0.4 }}
+        whileTap={{ scale: 0.9 }}
+        transition={transition}
+        style={{ cursor: "pointer" }}
         className={`${tab === "accueil" ? "active" : ""} btn-nav`}
         onClick={() => navigate("/dashboard/resume")}
       >
@@ -32,9 +38,13 @@ const Navigation = () => {
         </div> */}
         <HiOutlineHome size={"2em"} />
         <p>ACCUEIL</p>
-      </div>
+      </motion.div>
 
-      <div
+      <motion.div
+        whileHover={{ opacity: 0.4 }}
+        whileTap={{ scale: 0.9 }}
+        transition={transition}
+        style={{ cursor: "pointer" }}
         className={`${tab === "sessions" ? "active" : ""} btn-nav`}
         onClick={() => navigate("/dashboard/sessions")}
       >
@@ -43,8 +53,12 @@ const Navigation = () => {
         </div> */}
         <BsPlay size={"2em"} />
         <p>SESSIONS</p>
-      </div>
-      <div
+      </motion.div>
+      <motion.div
+        whileHover={{ opacity: 0.4 }}
+        whileTap={{ scale: 0.9 }}
+        transition={transition}
+        style={{ cursor: "pointer" }}
         className={`${tab === "settings" ? "active" : ""} btn-nav`}
         onClick={() => {
           navigate("/dashboard/settings/general");
@@ -55,7 +69,7 @@ const Navigation = () => {
         </div> */}
         <RiSettings4Line size={"2em"} />
         <p>PARAMETRES</p>
-      </div>
+      </motion.div>
 
       <div className="copyright">
         <p>MOZEAPP - {new Date().getFullYear()}</p>

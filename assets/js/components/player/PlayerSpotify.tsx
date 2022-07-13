@@ -7,11 +7,14 @@ import "../../../styles/player/player.scss";
 import { setTmpPlayingState } from "../../../helpers/redux/slices/tempSlice";
 import { useLocation } from "react-router-dom";
 import { motion } from "framer-motion";
+import { Bars } from "react-loader-spinner";
 
 const transition = { duration: 0.6, ease: [0.6, 0.01, -0.05, 0.9] };
 
 const PlayerSpotify = () => {
   const [cooldown, setCooldown] = useState(true);
+  const [refreshTimeout, setRefreshTimeout] = useState(0);
+  const [data, setData] = useState(null);
   const location = useLocation();
   const dispatch = useDispatch();
   const getBearer = useSelector((state: any) => state.userInfos.token);
@@ -19,6 +22,12 @@ const PlayerSpotify = () => {
     (state: any) => state.tempSlice.tmpPlayingState
   );
   const currentMusic = useSelector((state: any) => state.active.currentMusic);
+  const currentMusicFromSpoti = useSelector(
+    (state: any) => state.active.currentFromSpotify
+  );
+  const sessionActiveURL = useSelector(
+    (state: any) => state.active.urlActiveSession
+  );
 
   const config = {
     headers: {
@@ -32,9 +41,28 @@ const PlayerSpotify = () => {
   const eventSource = new EventSource(url);
 
   useEffect(() => {
+    if (sessionActiveURL) {
+      axios
+        .get("/api/get/spotify/source/" + sessionActiveURL)
+        .then((res) => {
+          console.log("setCurrentMusicDashboard", res.data);
+          setData(res.data);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    }
+
+    setTimeout(() => {
+      setRefreshTimeout(refreshTimeout + 1);
+    }, 60000);
+  }, [refreshTimeout, sessionActiveURL]);
+
+  useEffect(() => {
     console.log(location.pathname);
 
     eventSource.onmessage = (event) => {
+      setRefreshTimeout(refreshTimeout + 1);
       const data = JSON.parse(event.data);
       console.log(data.status);
       switch (data.status) {
@@ -52,14 +80,10 @@ const PlayerSpotify = () => {
     };
   }, []);
 
-  const sessionActiveURL = useSelector(
-    (state: any) => state.active.urlActiveSession
-  );
-
   const playOrPause = () => {
     if (!cooldown) return;
     var callURL = `/api/set/spotify/playlist`;
-    if (playingState) {
+    if (!data.is_playing) {
       callURL = callURL + "/pause";
     } else {
       callURL = callURL + "/play";
@@ -121,45 +145,79 @@ const PlayerSpotify = () => {
       }
     >
       <div className="infos">
-        <div className="imageContainer">
-          {currentMusic && <img src={currentMusic.cover} alt="" />}
-        </div>
+        {data ? (
+          <div className="imageContainer">
+            {currentMusic.cover && !data && (
+              <img src={currentMusic.cover} alt="" />
+            )}
+            {data && <img src={data.message.item.album.images[0].url} alt="" />}
+          </div>
+        ) : (
+          <div className={"loaderContainer"}>
+            <Bars color="#595251" />
+          </div>
+        )}
 
-        <div className="name">
-          {currentMusic && <h1> {currentMusic.name} </h1>}
-          {currentMusic && <h3> {currentMusic.artist} </h3>}
-        </div>
+        {data ? (
+          <div className="name">
+            {currentMusic && (
+              <h1>
+                {currentMusic.name && !data && currentMusic.name}
+                {data && data.message.item.name}
+              </h1>
+            )}
+            {currentMusic && (
+              <h3>
+                {data && data.message.item.artists[0].name}
+                {currentMusic.artist && !data && currentMusic.artist}
+              </h3>
+            )}
+          </div>
+        ) : (
+          <div className={"loaderContainer"}>
+            <Bars color="#595251" />
+          </div>
+        )}
       </div>
       <div className="controls">
-        <div
+        <motion.div
+          whileHover={{ opacity: 0.4, scale: 1.3 }}
+          whileTap={{ scale: 0.9 }}
+          transition={transition}
           className="btnContainer"
           onClick={() => {
             previous();
           }}
         >
           <BsSkipStart size={"4em"} className="previous" />
-        </div>
+        </motion.div>
         {/* <div></div> */}
-        <div
+        <motion.div
+          whileHover={{ opacity: 0.4, scale: 1.3 }}
+          whileTap={{ scale: 0.9 }}
+          transition={transition}
           className="btnContainer"
           onClick={() => {
             playOrPause();
           }}
         >
-          {playingState ? (
+          {data && data.message.is_playing ? (
             <BsPause size={"4em"} className="pause" />
           ) : (
             <BsPlay size={"4em"} className="pause" />
           )}
-        </div>
-        <div
+        </motion.div>
+        <motion.div
+          whileHover={{ opacity: 0.4, scale: 1.3 }}
+          whileTap={{ scale: 0.9 }}
+          transition={transition}
           className="btnContainer"
           onClick={() => {
             next();
           }}
         >
           <BsSkipEnd size={"4em"} className="next" />
-        </div>
+        </motion.div>
       </div>
     </motion.section>
   );
