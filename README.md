@@ -1,5 +1,9 @@
 # MozeApp - The App
 
+## Needed to add infos
+
+V1.5
+
 ## Installation instructions
 
 - Ajouter le .ENV
