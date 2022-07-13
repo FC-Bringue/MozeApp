@@ -36,6 +36,9 @@ const AuthedUsers = () => {
   const currentMusic = useSelector((state: any) => state.active.currentMusic);
 
   useEffect(() => {
+
+    setActiveSessionInfos(null)
+
     if (!bearerToken) {
       navigate("/login");
     }
@@ -142,7 +145,7 @@ const AuthedUsers = () => {
     <>
       <Navigation />
       <Outlet />
-      {sessionActiveURL && currentMusic && <PlayerSpotify />}
+      {(sessionActiveURL ||currentMusic)&& <PlayerSpotify />}
     </>
   );
 };

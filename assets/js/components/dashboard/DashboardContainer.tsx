@@ -85,7 +85,7 @@ const DashboardContainer = () => {
         .then((res) => {
           console.log(grossepute);
           console.log("setCurrentMusicDashboard", res.data);
-          setCurrentFromSpotify(res.data);
+          /*setCurrentFromSpotify(res.data);*/
         })
         .catch((err) => {
           console.log(err);

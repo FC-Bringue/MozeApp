@@ -2,6 +2,7 @@ import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { motion } from "framer-motion";
 
+import { useState } from "react";
 import amazonMusic from "../../../img/logos/amazonMusic.png";
 import spotify from "../../../img/logos/spotify.png";
 import mozeyee from "../../../img/logos/mozeyee.png";
@@ -23,6 +24,7 @@ const transition = { duration: 0.6, ease: [0.6, 0.01, -0.05, 0.9] };
 const Application = () => {
   const dispatch = useDispatch();
   const Bearer = useSelector((state: any) => state.userInfos.token);
+  const [fdp, setfdp] = useState(false);
   const isConnected = useSelector(
     (state: any) => state.userInfos.isLoggedToSpotify
   );
@@ -41,10 +43,13 @@ const Application = () => {
       .get("/api/get/isConnected", config)
       .then((res) => {
         console.log("isLOggedToSpotifyLA", res.data);
-        if (res.data.message === "Not Connected") {
+        if (res.data.message == "Not Connected") {
+          setfdp(false)
           dispatch(setIsLoggedToSpotify(false));
+          setfdp(true)
         } else {
           dispatch(setIsLoggedToSpotify(true));
+          setfdp(false)
         }
 
         dispatch(setDisplayParams(true));
@@ -52,6 +57,7 @@ const Application = () => {
       .catch((err) => {
         console.log("isLOggedToSpotifyERR", err);
         dispatch(setIsLoggedToSpotify(false));
+        setfdp(false)
         dispatch(setDisplayParams(true));
       });
   }, []);
@@ -70,7 +76,6 @@ const Application = () => {
               transition={transition}
               className="spotify"
               onClick={() => {
-                if (isConnected) return;
                 axios
                   .get("/api/get/spotify/TokenUrl", config)
                   .then((res) => {
@@ -82,7 +87,7 @@ const Application = () => {
                   });
               }}
             >
-              {isConnected ? <p>Lié</p> : <p>Se connecter</p>}
+              {fdp ? <p>Se connecter</p> : <p>Se connecter</p>}
               <div className="appLogo">
                 <img src={spotify} title="spotify" />
               </div>

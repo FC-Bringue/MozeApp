@@ -46,16 +46,25 @@ const PlayerSpotify = () => {
         .get("/api/get/spotify/source/" + sessionActiveURL)
         .then((res) => {
           console.log("setCurrentMusicDashboard", res.data);
-          setData(res.data);
+
+          if(data.message === null){
+            setData(null);
+          }
+          else{
+            setData(res.data);
+          }
         })
         .catch((err) => {
+          setData(null);
           console.log(err);
         });
     }
 
     setTimeout(() => {
       setRefreshTimeout(refreshTimeout + 1);
-    }, 60000);
+    }, 5000);
+
+    console.log(data)
   }, [refreshTimeout, sessionActiveURL]);
 
   useEffect(() => {
@@ -81,7 +90,7 @@ const PlayerSpotify = () => {
   }, []);
 
   const playOrPause = () => {
-    if (!cooldown) return;
+    /*if (!cooldown) return;*/
     var callURL = `/api/set/spotify/playlist`;
     if (!data.is_playing) {
       callURL = callURL + "/pause";
@@ -104,7 +113,7 @@ const PlayerSpotify = () => {
   };
 
   const previous = () => {
-    if (!cooldown) return;
+    /*if (!cooldown) return;*/
     axios
       .get(`/api/set/spotify/playlist/previous/${sessionActiveURL}`, config)
       .then((res) => {
@@ -119,7 +128,7 @@ const PlayerSpotify = () => {
   };
 
   const next = () => {
-    if (!cooldown) return;
+   /* if (!cooldown) return;*/
     axios
       .get(`/api/set/spotify/playlist/next/${sessionActiveURL}`, config)
       .then((res) => {
@@ -145,12 +154,12 @@ const PlayerSpotify = () => {
       }
     >
       <div className="infos">
-        {data ? (
+        {(data || currentMusic)? (
           <div className="imageContainer">
-            {currentMusic.cover && !data && (
+            {currentMusic && !data && (
               <img src={currentMusic.cover} alt="" />
             )}
-            {data && <img src={data.message.item.album.images[0].url} alt="" />}
+            {data != null && <img src={data.message.item.album.images[0].url} alt="" />}
           </div>
         ) : (
           <div className={"loaderContainer"}>
@@ -158,7 +167,7 @@ const PlayerSpotify = () => {
           </div>
         )}
 
-        {data ? (
+        {(data || currentMusic) ? (
           <div className="name">
             {currentMusic && (
               <h1>
@@ -201,7 +210,7 @@ const PlayerSpotify = () => {
             playOrPause();
           }}
         >
-          {data && data.message.is_playing ? (
+          {data.is_playing ? (
             <BsPause size={"4em"} className="pause" />
           ) : (
             <BsPlay size={"4em"} className="pause" />
