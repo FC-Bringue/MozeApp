@@ -190,7 +190,10 @@ const DashboardContainer = () => {
                       </p>
                     </div>
                     <div className="lightsAction">
-                      <div
+                      <motion.div
+                        whileHover={{ opacity: 0.4, scale: 1.3 }}
+                        whileTap={{ scale: 0.9 }}
+                        transition={transition}
                         className="quickPower"
                         onClick={() => {
                           handleChangeLight("power", "#000000");
@@ -198,53 +201,73 @@ const DashboardContainer = () => {
                       >
                         <p>Allumer</p>
                         <AiOutlinePoweroff size={"6em"} />
-                      </div>
+                      </motion.div>
                       <div className="quickChange">
                         <p>Changer de couleur</p>
                         <div className="btnColorContainer">
-                          <div
+                          <motion.div
+                            whileHover={{ opacity: 0.4, scale: 1.3 }}
+                            whileTap={{ scale: 0.9 }}
+                            transition={transition}
                             className="btnColor red"
                             onClick={() => {
                               handleChangeLight("color", "#FF0000");
                             }}
                           >
                             <p>Rouge</p>
-                          </div>
-                          <div
+                          </motion.div>
+                          <motion.div
+                            whileHover={{ opacity: 0.4, scale: 1.3 }}
+                            whileTap={{ scale: 0.9 }}
+                            transition={transition}
                             className="btnColor green"
                             onClick={() => {
                               handleChangeLight("color", "#00FF00");
                             }}
                           >
                             <p>Vert</p>
-                          </div>
-                          <div
+                          </motion.div>
+                          <motion.div
+                            whileHover={{ opacity: 0.4, scale: 1.3 }}
+                            whileTap={{ scale: 0.9 }}
+                            transition={transition}
                             className="btnColor blue"
                             onClick={() => {
                               handleChangeLight("color", "#0000FF");
                             }}
                           >
                             <p>Bleu</p>
-                          </div>
-                          <div
+                          </motion.div>
+                          <motion.div
+                            whileHover={{ opacity: 0.4, scale: 1.3 }}
+                            whileTap={{ scale: 0.9 }}
+                            transition={transition}
                             className="btnColor pink"
                             onClick={() => {
                               handleChangeLight("color", "#FF00FF");
                             }}
                           >
                             <p>Rose</p>
-                          </div>
-                          <div
+                          </motion.div>
+                          <motion.div
+                            whileHover={{ opacity: 0.4, scale: 1.3 }}
+                            whileTap={{ scale: 0.9 }}
+                            transition={transition}
                             className="btnColor purple"
                             onClick={() => {
                               handleChangeLight("color", "#800080");
                             }}
                           >
                             <p>Violet</p>
-                          </div>
-                          <div className="btnColor plus">
+                          </motion.div>
+                          <motion.div
+                            whileHover={{ opacity: 0.4, scale: 1.3 }}
+                            whileTap={{ scale: 0.9 }}
+                            transition={transition}
+                            className="btnColor plus"
+                          >
                             <ImPlus className="iconsPlus" />
-                          </div>
+                          </motion.div>
                         </div>
                       </div>
                     </div>

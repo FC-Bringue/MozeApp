@@ -1,9 +1,11 @@
 import { ImCross, ImArrowRight2, ImArrowLeft2 } from "react-icons/im";
 import { useParams, useNavigate, Outlet } from "react-router-dom";
-
+import { motion } from "framer-motion";
 import Lights from "./lights/Step0Lights";
 
 import "../../../styles/session/lights/lights.scss";
+
+const transition = { duration: 0.6, ease: [0.6, 0.01, -0.05, 0.9] };
 
 const switchParam = (typeOfSetting: any) => {
   console.log(typeOfSetting.typeOfSetting);
@@ -45,12 +47,15 @@ const SessionSettings = (typeOfSetting: any) => {
   const { sessionID } = useParams();
   return (
     <section id="paramsSessions">
-      <div
+      <motion.div
+        whileHover={{ opacity: 0.4, scale: 1.3 }}
+        whileTap={{ scale: 0.9 }}
+        transition={transition}
         className="exit"
         onClick={() => navigate("/dashboard/sessions/" + sessionID)}
       >
         <ImCross size={"2em"} />
-      </div>
+      </motion.div>
       {/* {switchParam(typeOfSetting)} */}
       <Outlet />
     </section>

@@ -131,16 +131,22 @@ const PlayerSpotify = () => {
         </div>
       </div>
       <div className="controls">
-        <div
+        <motion.div
+          whileHover={{ opacity: 0.4, scale: 1.3 }}
+          whileTap={{ scale: 0.9 }}
+          transition={transition}
           className="btnContainer"
           onClick={() => {
             previous();
           }}
         >
           <BsSkipStart size={"4em"} className="previous" />
-        </div>
+        </motion.div>
         {/* <div></div> */}
-        <div
+        <motion.div
+          whileHover={{ opacity: 0.4, scale: 1.3 }}
+          whileTap={{ scale: 0.9 }}
+          transition={transition}
           className="btnContainer"
           onClick={() => {
             playOrPause();
@@ -151,15 +157,18 @@ const PlayerSpotify = () => {
           ) : (
             <BsPlay size={"4em"} className="pause" />
           )}
-        </div>
-        <div
+        </motion.div>
+        <motion.div
+          whileHover={{ opacity: 0.4, scale: 1.3 }}
+          whileTap={{ scale: 0.9 }}
+          transition={transition}
           className="btnContainer"
           onClick={() => {
             next();
           }}
         >
           <BsSkipEnd size={"4em"} className="next" />
-        </div>
+        </motion.div>
       </div>
     </motion.section>
   );
