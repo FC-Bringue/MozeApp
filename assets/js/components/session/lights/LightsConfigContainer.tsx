@@ -3,11 +3,14 @@ import { useParams, useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { ImCross, ImArrowRight2, ImArrowLeft2 } from "react-icons/im";
 import { BsCheckLg } from "react-icons/bs";
+import { motion } from "framer-motion";
 
 import Step1Lights from "./Step1Lights";
 import RegisterLightNmb from "./RegisterLightNmb";
 import RegisterLightsIp from "./RegisterLightsIp";
 import UpdatesLightsIp from "./UpdatesLightsIp";
+
+const transition = { duration: 0.6, ease: [0.6, 0.01, -0.05, 0.9] };
 
 const LightsConfigContainer = () => {
   const { sessionID, onNew } = useParams();
@@ -67,7 +70,7 @@ const LightsConfigContainer = () => {
         <h2>Parametrages des lumieres</h2>
         <div id="lights-params">{stepsDisplay(stepCountLights)}</div>
         <div className="containerBtn lights">
-          <div
+          <motion.div
             className={
               ((stepCountLights === 1 || stepCountLights === 0) && "hidden") +
               " passTo"
@@ -77,11 +80,23 @@ const LightsConfigContainer = () => {
                 setStepCountLights(stepCountLights - 1);
               }
             }}
+            style={{
+              cursor: "pointer",
+            }}
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.9 }}
+            transition={transition}
           >
             <ImArrowLeft2 size={"2em"} />
             <p>RETOUR</p>
-          </div>
-          <div
+          </motion.div>
+          <motion.div
+            style={{
+              cursor: "pointer",
+            }}
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.9 }}
+            transition={transition}
             className={
               ((stepCountLights === 3 || stepCountLights === 0) && "hidden") +
               " passTo right"
@@ -93,7 +108,7 @@ const LightsConfigContainer = () => {
             }}
           >
             <p>SUIVANT</p> <ImArrowRight2 size={"2em"} />
-          </div>
+          </motion.div>
           <div
             className={(stepCountLights != 3 && "hidden") + " passTo right"}
             onClick={() => {

@@ -5,10 +5,13 @@ import { BsCheckLg } from "react-icons/bs";
 import Switch from "react-switch";
 import { Bars } from "react-loader-spinner";
 import SimpleBar from "simplebar-react";
+import { motion } from "framer-motion";
 
 import { useEffect, useState } from "react";
 import "../../../styles/session/lights/lights.scss";
 import axios from "axios";
+
+const transition = { duration: 0.6, ease: [0.6, 0.01, -0.05, 0.9] };
 
 import {
   setNewSessionLights,
@@ -186,7 +189,11 @@ const SessionConfig = () => {
 
   return (
     <>
-      <section id="sessions">
+      <motion.section
+        id="sessions"
+        exit={{ opacity: 0 }}
+        transition={transition}
+      >
         <h4>SESSIONS</h4>
         {displayConfig ? (
           <>
@@ -311,13 +318,19 @@ const SessionConfig = () => {
             </div>
             {onNew && (
               <div className="containerBtn">
-                <div
+                <motion.div
+                  style={{
+                    cursor: "pointer",
+                  }}
+                  whileHover={{ scale: 1.05 }}
+                  whileTap={{ scale: 0.9 }}
+                  transition={transition}
                   className="passTo"
                   onClick={() => navigate("/dashboard/sessions/new")}
                 >
                   <ImArrowLeft2 size={"2em"} />
                   <p>RETOUR</p>
-                </div>
+                </motion.div>
 
                 {onNew ? (
                   <div
@@ -380,7 +393,13 @@ const SessionConfig = () => {
                     <BsCheckLg size={"2em"} />
                   </div>
                 ) : (
-                  <div
+                  <motion.div
+                    style={{
+                      cursor: "pointer",
+                    }}
+                    whileHover={{ scale: 1.05 }}
+                    whileTap={{ scale: 0.9 }}
+                    transition={transition}
                     className="passTo "
                     onClick={() => {
                       dispatch(
@@ -411,7 +430,7 @@ const SessionConfig = () => {
                   >
                     <p>SUIVANT</p>
                     <ImArrowRight2 size={"2em"} />
-                  </div>
+                  </motion.div>
                 )}
               </div>
             )}
@@ -424,7 +443,7 @@ const SessionConfig = () => {
           </>
         )}
         <Outlet />
-      </section>
+      </motion.section>
     </>
   );
 };

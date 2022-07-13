@@ -1,5 +1,6 @@
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
+import { motion } from "framer-motion";
 
 import amazonMusic from "../../../img/logos/amazonMusic.png";
 import spotify from "../../../img/logos/spotify.png";
@@ -16,6 +17,8 @@ import "../../../styles/settings/Parametres.css";
 import "../../../styles/settings/Application.css";
 import { setDisplayParams } from "../../../helpers/redux/slices/websiteWorkerSlice";
 import { responsivePropType } from "react-bootstrap/esm/createUtilityClasses";
+
+const transition = { duration: 0.6, ease: [0.6, 0.01, -0.05, 0.9] };
 
 const Application = () => {
   const dispatch = useDispatch();
@@ -34,11 +37,10 @@ const Application = () => {
 
   useEffect(() => {
     dispatch(setDisplayParams(false));
-
     axios
       .get("/api/get/isConnected", config)
       .then((res) => {
-        console.log("isLOggedToSpotify", res.data);
+        console.log("isLOggedToSpotifyLA", res.data);
         if (res.data.message === "Not Connected") {
           dispatch(setIsLoggedToSpotify(false));
         } else {
@@ -56,40 +58,56 @@ const Application = () => {
 
   return (
     <>
-      {displayParams ? (
-        <section id="applications">
-          <div
-            className="spotify"
-            onClick={() => {
-              if (isConnected) return;
-              axios
-                .get("/api/get/spotify/TokenUrl", config)
-                .then((res) => {
-                  console.log(res);
-                  window.location.replace(res.data.url);
-                })
-                .catch((ee) => {
-                  console.log(ee);
-                });
-            }}
-          >
-            {isConnected ? <p>Lié</p> : <p>Se connecter</p>}
-            <div className="appLogo">
-              <img src={spotify} title="spotify" />
-            </div>
+      <section id="applications">
+        {displayParams ? (
+          <>
+            <motion.div
+              style={{
+                cursor: "pointer",
+              }}
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.9 }}
+              transition={transition}
+              className="spotify"
+              onClick={() => {
+                if (isConnected) return;
+                axios
+                  .get("/api/get/spotify/TokenUrl", config)
+                  .then((res) => {
+                    console.log(res);
+                    window.location.replace(res.data.url);
+                  })
+                  .catch((ee) => {
+                    console.log(ee);
+                  });
+              }}
+            >
+              {isConnected ? <p>Lié</p> : <p>Se connecter</p>}
+              <div className="appLogo">
+                <img src={spotify} title="spotify" />
+              </div>
+            </motion.div>
+            <motion.div
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.9 }}
+              transition={transition}
+              className="mozeyee"
+              style={{
+                cursor: "pointer",
+              }}
+            >
+              <p id="mozeyeetxt">Moze Yeelight Control (Windows)</p>
+              <div className="appLogo">
+                <img src={mozeyee} title="mozeyee" />
+              </div>
+            </motion.div>
+          </>
+        ) : (
+          <div className={"loaderContainer"}>
+            <Bars color="#595251" height={200} width={200} />
           </div>
-          <div className="mozeyee">
-            <p id="mozeyeetxt">Moze Yeelight Control (Windows)</p>
-            <div className="appLogo">
-              <img src={mozeyee} title="mozeyee" />
-            </div>
-          </div>
-        </section>
-      ) : (
-        <div className={"loaderContainer"}>
-          <Bars color="#595251" height={200} width={200} />
-        </div>
-      )}
+        )}
+      </section>
     </>
   );
 };

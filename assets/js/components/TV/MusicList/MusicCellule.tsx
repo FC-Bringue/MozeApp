@@ -54,7 +54,7 @@ const MusicCellule = ({
       </div>
       <div className="likes">
         <p style={{ fontWeight: "600", fontSize: "1.5em" }}>{typeOfSong}</p>
-        <div>
+        <div className="iconLike">
           <img src={heart} alt="" className="icon" />
         </div>
       </div>

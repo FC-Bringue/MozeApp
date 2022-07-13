@@ -1,6 +1,7 @@
 import "../styles/app.css";
 import { Routes, Route } from "react-router-dom";
 import { useLocation } from "react-router-dom";
+import { AnimatePresence } from "framer-motion";
 
 import Login from "./components/auth/Login";
 import Signup from "./components/auth/Signup";
@@ -25,6 +26,7 @@ import General from "./components/settings/General";
 import AppContainer from "./components/Application/AppContainer";
 import Playlist from "./components/session/playlist/Step0Playlist";
 import DashboardContainer from "./components/dashboard/DashboardContainer";
+import QuatreCentQuatre from "./components/404/QuatreCentQuatre";
 
 const App = () => {
   const location = useLocation();
@@ -33,63 +35,58 @@ const App = () => {
       id="App"
       className={location.pathname === "/tv" ? "forceColumn" : null}
     >
-      <Routes>
-        {/* DEV PURPOSE ONLY */}
-        <Route path="/dev/authedCall" element={<SendAuthCall />} />
-        {/* END */}
+      <AnimatePresence initial={false} exitBeforeEnter>
+        <Routes key={location.pathname} location={location}>
+          {/* DASHBOARD ROUTING */}
+          <Route path="dashboard" element={<AuthedUsers />}>
+            {/* WELCOME PAGE */}
+            <Route path="resume" element={<DashboardContainer />} />
 
-        {/* API REDIRECTION AUTHED ROUTES */}
-        <Route path="/redirects/instagram" element={<InstagramRedirect />} />
-        {/* END */}
+            {/* SESSIONS PAGE */}
+            <Route path="sessions" element={<ListIt />} />
+            <Route path="sessions/new" element={<NewSession />} />
+            <Route path="sessions/new/:onNew" element={<SessionConfig />}>
+              <Route path="config-playlist" element={<Playlist />} />
+              <Route path="config-lights" element={<LightsConfigContainer />} />
+              <Route path="config-events" element={<SessionContainer />} />
+            </Route>
+            <Route path="sessions/:sessionID" element={<SessionConfig />}>
+              <Route path="config-playlist" element={<Playlist />} />
+              <Route path="config-lights" element={<LightsConfigContainer />} />
+              <Route path="config-events" element={<SessionContainer />} />
+            </Route>
 
-        {/* DASHBOARD ROUTING */}
-        <Route path="dashboard" element={<AuthedUsers />}>
-          {/* WELCOME PAGE */}
-          <Route path="resume" element={<DashboardContainer />} />
-
-          {/* SESSIONS PAGE */}
-          <Route path="sessions" element={<ListIt />} />
-          <Route path="sessions/new" element={<NewSession />} />
-          <Route path="sessions/new/:onNew" element={<SessionConfig />}>
-            <Route path="config-playlist" element={<Playlist />} />
-            <Route path="config-lights" element={<LightsConfigContainer />} />
-            <Route path="config-events" element={<SessionContainer />} />
+            {/* SETTINGS PAGE */}
+            <Route path="settings" element={<Parametres />}>
+              <Route path="linked-apps" element={<Application />} />
+              <Route path="general" element={<General />} />
+            </Route>
           </Route>
-          <Route path="sessions/:sessionID" element={<SessionConfig />}>
-            <Route path="config-playlist" element={<Playlist />} />
-            <Route path="config-lights" element={<LightsConfigContainer />} />
-            <Route path="config-events" element={<SessionContainer />} />
+          {/* END */}
+
+          {/* TV DISPLAY ROUTING */}
+          <Route path="tv/:urluid" element={<Tv />}></Route>
+
+          {/* APPLICATION ROUTING */}
+          <Route path="app/:sessionid" element={<AppContainer />}>
+            {/* <Route path=":applicationSection" element={<AppContainer/>} /> */}
+            <Route path="search" element={<AppMusicSearch />} />
+            <Route path="music" element={<AppPlaylist />} />
+            <Route path="acceuil" element={<Acceuil />} />
+            <Route path="profile" element={<UserProfile />} />
+            <Route path="addGuest" element={<SessionName />} />
           </Route>
+          {/* END */}
 
-          {/* SETTINGS PAGE */}
-          <Route path="settings" element={<Parametres />}>
-            {/*  <Route path="" element={<AuthedUsers />} /> */}
-            <Route path="general" element={<General />} />
-            <Route path="linked-apps" element={<Application />} />
-          </Route>
-        </Route>
-        {/* END */}
+          {/* BASIC ROUTING */}
+          <Route path="login" element={<Login />} />
+          <Route path="register" element={<Signup />} />
+          <Route path="/" element={<Index />} />
+          {/* END */}
 
-        {/* TV DISPLAY ROUTING */}
-        <Route path="tv/:urluid" element={<Tv />}></Route>
-
-        {/* APPLICATION ROUTING */}
-        <Route path="app/:sessionid" element={<AppContainer />}>
-          {/* <Route path=":applicationSection" element={<AppContainer/>} /> */}
-          <Route path="search" element={<AppMusicSearch />} />
-          <Route path="music" element={<AppPlaylist />} />
-          <Route path="acceuil" element={<Acceuil />} />
-          <Route path="profile" element={<UserProfile />} />
-          <Route path="addGuest" element={<SessionName />} />
-        </Route>
-        {/* END */}
-
-        {/* BASIC ROUTING */}
-        <Route path="login" element={<Login />} />
-        <Route path="register" element={<Signup />} />
-        <Route path="/" element={<Index />} />
-        {/* END */}
-      </Routes>
+          <Route path="*" element={<QuatreCentQuatre />} />
+        </Routes>
+      </AnimatePresence>
     </div>
   );
 };

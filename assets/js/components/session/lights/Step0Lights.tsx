@@ -2,6 +2,7 @@ import { ImCross, ImArrowRight2, ImArrowLeft2 } from "react-icons/im";
 import { useEffect, useState } from "react";
 import { useParams, useNavigate, Outlet } from "react-router-dom";
 import { useDispatch } from "react-redux";
+import { motion } from "framer-motion";
 
 import { setNewSessionLights } from "../../../../helpers/redux/slices/tempSlice";
 
@@ -9,6 +10,8 @@ import Step1Lights from "./Step1Lights";
 import Step2Lights from "./Step2Lights";
 import Step3Lights from "./Step3Lights";
 import Step4Lights from "./Step4Lights";
+
+const transition = { duration: 0.6, ease: [0.6, 0.01, -0.05, 0.9] };
 
 const Lights = () => {
   const [lightsCount, setLightsCount] = useState<any>(1);
@@ -71,7 +74,13 @@ const Lights = () => {
         {lightsCount != "done" && (
           <div className="containerBtn">
             {lightsCount > 1 && (
-              <div
+              <motion.div
+                style={{
+                  cursor: "pointer",
+                }}
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.9 }}
+                transition={transition}
                 className={" passTo"}
                 onClick={() => {
                   var retourBy = lightsCount - 1;
@@ -83,10 +92,16 @@ const Lights = () => {
               >
                 <ImArrowLeft2 size={"2em"} />
                 <p>RETOUR</p>
-              </div>
+              </motion.div>
             )}
 
-            <div
+            <motion.div
+              style={{
+                cursor: "pointer",
+              }}
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.9 }}
+              transition={transition}
               className={
                 (NmbOfLights === "noClick" && !canClick ? "noClick" : null) +
                 " passTo right"
@@ -109,7 +124,7 @@ const Lights = () => {
               }}
             >
               <p>SUIVANT</p> <ImArrowRight2 size={"2em"} />
-            </div>
+            </motion.div>
           </div>
         )}
       </section>

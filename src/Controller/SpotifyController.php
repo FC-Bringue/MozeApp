@@ -534,14 +534,18 @@ class SpotifyController extends AbstractController
 
         $api->setAccessToken($accessToken);
         //////
-
+        $currentMusic = $activeSession->getMusicQueue()[$currentIndex];
         while (true) {
             try {
                 $devices = $api->getMyDevices();
                 foreach ($devices->devices as $key => $value) {
                     if ($value->is_active) {
                         if ($max >= $currentIndex) {
-                            $api->next();
+                            $api->play($devices->devices[$key]->id, [
+                                'uris' => [
+                                    'spotify:track:' . $currentMusic['id']
+                                ]
+                            ]);
                         }
                         break;
                     }
@@ -614,6 +618,7 @@ class SpotifyController extends AbstractController
 
         $api->setAccessToken($accessToken);
         //////
+        $currentMusic = $activeSession->getMusicQueue()[$currentIndex];
 
         while (true) {
             try {
@@ -621,7 +626,11 @@ class SpotifyController extends AbstractController
                 foreach ($devices->devices as $key => $value) {
                     if ($value->is_active) {
                         if ($min <= $currentIndex) {
-                            $api->previous();
+                            $api->play($devices->devices[$key]->id, [
+                                'uris' => [
+                                    'spotify:track:' . $currentMusic['id']
+                                ]
+                            ]);
                         }
                         break;
                     }
@@ -1057,6 +1066,7 @@ class SpotifyController extends AbstractController
         while (true) {
             try {
                 $currentTrack = $api->getMyCurrentTrack();
+                break;
             } catch (SpotifyWebAPIException $e) {
                 $sessionSpotify->refreshAccessToken($sessionSpotify->getRefreshToken());
                 $api->setAccessToken($sessionSpotify->getAccessToken());
@@ -1067,8 +1077,7 @@ class SpotifyController extends AbstractController
         }
 
         return $this->json([
-            'message' => 'Music correctly paused',
-
+            'message' => $currentTrack,
         ]);
     }
 
