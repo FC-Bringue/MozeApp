@@ -1057,6 +1057,7 @@ class SpotifyController extends AbstractController
         while (true) {
             try {
                 $currentTrack = $api->getMyCurrentTrack();
+                break;
             } catch (SpotifyWebAPIException $e) {
                 $sessionSpotify->refreshAccessToken($sessionSpotify->getRefreshToken());
                 $api->setAccessToken($sessionSpotify->getAccessToken());
