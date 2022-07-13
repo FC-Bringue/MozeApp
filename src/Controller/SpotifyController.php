@@ -1067,8 +1067,7 @@ class SpotifyController extends AbstractController
         }
 
         return $this->json([
-            'message' => 'Music correctly paused',
-
+            'message' => $currentTrack,
         ]);
     }
 
