@@ -9,7 +9,10 @@ import SimpleBar from "simplebar-react";
 import TracksData from "./tracks/TracksData";
 import { motion } from "framer-motion";
 
-import { setCurrentMusic } from "../../../helpers/redux/slices/activeSlice";
+import {
+  setCurrentFromSpotify,
+  setCurrentMusic,
+} from "../../../helpers/redux/slices/activeSlice";
 import { setMozeYeelightControlToken } from "../../../helpers/redux/slices/userInfosSlice";
 import {
   setResetOne,
@@ -29,6 +32,9 @@ const DashboardContainer = () => {
   const [refresh, setRefresh] = useState(0);
   const [display, setDisplay] = useState(false);
   const [lightsDuplicate, setLightsDuplicate] = useState([]);
+  const [currentMusicDashboard, setCurrentMusicDashboard] = useState(null);
+  const [refreshTimeout, setRefreshTimeout] = useState(0);
+  const [playlistdata, setPlaylistdata] = useState(null);
 
   const activeSession = useSelector(
     (state: any) => state.active.activeSessionInfos
@@ -44,6 +50,9 @@ const DashboardContainer = () => {
     (state: any) => state.active.urlActiveSession
   );
   const resetOne = useSelector((state: any) => state.websiteWorker.resetOne);
+  const grossepute = useSelector(
+    (state: any) => state.active.currentFromSpotify
+  );
 
   const url = new URL("https://localhost/.well-known/mercure");
   url.searchParams.set("topic", "http://localhost/spotify");
@@ -57,13 +66,36 @@ const DashboardContainer = () => {
       .get("/api/get/spotify/playlist/current/url/" + sessionActiveURL)
       .then((res) => {
         console.log(res.data);
-        dispatch(setCurrentMusic(res.data["current music"]));
+        if (refreshTimeout === 0 || refreshTimeout === 1) {
+          dispatch(setCurrentMusic(res.data["current music"]));
+        }
+        /*  */
+        setPlaylistdata(res.data["next music"]);
       })
       .catch((err) => {
         setDisplayResume(true);
         console.log(err);
       });
   }, [resetOne]);
+
+  useEffect(() => {
+    if (sessionActiveURL) {
+      axios
+        .get("/api/get/spotify/source/" + sessionActiveURL)
+        .then((res) => {
+          console.log(grossepute);
+          console.log("setCurrentMusicDashboard", res.data);
+          setCurrentFromSpotify(res.data);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    }
+
+    setTimeout(() => {
+      setRefreshTimeout(refreshTimeout + 1);
+    }, 60000);
+  }, [refreshTimeout, sessionActiveURL]);
 
   useEffect(() => {
     console.log("activeSessionAAAAAAA", activeSession);
@@ -151,10 +183,6 @@ const DashboardContainer = () => {
                       {activeSession.session.parameters.hashtag}
                     </span>
                   )}
-                <span>
-                  {"#"}
-                  {activeSession.session.parameters.hashtag}
-                </span>
               </h1>
               <section className="session-list-resume">
                 <div className="playlistDetails">
@@ -169,13 +197,19 @@ const DashboardContainer = () => {
                     autoHide={false}
                     style={{ height: "80%" }}
                   >
-                    {activeSession.musicQueue.map((music: any, index: any) => (
-                      <TracksData
-                        key={music + index}
-                        track={music}
-                        index={index}
-                      />
-                    ))}
+                    {playlistdata ? (
+                      playlistdata.map((music: any, index: any) => (
+                        <TracksData
+                          key={music + index}
+                          track={music}
+                          index={index}
+                        />
+                      ))
+                    ) : (
+                      <div className={"loaderContainer"}>
+                        <Bars color="#595251" height={200} width={200} />
+                      </div>
+                    )}
                   </SimpleBar>
                 </div>
                 <div className="lights_and_events">
@@ -288,7 +322,7 @@ const DashboardContainer = () => {
                   </div>
                   <div className="links">
                     <h3>Voici vos liens de session :</h3>
-                    {sessionActiveURL && (
+                    {sessionActiveURL ? (
                       <div className="linksContainer">
                         <div className="link">
                           <h4>Le lien d'affichage pour votre TV :</h4>
@@ -296,8 +330,12 @@ const DashboardContainer = () => {
                         </div>
                         <div className="link">
                           <h4>L'accès pour vos consommateurs :</h4>
-                          <p>{`${window.location.origin}/app/${sessionActiveURL}`}</p>
+                          <p>{`${window.location.origin}/app/${sessionActiveURL}/addGuest`}</p>
                         </div>
+                      </div>
+                    ) : (
+                      <div className={"loaderContainer"}>
+                        <Bars color="#595251" height={200} width={200} />
                       </div>
                     )}
                   </div>
