@@ -36,7 +36,13 @@ const Login = () => {
               placeholder="Mot de passe"
               onChange={(e) => dispatch(setPassword(e.target.value))}
             />
-            <a>Mot de passe oublié?</a>
+            <a
+              onClick={async () => {
+                window.location.href = "/reset-password";
+              }}
+            >
+              Mot de passe oublié?
+            </a>
           </div>
         </form>
         <div
@@ -57,7 +63,14 @@ const Login = () => {
           <p>Se connecter</p>
         </div>
         <p>
-          Nouvel utilisateur? <a>Inscrivez-vous!</a>
+          Nouvel utilisateur?{" "}
+          <a
+            onClick={async () => {
+              window.location.href = "/register";
+            }}
+          >
+            Inscrivez-vous!
+          </a>
         </p>
       </div>
     </div>

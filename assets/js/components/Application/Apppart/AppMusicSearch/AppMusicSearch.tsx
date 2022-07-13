@@ -33,7 +33,7 @@ const Starting: React.FC<{}> = () => {
     visible: {
       opacity: 1,
 
-      transition: { duration: 10 },
+      transition: { duration: 5 },
       transitionEnd: { display: "none" },
     },
     hidden: { opacity: 0 },

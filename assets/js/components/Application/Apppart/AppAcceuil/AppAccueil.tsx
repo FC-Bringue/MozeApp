@@ -25,6 +25,8 @@ const Starting = () => {
   const [musicList, setMusicList] = useState([]);
   const [upVote, setUpVote] = useState([]);
 
+  const [refresh, setRefresh] = useState(0);
+
   const upVoteMusic = (songId: any) => {
     axios
       .post(
@@ -58,6 +60,15 @@ const Starting = () => {
       });
   };
 
+  const url = new URL("https://localhost/.well-known/mercure");
+  url.searchParams.set("topic", "http://localhost/spotify");
+
+  const eventSource = new EventSource(url);
+
+  eventSource.onmessage = (event) => {
+    setRefresh(refresh + 1);
+  };
+
   useEffect(() => {
     dispatch(setDisplayApp(false));
     console.log(tokenStored);
@@ -82,7 +93,9 @@ const Starting = () => {
       });
     fetchData();
   }, []);
-
+  useEffect(() => {
+    fetchData();
+  }, [refresh]);
   return (
     <>
       {Loader ? (

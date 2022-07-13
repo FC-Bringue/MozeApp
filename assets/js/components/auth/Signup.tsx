@@ -83,7 +83,7 @@ const Signup = () => {
               password: password,
               name: name,
             });
-            if (response.status === 200) {
+            if (response.status === 201) {
               navigate("/login");
             } else {
               console.log("response", response);
