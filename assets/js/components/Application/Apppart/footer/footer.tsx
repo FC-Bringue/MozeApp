@@ -37,7 +37,7 @@ const Starting: React.FC<{}> = () => {
               id="navigate-Profile"
               onClick={async () => {
                 dispatch(setDisplayApp(false));
-                navigate(`/app/${sessionid}/music`);
+                navigate(`/app/${sessionid}/search`);
               }}
             >
               {/* <img src={btnmid} title="MozeLogo" className="footerIcon" /> */}
